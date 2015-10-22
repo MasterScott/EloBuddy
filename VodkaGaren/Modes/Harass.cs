@@ -2,9 +2,9 @@
 using EloBuddy.SDK;
 
 // Using the config like this makes your life easier, trust me
-using Settings = AddonTemplate.Config.Modes.Harass;
+using Settings = VodkaGaren.Config.Modes.Harass;
 
-namespace AddonTemplate.Modes
+namespace VodkaGaren.Modes
 {
     public sealed class Harass : ModeBase
     {

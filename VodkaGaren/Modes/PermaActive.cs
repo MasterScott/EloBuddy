@@ -1,4 +1,4 @@
-﻿namespace AddonTemplate.Modes
+﻿namespace VodkaGaren.Modes
 {
     public sealed class PermaActive : ModeBase
     {

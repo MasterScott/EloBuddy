@@ -4,7 +4,7 @@ using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
 
-namespace AddonTemplate
+namespace VodkaGaren
 {
     public static class Program
     {

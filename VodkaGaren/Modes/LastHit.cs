@@ -1,7 +1,7 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
 
-namespace AddonTemplate.Modes
+namespace VodkaGaren.Modes
 {
     public sealed class LastHit : ModeBase
     {

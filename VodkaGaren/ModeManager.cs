@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using AddonTemplate.Modes;
+using VodkaGaren.Modes;
 using EloBuddy;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Utils;
 
-namespace AddonTemplate
+namespace VodkaGaren
 {
     public static class ModeManager
     {

@@ -2,9 +2,9 @@
 using EloBuddy.SDK;
 
 // Using the config like this makes your life easier, trust me
-using Settings = AddonTemplate.Config.Modes.Combo;
+using Settings = VodkaGaren.Config.Modes.Combo;
 
-namespace AddonTemplate.Modes
+namespace VodkaGaren.Modes
 {
     public sealed class Combo : ModeBase
     {

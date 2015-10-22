@@ -1,7 +1,7 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
 
-namespace AddonTemplate
+namespace VodkaGaren
 {
     public static class SpellManager
     {

@@ -3,7 +3,7 @@ using EloBuddy.SDK.Menu.Values;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable MemberHidesStaticFromOuterClass
-namespace AddonTemplate
+namespace VodkaGaren
 {
     // I can't really help you with my layout of a good config class
     // since everyone does it the way they like it most, go checkout my
@@ -19,7 +19,7 @@ namespace AddonTemplate
         {
             // Initialize the menu
             Menu = MainMenu.AddMenu(MenuName, MenuName.ToLower());
-            Menu.AddGroupLabel("Welcome to this AddonTemplate!");
+            Menu.AddGroupLabel("Welcome to this VodkaGaren!");
             Menu.AddLabel("To change the menu, please have a look at the");
             Menu.AddLabel("Config.cs class inside the project, now have fun!");
 

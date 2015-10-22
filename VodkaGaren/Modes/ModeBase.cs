@@ -1,6 +1,6 @@
 ﻿using EloBuddy.SDK;
 
-namespace AddonTemplate.Modes
+namespace VodkaGaren.Modes
 {
     public abstract class ModeBase
     {
