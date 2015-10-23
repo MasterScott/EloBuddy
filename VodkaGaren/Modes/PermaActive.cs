@@ -16,7 +16,7 @@ namespace VodkaGaren.Modes
             // Kill Steal
             foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e.IsEnemy && e.IsVisible && !e.IsDead && !e.IsZombie && e.Health > 0))
             {
-                if (Config.Modes.KillSteal.UseR && SpellManager.R.IsReady() && Damages.RDamage(enemy) > enemy.Health && SpellManager.R.IsInRange(enemy))
+                if (SpellManager.R.IsLearned && Config.Modes.KillSteal.UseR && SpellManager.R.IsReady() && Damages.RDamage(enemy) > enemy.Health && SpellManager.R.IsInRange(enemy))
                 {
                     if (enemy.HasBuffOfType(BuffType.SpellImmunity) || enemy.HasBuffOfType(BuffType.SpellShield))
                     {

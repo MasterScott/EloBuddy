@@ -63,6 +63,10 @@ namespace VodkaGaren
 
         private static void DrawHPAfterR()
         {
+            if (!SpellManager.R.IsLearned)
+            {
+                return;
+            }
             foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsVisible && e.Health > 0))
             {
                 int hpAfterR = (int) Math.Floor((double) enemy.Health - Damages.RDamage(enemy));
