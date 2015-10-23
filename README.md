@@ -1,2 +1,2 @@
-# EloBuddy-VodkaGaren
-EloBuddy VodkaGaren addon.
+# EloBuddy
+EloBuddy addons.
