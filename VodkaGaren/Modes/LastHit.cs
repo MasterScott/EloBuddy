@@ -13,15 +13,7 @@ namespace VodkaGaren.Modes
 
         public override void Execute()
         {
-            // TODO: Add lasthit logic here
-            //if (Q.IsReady())
-            //{
-            //    var target = TargetSelector.GetTarget(Q.Range, DamageType.Physical);
-            //    if (target != null)
-            //    {
-            //        Q.Cast(target);
-            //    }
-            //}
+           
         }
     }
 }

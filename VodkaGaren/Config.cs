@@ -1,5 +1,6 @@
 ﻿using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
+using SharpDX;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable MemberHidesStaticFromOuterClass
@@ -20,8 +21,7 @@ namespace VodkaGaren
             // Initialize the menu
             Menu = MainMenu.AddMenu(MenuName, MenuName.ToLower());
             Menu.AddGroupLabel("Welcome to this VodkaGaren!");
-            Menu.AddLabel("To change the menu, please have a look at the");
-            Menu.AddLabel("Config.cs class inside the project, now have fun!");
+            Menu.AddLabel("Created by Haker");
 
             // Initialize the modes
             Modes.Initialize();
@@ -33,20 +33,34 @@ namespace VodkaGaren
 
         public static class Modes
         {
-            private static readonly Menu Menu;
+            private static readonly Menu ComboMenu;
+            private static readonly Menu KillStealMenu;
+            private static readonly Menu DrawingMenu;
 
             static Modes()
             {
                 // Initialize the menu
-                Menu = Config.Menu.AddSubMenu("Modes");
+                ComboMenu = Config.Menu.AddSubMenu("Combo");
+                KillStealMenu = Config.Menu.AddSubMenu("KillSteal");
+                DrawingMenu = Config.Menu.AddSubMenu("Drawing");
+
 
                 // Initialize all modes
                 // Combo
                 Combo.Initialize();
                 Menu.AddSeparator();
 
-                // Harass
-                Harass.Initialize();
+                // Kill Steal
+                KillSteal.Initialize();
+                Menu.AddSeparator();
+
+                // Drawing
+                Drawing.Initialize();
+                Menu.AddSeparator();
+
+
+
+
             }
 
             public static void Initialize()
@@ -59,6 +73,7 @@ namespace VodkaGaren
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
                 private static readonly CheckBox _useR;
+                private static readonly Slider _minWEnemies;
 
                 public static bool UseQ
                 {
@@ -76,15 +91,20 @@ namespace VodkaGaren
                 {
                     get { return _useR.CurrentValue; }
                 }
+                public static int MinWEnemies
+                {
+                    get { return _minWEnemies.CurrentValue; }
+                }
 
                 static Combo()
                 {
                     // Initialize the menu values
-                    Menu.AddGroupLabel("Combo");
-                    _useQ = Menu.Add("comboUseQ", new CheckBox("Use Q"));
-                    _useW = Menu.Add("comboUseW", new CheckBox("Use W"));
-                    _useE = Menu.Add("comboUseE", new CheckBox("Use E"));
-                    _useR = Menu.Add("comboUseR", new CheckBox("Use R", false)); // Default false
+                    ComboMenu.AddGroupLabel("Combo");
+                    _useQ = ComboMenu.Add("comboUseQ", new CheckBox("Use Q"));
+                    _useW = ComboMenu.Add("comboUseW", new CheckBox("Use W", false));
+                    _useE = ComboMenu.Add("comboUseE", new CheckBox("Use E"));
+                    _useR = ComboMenu.Add("comboUseR", new CheckBox("Use R"));
+                    _minWEnemies = ComboMenu.Add("minWEnemies", new Slider("Minimum enemies near you to W", 1, 1, 5));
                 }
 
                 public static void Initialize()
@@ -92,42 +112,60 @@ namespace VodkaGaren
                 }
             }
 
-            public static class Harass
+            public static class KillSteal
             {
-                public static bool UseQ
-                {
-                    get { return Menu["harassUseQ"].Cast<CheckBox>().CurrentValue; }
-                }
-                public static bool UseW
-                {
-                    get { return Menu["harassUseW"].Cast<CheckBox>().CurrentValue; }
-                }
-                public static bool UseE
-                {
-                    get { return Menu["harassUseE"].Cast<CheckBox>().CurrentValue; }
-                }
+                private static readonly CheckBox _useIgnite;
+                private static readonly CheckBox _useR;
+
                 public static bool UseR
                 {
-                    get { return Menu["harassUseR"].Cast<CheckBox>().CurrentValue; }
+                    get { return _useR.CurrentValue; }
                 }
-                public static int Mana
+                public static bool UseIgnite
                 {
-                    get { return Menu["harassMana"].Cast<Slider>().CurrentValue; }
+                    get { return _useIgnite.CurrentValue; }
                 }
 
-                static Harass()
+                static KillSteal()
                 {
-                    // Here is another option on how to use the menu, but I prefer the
-                    // way that I used in the combo class
-                    Menu.AddGroupLabel("Harass");
-                    Menu.Add("harassUseQ", new CheckBox("Use Q"));
-                    Menu.Add("harassUseW", new CheckBox("Use W"));
-                    Menu.Add("harassUseE", new CheckBox("Use E"));
-                    Menu.Add("harassUseR", new CheckBox("Use R", false)); // Default false
+                    // Initialize the menu values
+                    KillStealMenu.AddGroupLabel("KillSteal");
+                    _useIgnite = KillStealMenu.Add("ksUseIgnite", new CheckBox("Use Ignite"));
+                    _useR = KillStealMenu.Add("ksUseR", new CheckBox("Use R"));
+                }
 
-                    // Adding a slider, we have a little more options with them, using {0} {1} and {2}
-                    // in the display name will replace it with 0=current 1=min and 2=max value
-                    Menu.Add("harassMana", new Slider("Maximum mana usage in percent ({0}%)", 40));
+                public static void Initialize()
+                {
+                }
+            }
+
+            public static class Drawing
+            {
+                private static readonly CheckBox _drawERange;
+                private static readonly CheckBox _drawRRange;
+                private static readonly CheckBox _drawHPAfterR;
+
+                public static bool DrawERange
+                {
+                    get { return _drawERange.CurrentValue; }
+                }
+                public static bool DrawRRange
+                {
+                    get { return _drawRRange.CurrentValue; }
+                }
+
+                public static bool DrawHPAfterR
+                {
+                    get { return _drawHPAfterR.CurrentValue; }
+                }
+
+                static Drawing()
+                {
+                    // Initialize the menu values
+                    DrawingMenu.AddGroupLabel("Drawing");
+                    _drawERange = DrawingMenu.Add("drawERange", new CheckBox("Draw E Range", false));
+                    _drawRRange = DrawingMenu.Add("DrawRRange", new CheckBox("Draw R Range"));
+                    _drawHPAfterR = DrawingMenu.Add("DrawHPAfterR", new CheckBox("Draw Enemy HP After R"));
                 }
 
                 public static void Initialize()
