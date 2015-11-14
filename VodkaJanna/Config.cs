@@ -323,7 +323,7 @@ namespace VodkaJanna
                 _antigapcloserQ = MenuMisc.Add("antigapcloserUseQ", new CheckBox("Use Q against gapclosers"));
                 _antigapcloserR = MenuMisc.Add("antigapcloserUseR", new CheckBox("Use R against gapclosers", false));
                 MenuMisc.AddGroupLabel("Auto R usage");
-                _autoR = MenuMisc.Add("autoR", new CheckBox("Use R automatically when ally is low HP"));
+                _autoR = MenuMisc.Add("autoR", new CheckBox("Use R automatically when ally is low HP", false));
                 _autoRMinHP = MenuMisc.Add("autoRMinHP", new Slider("Minimum ally HP % to ult", 15));
                 _autoRMinEnemies = MenuMisc.Add("autoRMinEnemies", new Slider("Minimum enemies around to ult", 1, 0, 5));
                 MenuMisc.AddGroupLabel("Auto pot usage");
