@@ -1,31 +1,43 @@
-﻿using EloBuddy;
+﻿using System.Linq;
+using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
+using Settings = VodkaJanna.Config.Modes.Combo;
 
-// Using the config like this makes your life easier, trust me
-using Settings = AddonTemplate.Config.Modes.Combo;
-
-namespace AddonTemplate.Modes
+namespace VodkaJanna.Modes
 {
     public sealed class Combo : ModeBase
     {
         public override bool ShouldBeExecuted()
         {
-            // Only execute this mode when the orbwalker is on combo mode
             return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo);
         }
 
         public override void Execute()
         {
-            // TODO: Add combo logic here
-            // See how I used the Settings.UseQ here, this is why I love my way of using
-            // the menu in the Config class!
-            if (Settings.UseQ && Q.IsReady())
+            if (Settings.UseQ && QCastable())
             {
-                var target = TargetSelector.GetTarget(Q.Range, DamageType.Physical);
-                if (target != null)
+                var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
+                if (target == null)
+                {
+                    return;
+                }
+                var pred = Q.GetPrediction(target);
+                if (pred.HitChance >= HitChance.Medium)
                 {
                     Q.Cast(target);
+                    Core.DelayAction(() => { Q.Cast(target); }, 10);
                 }
+                
+            }
+            if (Settings.UseW && W.IsReady())
+            {
+                var target = TargetSelector.GetTarget(W.Range, DamageType.Magical);
+                if (target == null)
+                {
+                    return;
+                }
+                W.Cast(target);
             }
         }
     }

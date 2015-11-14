@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using AddonTemplate.Modes;
+using VodkaJanna.Modes;
 using EloBuddy;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Utils;
 
-namespace AddonTemplate
+namespace VodkaJanna
 {
     public static class ModeManager
     {
@@ -23,8 +23,8 @@ namespace AddonTemplate
                 new Combo(),
                 new Harass(),
                 new LaneClear(),
-                //new JungleClear(),
-                //new LastHit(),
+                new JungleClear(),
+                new LastHit(),
                 new Flee()
             });
             

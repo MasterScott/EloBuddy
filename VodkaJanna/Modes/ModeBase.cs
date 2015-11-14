@@ -1,28 +1,30 @@
-﻿using EloBuddy.SDK;
+﻿using EloBuddy;
+using EloBuddy.SDK;
 
-namespace AddonTemplate.Modes
+namespace VodkaJanna.Modes
 {
     public abstract class ModeBase
     {
-        // Change the spell type to whatever type you used in the SpellManager
-        // here to have full features of that spells, if you don't need that,
-        // just change it to Spell.SpellBase, this way it's dynamic with still
-        // the most needed functions
-        protected Spell.Active Q
+        protected Spell.Skillshot Q
         {
             get { return SpellManager.Q; }
         }
-        protected Spell.Chargeable W
+        protected Spell.Targeted W
         {
             get { return SpellManager.W; }
         }
-        protected Spell.Skillshot E
+        protected Spell.Targeted E
         {
             get { return SpellManager.E; }
         }
-        protected Spell.Targeted R
+        protected Spell.Active R
         {
             get { return SpellManager.R; }
+        }
+
+        protected bool QCastable()
+        {
+            return SpellManager.Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).ToggleState != 2;
         }
 
         public abstract bool ShouldBeExecuted();

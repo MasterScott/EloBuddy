@@ -1,14 +1,13 @@
-﻿using EloBuddy;
+﻿using System;
+using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 
-namespace AddonTemplate
+namespace VodkaJanna
 {
     public static class SpellManager
     {
-        // You will need to edit the types of spells you have for each champ as they
-        // don't have the same type for each champ, for example Xerath Q is chargeable,
-        // right now it's  set to Active.
-        public static Spell.Chargeable Q { get; private set; }
+        public static Spell.Skillshot Q { get; private set; }
         public static Spell.Targeted W { get; private set; }
         public static Spell.Targeted E { get; private set; }
         public static Spell.Active R { get; private set; }
@@ -16,17 +15,30 @@ namespace AddonTemplate
         static SpellManager()
         {
             // Initialize spells
-            Q = new Spell.Active(SpellSlot.Q, /*Spell range*/ 1000);
-
-            // TODO: Uncomment the other spells to initialize them
-            //W = new Spell.Chargeable(SpellSlot.W);
-            //E = new Spell.Skillshot(SpellSlot.E);
-            //R = new Spell.Targeted(SpellSlot.R);
+            Q = new Spell.Skillshot(SpellSlot.Q, 800, SkillShotType.Linear, 10, 900, 120);
+            Q.AllowedCollisionCount = int.MaxValue;
+            //Q = new Spell.Chargeable(SpellSlot.Q, 800, 1700, 3000, 10, 900, 120);
+            W = new Spell.Targeted(SpellSlot.W, 550);
+            E = new Spell.Targeted(SpellSlot.E, 750);
+            R = new Spell.Active(SpellSlot.R, 675);
         }
 
         public static void Initialize()
         {
-            // Let the static initializer do the job, this way we avoid multiple init calls aswell
+
+        }
+
+        public static float WRawDamage()
+        {
+            return
+                (int)
+                    (new int[] { 60, 115, 170, 225, 280 }[SpellManager.W.Level - 1] +
+                     0.5 * (ObjectManager.Player.TotalMagicalDamage));
+        }
+
+        public static bool QCastable()
+        {
+            return Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).ToggleState != 2;
         }
     }
 }
