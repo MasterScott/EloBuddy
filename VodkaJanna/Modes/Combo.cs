@@ -25,8 +25,8 @@ namespace VodkaJanna.Modes
                 var pred = Q.GetPrediction(target);
                 if (pred.HitChance >= HitChance.Medium)
                 {
-                    Q.Cast(target);
-                    Core.DelayAction(() => { Q.Cast(target); }, 10);
+                    Q.Cast(pred.CastPosition);
+                    Core.DelayAction(() => { Q.Cast(pred.CastPosition); }, 10);
                 }
                 
             }
