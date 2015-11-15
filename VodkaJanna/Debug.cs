@@ -42,13 +42,13 @@ namespace VodkaJanna
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat || (text.Equals(lastChatMsgText) && Environment.TickCount - lastChatMsg < 300))
+            if (!Settings.DebugChat || (text.Substring(0, 20).Equals(lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - lastChatMsg < 150))
             {
                 return;
             }
             Chat.Print("[Vodka{0}] {1}", color, Program.ChampName, text);
             lastChatMsg = Environment.TickCount;
-            lastChatMsgText = text;
+            lastChatMsgText = text.Substring(0, 20);
         }
 
         public static void WriteConsole(string text)
@@ -68,7 +68,7 @@ namespace VodkaJanna
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole || (text.Equals(lastConsoleMsgText) && Environment.TickCount - lastConsoleMsg < 300))
+            if (!Settings.DebugConsole || (text.Substring(0, 20).Equals(lastConsoleMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - lastConsoleMsg < 500))
             {
                 return;
             }
@@ -76,7 +76,7 @@ namespace VodkaJanna
             Console.WriteLine("[Vodka{0}] {1}", Program.ChampName, text);
             Console.ResetColor();
             lastConsoleMsg = Environment.TickCount;
-            lastConsoleMsgText = text;
+            lastConsoleMsgText = text.Substring(0, 20);
         }
     }
 }

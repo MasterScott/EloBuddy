@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaJanna.Config.MiscMenu;
@@ -51,25 +52,25 @@ namespace VodkaJanna.Modes
                 {
                     if (Item.HasItem(HealthPotion.Id) && Item.CanUseItem(HealthPotion.Id))
                     {
-                        Debug.WriteChat("Using HealthPotion because below {0}% HP - have {1}% HP", ""+Settings.potionMinHP, ""+Player.Instance.HealthPercent);
+                        Debug.WriteChat("Using HealthPotion because below {0}% HP - have {1}% HP", ""+Settings.potionMinHP, String.Format("{0:##.##}", Player.Instance.HealthPercent));
                         HealthPotion.Cast();
                         return;
                     }
                     if (Item.HasItem(TotalBiscuit.Id) && Item.CanUseItem(TotalBiscuit.Id))
                     {
-                        Debug.WriteChat("Using TotalBiscuitOfRejuvenation because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + Player.Instance.HealthPercent);
+                        Debug.WriteChat("Using TotalBiscuitOfRejuvenation because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, String.Format("{0:##.##}", Player.Instance.HealthPercent));
                         TotalBiscuit.Cast();
                         return;
                     }
                     if (Item.HasItem(RefillablePotion.Id) && Item.CanUseItem(RefillablePotion.Id))
                     {
-                        Debug.WriteChat("Using RefillablePotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + Player.Instance.HealthPercent);
+                        Debug.WriteChat("Using RefillablePotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + String.Format("{0:##.##}", Player.Instance.HealthPercent));
                         RefillablePotion.Cast();
                         return;
                     }
                     if (Item.HasItem(CorruptingPotion.Id) && Item.CanUseItem(CorruptingPotion.Id))
                     {
-                        Debug.WriteChat("Using CorruptingPotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + Player.Instance.HealthPercent);
+                        Debug.WriteChat("Using CorruptingPotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + String.Format("{0:##.##}", Player.Instance.HealthPercent));
                         CorruptingPotion.Cast();
                         return;
                     }
@@ -78,7 +79,7 @@ namespace VodkaJanna.Modes
                 {
                     if (Item.HasItem(CorruptingPotion.Id) && Item.CanUseItem(CorruptingPotion.Id))
                     {
-                        Debug.WriteChat("Using HealthPotion because below {0}% MP - have {1}% MP", "" + Settings.potionMinMP, "" + Player.Instance.ManaPercent);
+                        Debug.WriteChat("Using HealthPotion because below {0}% MP - have {1}% MP", "" + Settings.potionMinMP, "" + String.Format("{0:##.##}", Player.Instance.ManaPercent));
                         CorruptingPotion.Cast();
                         return;
                     }

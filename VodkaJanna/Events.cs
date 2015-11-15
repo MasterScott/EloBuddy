@@ -11,6 +11,9 @@ namespace VodkaJanna
 {
     public static class Events
     {
+        private static bool canAntiGapR = true;
+        private static bool canInterruptR = true;
+
         static Events()
         {
             Interrupter.OnInterruptableSpell += InterrupterOnOnInterruptableSpell;
@@ -58,10 +61,13 @@ namespace VodkaJanna
             if (SettingsMisc.InterrupterUseQ && SpellManager.Q.IsReady() && sender.IsEnemy && SpellManager.Q.IsInRange(sender))
             {
                 Debug.WriteChat("Interrupting with Q, Target: {0}, Distance: {1}", sender.Name, ""+sender.Distance(Player.Instance));
+                canInterruptR = false;
                 SpellManager.Q.Cast(sender);
-                Core.DelayAction(() => { SpellManager.Q.Cast(sender); }, 10);
+                Core.DelayAction(() => { SpellManager.Q.Cast(sender); }, 1);
+                Core.DelayAction(() => { canInterruptR = true; }, 200);
+                return;
             }
-            if (SettingsMisc.InterrupterUseR && SpellManager.R.IsReady() && sender.IsEnemy && SpellManager.R.IsInRange(sender))
+            if (SettingsMisc.InterrupterUseR && SpellManager.R.IsReady() && sender.IsEnemy && SpellManager.R.IsInRange(sender) && canInterruptR)
             {
                 Debug.WriteChat("Interrupting with R, Target: {0}, Distance: {1}", sender.Name, "" + sender.Distance(Player.Instance));
                 SpellManager.R.Cast();
@@ -77,10 +83,13 @@ namespace VodkaJanna
             if (SettingsMisc.AntigapcloserUseQ && SpellManager.Q.IsReady() && gapcloserEventArgs.End.Distance(Player.Instance) < 200)
             {
                 Debug.WriteChat("AntiGapcloser with Q, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.Name, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
+                canAntiGapR = false;
                 SpellManager.Q.Cast(gapcloserEventArgs.End);
-                Core.DelayAction(() => { SpellManager.Q.Cast(gapcloserEventArgs.End); }, 10);
+                Core.DelayAction(() => { SpellManager.Q.Cast(gapcloserEventArgs.End); }, 1);
+                Core.DelayAction(() => { canAntiGapR = true; }, 200);
+                return;
             }
-            if (SettingsMisc.AntigapcloserUseR && !SpellManager.R.IsOnCooldown && SpellManager.R.IsInRange(sender))
+            if (SettingsMisc.AntigapcloserUseR && !SpellManager.R.IsOnCooldown && SpellManager.R.IsInRange(gapcloserEventArgs.End) && canAntiGapR)
             {
                 Debug.WriteChat("AntiGapcloser with R, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.Name, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
                 SpellManager.R.Cast();

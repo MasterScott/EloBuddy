@@ -86,7 +86,7 @@ namespace VodkaJanna
                     MenuModes.AddGroupLabel("Combo");
                     _useQ = MenuModes.Add("comboUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
-                    _useE = MenuModes.Add("comboUseE", new CheckBox("Use E (on self)", false));
+                    _useE = MenuModes.Add("comboUseE", new CheckBox("Use E (on self)"));
                 }
 
                 public static void Initialize()
@@ -159,7 +159,7 @@ namespace VodkaJanna
                 {
                     MenuModes.AddGroupLabel("LaneClear");
                     _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q"));
-                    _useW = MenuModes.Add("laneUseW", new CheckBox("Use W"));
+                    _useW = MenuModes.Add("laneUseW", new CheckBox("Use W", false));
                     _useE = MenuModes.Add("laneUseE", new CheckBox("Use E (on self)"));
                     _minQTargets = MenuModes.Add("minQTargetsLC", new Slider("Minimum targets for Q", 4, 1, 10));
                 }
