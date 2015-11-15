@@ -45,6 +45,7 @@ namespace VodkaJanna
                 return;
             }
             Chat.Print("[Vodka{0}] {1}", color, Program.ChampName, text);
+            lastChatMsg = Environment.TickCount;
         }
 
         public static void WriteConsole(string text)
@@ -64,13 +65,14 @@ namespace VodkaJanna
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole || Environment.TickCount - lastChatMsg < 10)
+            if (!Settings.DebugConsole || Environment.TickCount - lastConsoleMsg < 10)
             {
                 return;
             }
             Console.ForegroundColor = color;
             Console.WriteLine("[Vodka{0}] {1}", Program.ChampName, text);
             Console.ResetColor();
+            lastConsoleMsg = Environment.TickCount;
         }
     }
 }
