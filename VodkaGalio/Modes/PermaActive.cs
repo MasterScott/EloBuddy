@@ -36,14 +36,14 @@ namespace VodkaGalio.Modes
             // KillSteal
             foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e.IsEnemy && e.IsVisible && !e.IsDead && !e.IsZombie && !e.IsInvulnerable && e.Health > 0))
             {
-                if (Settings.KsQ && SpellManager.Q.IsReady() && Damages.QDamage(enemy) > enemy.Health && SpellManager.Q.IsInRange(enemy))
+                if (!isUlting() && Settings.KsQ && SpellManager.Q.IsReady() && Damages.QDamage(enemy) > enemy.Health && SpellManager.Q.IsInRange(enemy))
                 {
                     if (enemy.HasBuffOfType(BuffType.SpellImmunity) || enemy.HasBuffOfType(BuffType.SpellShield))
                     {
                         continue;
                     }
                     var pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.Low)
+                    if (pred.HitChance >= HitChance.High)
                     {
                         Debug.WriteChat("Casting Q in KillSteal on {0}, who has {1} HP", enemy.ChampionName, ""+enemy.Health);
                         Q.Cast(pred.CastPosition);
@@ -51,14 +51,14 @@ namespace VodkaGalio.Modes
                     }
                 }
 
-                if (Settings.KsE && SpellManager.E.IsReady() && Damages.EDamage(enemy) > enemy.Health && SpellManager.E.IsInRange(enemy))
+                if (!isUlting() && Settings.KsE && SpellManager.E.IsReady() && Damages.EDamage(enemy) > enemy.Health && SpellManager.E.IsInRange(enemy))
                 {
                     if (enemy.HasBuffOfType(BuffType.SpellImmunity) || enemy.HasBuffOfType(BuffType.SpellShield))
                     {
                         continue;
                     }
                     var pred = E.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.Low)
+                    if (pred.HitChance >= HitChance.High)
                     {
                         Debug.WriteChat("Casting E in KillSteal on {0}, who has {1} HP", enemy.ChampionName, "" + enemy.Health);
                         E.Cast(pred.CastPosition);
@@ -66,7 +66,7 @@ namespace VodkaGalio.Modes
                     }
                 }
 
-                if (SpellManager.Ignite != null && Settings.KsIgnite && SpellManager.Ignite.IsReady() &&
+                if (!isUlting() && SpellManager.Ignite != null && Settings.KsIgnite && SpellManager.Ignite.IsReady() &&
                     Damages.IgniteDmg(enemy) > enemy.Health && SpellManager.Ignite.IsInRange(enemy))
                 {
                     Debug.WriteChat("Casting Ignite in KillSteal on {0}, who has {1} HP", enemy.ChampionName, "" + enemy.Health);
@@ -74,7 +74,7 @@ namespace VodkaGalio.Modes
                     break;
                 }
 
-                if (Settings.KsR && SpellManager.R.IsReady() && Damages.RDamage(enemy) > enemy.Health && SpellManager.R.IsInRange(enemy))
+                if (!isUlting() && Settings.KsR && SpellManager.R.IsReady() && Damages.RDamage(enemy) > enemy.Health && SpellManager.R.IsInRange(enemy))
                 {
                     if (enemy.HasBuffOfType(BuffType.SpellImmunity) || enemy.HasBuffOfType(BuffType.SpellShield))
                     {

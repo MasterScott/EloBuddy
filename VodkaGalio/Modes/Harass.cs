@@ -15,7 +15,7 @@ namespace VodkaGalio.Modes
 
         public override void Execute()
         {
-            if (Settings.UseE && Q.IsReady())
+            if (Settings.UseQ && Q.IsReady())
             {
                 var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
                 if (target == null)
@@ -23,7 +23,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
                 var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
+                if (pred.HitChance >= HitChance.High)
                 {
                     Debug.WriteChat("Casting Q in Harass, Target: {0}, Distance: {1}, Prediction: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(pred.CastPosition);
@@ -38,7 +38,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
                 var pred = E.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
+                if (pred.HitChance >= HitChance.High)
                 {
                     Debug.WriteChat("Casting E in Harass, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     E.Cast(pred.CastPosition);
