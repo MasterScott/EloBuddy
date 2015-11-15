@@ -1,7 +1,7 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
-using Settings = VodkaJanna.Config.Modes.Harass;
+using Settings = VodkaJanna.Config.ModesMenu.Harass;
 
 namespace VodkaJanna.Modes
 {
@@ -25,6 +25,7 @@ namespace VodkaJanna.Modes
                 var pred = Q.GetPrediction(target);
                 if (pred.HitChance >= HitChance.Medium)
                 {
+                    Debug.WriteChat("Castin Q in Harass, Target: {0}, Distance: {1}, Prediction: {2}", target.Name, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(pred.CastPosition);
                     Core.DelayAction(() => { Q.Cast(pred.CastPosition); }, 10);
                 }

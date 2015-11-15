@@ -1,7 +1,7 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
-using Settings = VodkaJanna.Config.Modes.Flee;
+using Settings = VodkaJanna.Config.ModesMenu.Flee;
 
 namespace VodkaJanna.Modes
 {
@@ -24,6 +24,7 @@ namespace VodkaJanna.Modes
                 var pred = Q.GetPrediction(target);
                 if (pred.HitChance >= HitChance.Low)
                 {
+                    Debug.WriteChat("Castin Q in Flee, Target: {0}, Distance: {1}, Prediction: {2}", target.Name, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(target);
                     Core.DelayAction(() => { Q.Cast(target); }, 10);
                 }

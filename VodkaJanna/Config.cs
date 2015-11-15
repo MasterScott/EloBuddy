@@ -1,4 +1,6 @@
-﻿using EloBuddy.SDK.Menu;
+﻿using System;
+using EloBuddy;
+using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
 // ReSharper disable InconsistentNaming
@@ -18,20 +20,21 @@ namespace VodkaJanna
             Menu.AddGroupLabel("Welcome to VodkaJanna");
             Menu.AddLabel("Created by Haker");
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
-            Modes.Initialize();
-            Misc.Initialize();
-            Drawing.Initialize();
+            ModesMenu.Initialize();
+            MiscMenu.Initialize();
+            DrawingMenu.Initialize();
+            DebugMenu.Initialize();
         }
 
         public static void Initialize()
         {
         }
 
-        public static class Modes
+        public static class ModesMenu
         {
             private static readonly Menu MenuModes;
 
-            static Modes()
+            static ModesMenu()
             {
                 MenuModes = Config.Menu.AddSubMenu("Modes");
 
@@ -258,7 +261,7 @@ namespace VodkaJanna
             }
         }
 
-        public static class Misc
+        public static class MiscMenu
         {
             private static readonly Menu MenuMisc;
             private static readonly CheckBox _interrupterQ;
@@ -313,7 +316,7 @@ namespace VodkaJanna
                 get { return _potionMinMP.CurrentValue; }
             }
 
-            static Misc()
+            static MiscMenu()
             {
                 MenuMisc = Config.Menu.AddSubMenu("Misc");
                 MenuMisc.AddGroupLabel("Interrupter");
@@ -337,7 +340,7 @@ namespace VodkaJanna
             }
         }
 
-        public static class Drawing
+        public static class DrawingMenu
         {
             private static readonly Menu MenuDrawing;
             private static readonly CheckBox _drawQ;
@@ -367,7 +370,7 @@ namespace VodkaJanna
                 get { return _drawR.CurrentValue; }
             }
 
-            static Drawing()
+            static DrawingMenu()
             {
                 MenuDrawing = Config.Menu.AddSubMenu("Drawing");
                 _drawQ = MenuDrawing.Add("drawQ", new CheckBox("Draw Q"));
@@ -379,6 +382,35 @@ namespace VodkaJanna
 
             public static void Initialize()
             {
+            }
+        }
+
+        public static class DebugMenu
+        {
+            private static readonly Menu MenuDebug;
+            private static readonly CheckBox _debugChat;
+            private static readonly CheckBox _debugConsole;
+
+            public static bool DebugChat
+            {
+                get { return _debugChat.CurrentValue; }
+            }
+            public static bool DebugConsole
+            {
+                get { return _debugConsole.CurrentValue; }
+            }
+
+            static DebugMenu()
+            {
+                MenuDebug = Config.Menu.AddSubMenu("Debug");
+                MenuDebug.AddLabel("This is for debugging purposes only.");
+                _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat"));
+                _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console"));
+            }
+
+            public static void Initialize()
+            {
+
             }
         }
     }

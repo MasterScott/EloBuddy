@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using Settings = VodkaJanna.Config.Modes.LastHit;
+using Settings = VodkaJanna.Config.ModesMenu.LastHit;
 
 namespace VodkaJanna.Modes
 {
@@ -20,6 +20,7 @@ namespace VodkaJanna.Modes
                 var minion = EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && m.IsInRange(Player.Instance.Position, W.Range) && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, SpellManager.WRawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
                 if (minion != null)
                 {
+                    Debug.WriteChat("Casting W in Last Hit, Target: {0}, Distance: {1}, Target HP: {2}", minion.Name, ""+minion.Distance(Player.Instance), ""+minion.Health);
                     W.Cast(minion);
                 }
             }

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using Settings = VodkaJanna.Config.Misc;
+using Settings = VodkaJanna.Config.MiscMenu;
 
 namespace VodkaJanna.Modes
 {
@@ -34,11 +34,12 @@ namespace VodkaJanna.Modes
             // Automatic ult usage
             if (Settings.AutoR && R.IsReady() && !Player.Instance.IsRecalling() && !Player.Instance.IsInShopRange())
             {
-                bool woundedAllyNear = EntityManager.Heroes.Allies.Where(a => !a.IsDead && !a.IsRecalling() && R.IsInRange(a) && a.HealthPercent <= Config.Misc.AutoRMinHP).Count() > 0;
-                bool enemiesNear =
-                    EntityManager.Heroes.Enemies.Count(e => !e.IsDead && !e.IsRecalling() && e.Distance(Player.Instance.Position) < 1600) >= Config.Misc.AutoRMinEnemies;
-                if (woundedAllyNear && enemiesNear)
+                var wounded =
+                    EntityManager.Heroes.Allies.Where(a =>!a.IsDead && !a.IsRecalling() && R.IsInRange(a) && a.HealthPercent <= Settings.AutoRMinHP);
+                var enemies = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && !e.IsRecalling() && e.Distance(Player.Instance.Position) < 1600);
+                if (wounded.Count() > 0 && enemies.Count() >= Settings.AutoRMinEnemies)
                 {
+                    Debug.WriteChat("AutoCasting R, Wounded allies: {0}, Enemies near: {1}", ""+wounded.Count(), ""+enemies.Count());
                     R.Cast();
                 }
             }
@@ -50,21 +51,25 @@ namespace VodkaJanna.Modes
                 {
                     if (Item.HasItem(HealthPotion.Id) && Item.CanUseItem(HealthPotion.Id))
                     {
+                        Debug.WriteChat("Using HealthPotion because below {0}% HP - have {1}% HP", ""+Settings.potionMinHP, ""+Player.Instance.HealthPercent);
                         HealthPotion.Cast();
                         return;
                     }
                     if (Item.HasItem(TotalBiscuit.Id) && Item.CanUseItem(TotalBiscuit.Id))
                     {
+                        Debug.WriteChat("Using TotalBiscuitOfRejuvenation because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + Player.Instance.HealthPercent);
                         TotalBiscuit.Cast();
                         return;
                     }
                     if (Item.HasItem(RefillablePotion.Id) && Item.CanUseItem(RefillablePotion.Id))
                     {
+                        Debug.WriteChat("Using RefillablePotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + Player.Instance.HealthPercent);
                         RefillablePotion.Cast();
                         return;
                     }
                     if (Item.HasItem(CorruptingPotion.Id) && Item.CanUseItem(CorruptingPotion.Id))
                     {
+                        Debug.WriteChat("Using CorruptingPotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, "" + Player.Instance.HealthPercent);
                         CorruptingPotion.Cast();
                         return;
                     }
@@ -73,6 +78,7 @@ namespace VodkaJanna.Modes
                 {
                     if (Item.HasItem(CorruptingPotion.Id) && Item.CanUseItem(CorruptingPotion.Id))
                     {
+                        Debug.WriteChat("Using HealthPotion because below {0}% MP - have {1}% MP", "" + Settings.potionMinMP, "" + Player.Instance.ManaPercent);
                         CorruptingPotion.Cast();
                         return;
                     }

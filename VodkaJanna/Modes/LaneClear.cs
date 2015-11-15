@@ -2,7 +2,7 @@
 using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX.Direct3D9;
-using Settings = VodkaJanna.Config.Modes.LaneClear;
+using Settings = VodkaJanna.Config.ModesMenu.LaneClear;
 
 namespace VodkaJanna.Modes
 {
@@ -27,8 +27,11 @@ namespace VodkaJanna.Modes
 
                     foreach (var m in minions)
                     {
-                        if (Q.GetPrediction(m).CollisionObjects.Count(t => t.IsEnemy && !t.IsDead && t.IsValid && !t.IsInvulnerable) >= Settings.MinQTargets - 1)
+                        var cols =
+                            Q.GetPrediction(m).CollisionObjects.Count(t => t.IsEnemy && !t.IsDead && t.IsValid && !t.IsInvulnerable);
+                        if (cols >= Settings.MinQTargets - 1)
                         {
+                            Debug.WriteChat("Castin Q in LaneClear, Target: {0}, Distance: {1}, Collisions: {2}", m.Name, "" + m.Distance(Player.Instance), "" + (cols+1));
                             Q.Cast(m);
                             Core.DelayAction(() => { Q.Cast(m); }, 10);
                             return;

@@ -7,8 +7,8 @@
     <ProjectGuid>{1C416933-740D-4F85-8AF3-A3341C690663}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AddonTemplate</RootNamespace>
-    <AssemblyName>AddonTemplate</AssemblyName>
+    <RootNamespace>VodkaJanna</RootNamespace>
+    <AssemblyName>VodkaJanna</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Debug.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="ModeManager.cs" />
     <Compile Include="Modes\PermaActive.cs" />
