@@ -7,6 +7,9 @@ namespace VodkaJanna
 {
     class Debug
     {
+        private static int lastConsoleMsg = Environment.TickCount; // To prevent msg spam
+        private static int lastChatMsg = Environment.TickCount;
+
         public static void Write(String text)
         {
             WriteChat(text, Color.LightBlue);
@@ -37,7 +40,7 @@ namespace VodkaJanna
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat)
+            if (!Settings.DebugChat || Environment.TickCount-lastChatMsg < 10)
             {
                 return;
             }
@@ -61,7 +64,7 @@ namespace VodkaJanna
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole)
+            if (!Settings.DebugConsole || Environment.TickCount - lastChatMsg < 10)
             {
                 return;
             }
