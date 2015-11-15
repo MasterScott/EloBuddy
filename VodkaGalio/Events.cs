@@ -89,7 +89,7 @@ namespace VodkaGalio
                 return;
             }
             Debug.WriteChat("Interruptable Spell from {0}", ((AIHeroClient)sender).ChampionName);
-            if (SettingsMisc.InterrupterUseR && SpellManager.R.IsReady() && sender.IsEnemy && SpellManager.R.IsInRange(sender))
+            if (SettingsMisc.InterrupterUseR && SpellManager.R.IsReady() && SpellManager.R.IsInRange(sender))
             {
                 Debug.WriteChat("Interrupting with R, Target: {0}, Distance: {1}", ((AIHeroClient)sender).ChampionName, "" + sender.Distance(Player.Instance));
                 SpellManager.R.Cast();
