@@ -9,6 +9,8 @@ namespace VodkaJanna
     {
         private static int lastConsoleMsg = Environment.TickCount; // To prevent msg spam
         private static int lastChatMsg = Environment.TickCount;
+        private static string lastChatMsgText = "Chat";
+        private static string lastConsoleMsgText = "Console";
 
         public static void Write(String text)
         {
@@ -40,12 +42,13 @@ namespace VodkaJanna
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat || Environment.TickCount-lastChatMsg < 50)
+            if (!Settings.DebugChat || (text.Equals(lastChatMsgText) && Environment.TickCount - lastChatMsg < 300))
             {
                 return;
             }
             Chat.Print("[Vodka{0}] {1}", color, Program.ChampName, text);
             lastChatMsg = Environment.TickCount;
+            lastChatMsgText = text;
         }
 
         public static void WriteConsole(string text)
@@ -65,7 +68,7 @@ namespace VodkaJanna
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole || Environment.TickCount - lastConsoleMsg < 50)
+            if (!Settings.DebugConsole || (text.Equals(lastConsoleMsgText) && Environment.TickCount - lastConsoleMsg < 300))
             {
                 return;
             }
@@ -73,6 +76,7 @@ namespace VodkaJanna
             Console.WriteLine("[Vodka{0}] {1}", Program.ChampName, text);
             Console.ResetColor();
             lastConsoleMsg = Environment.TickCount;
+            lastConsoleMsgText = text;
         }
     }
 }
