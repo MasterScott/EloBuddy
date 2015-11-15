@@ -53,14 +53,14 @@ namespace VodkaJanna
 
         private static void InterrupterOnOnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs interruptableSpellEventArgs)
         {
-            if (!sender.IsEnemy)
+            if (!sender.IsEnemy || !(sender is AIHeroClient) || Player.Instance.IsRecalling())
             {
                 return;
             }
             Debug.WriteChat("Interruptable Spell from {0}", sender.Name);
             if (SettingsMisc.InterrupterUseQ && SpellManager.Q.IsReady() && sender.IsEnemy && SpellManager.Q.IsInRange(sender))
             {
-                Debug.WriteChat("Interrupting with Q, Target: {0}, Distance: {1}", sender.Name, ""+sender.Distance(Player.Instance));
+                Debug.WriteChat("Interrupting with Q, Target: {0}, Distance: {1}", ((AIHeroClient)sender).ChampionName, ""+sender.Distance(Player.Instance));
                 canInterruptR = false;
                 SpellManager.Q.Cast(sender);
                 Core.DelayAction(() => { SpellManager.Q.Cast(sender); }, 1);
@@ -69,20 +69,20 @@ namespace VodkaJanna
             }
             if (SettingsMisc.InterrupterUseR && SpellManager.R.IsReady() && sender.IsEnemy && SpellManager.R.IsInRange(sender) && canInterruptR)
             {
-                Debug.WriteChat("Interrupting with R, Target: {0}, Distance: {1}", sender.Name, "" + sender.Distance(Player.Instance));
+                Debug.WriteChat("Interrupting with R, Target: {0}, Distance: {1}", ((AIHeroClient)sender).ChampionName, "" + sender.Distance(Player.Instance));
                 SpellManager.R.Cast();
             }
         }
 
         private static void GapcloserOnOnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs gapcloserEventArgs)
         {
-            if (!sender.IsEnemy)
+            if (!sender.IsEnemy || Player.Instance.IsRecalling())
             {
                 return;
             }
             if (SettingsMisc.AntigapcloserUseQ && SpellManager.Q.IsReady() && gapcloserEventArgs.End.Distance(Player.Instance) < 200)
             {
-                Debug.WriteChat("AntiGapcloser with Q, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.Name, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
+                Debug.WriteChat("AntiGapcloser with Q, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.ChampionName, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
                 canAntiGapR = false;
                 SpellManager.Q.Cast(gapcloserEventArgs.End);
                 Core.DelayAction(() => { SpellManager.Q.Cast(gapcloserEventArgs.End); }, 1);
@@ -91,7 +91,7 @@ namespace VodkaJanna
             }
             if (SettingsMisc.AntigapcloserUseR && !SpellManager.R.IsOnCooldown && SpellManager.R.IsInRange(gapcloserEventArgs.End) && canAntiGapR)
             {
-                Debug.WriteChat("AntiGapcloser with R, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.Name, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
+                Debug.WriteChat("AntiGapcloser with R, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.ChampionName, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
                 SpellManager.R.Cast();
             }
         }

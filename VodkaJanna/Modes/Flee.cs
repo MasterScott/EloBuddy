@@ -24,7 +24,7 @@ namespace VodkaJanna.Modes
                 var pred = Q.GetPrediction(target);
                 if (pred.HitChance >= HitChance.Low)
                 {
-                    Debug.WriteChat("Castin Q in Flee, Target: {0}, Distance: {1}, Prediction: {2}", target.Name, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
+                    Debug.WriteChat("Castin Q in Flee, Target: {0}, Distance: {1}, Prediction: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(target);
                     Core.DelayAction(() => { Q.Cast(target); }, 10);
                 }

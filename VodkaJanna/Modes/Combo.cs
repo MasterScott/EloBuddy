@@ -25,7 +25,7 @@ namespace VodkaJanna.Modes
                 var pred = Q.GetPrediction(target);
                 if (pred.HitChance >= HitChance.Medium)
                 {
-                    Debug.WriteChat("Castin Q in Combo, Target: {0}, Distance: {1}, HitChance: {2}", target.Name, ""+target.Distance(Player.Instance), pred.HitChance.ToString());
+                    Debug.WriteChat("Castin Q in Combo, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, ""+target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(pred.CastPosition);
                     Core.DelayAction(() => { Q.Cast(pred.CastPosition); }, 10);
                 }
