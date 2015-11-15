@@ -1,6 +1,7 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
+using SharpDX;
 using Settings = VodkaGalio.Config.ModesMenu.Flee;
 
 namespace VodkaGalio.Modes
@@ -34,9 +35,10 @@ namespace VodkaGalio.Modes
             if (Settings.UseE && E.IsReady())
             {
                 var cursorPos = Game.CursorPos;
-                if (Player.Instance.Position.Distance(cursorPos) > 300)
+                var playerPos = Player.Instance.Position;
+                if (playerPos.Distance(cursorPos) > 300)
                 {
-                    E.Cast(cursorPos);
+                    E.Cast(new Vector3(playerPos.Extend(cursorPos, 500), cursorPos.Z));
                 }
             }
         }
