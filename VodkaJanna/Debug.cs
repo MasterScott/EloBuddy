@@ -40,7 +40,7 @@ namespace VodkaJanna
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat || Environment.TickCount-lastChatMsg < 10)
+            if (!Settings.DebugChat || Environment.TickCount-lastChatMsg < 50)
             {
                 return;
             }
@@ -65,7 +65,7 @@ namespace VodkaJanna
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole || Environment.TickCount - lastConsoleMsg < 10)
+            if (!Settings.DebugConsole || Environment.TickCount - lastConsoleMsg < 50)
             {
                 return;
             }
