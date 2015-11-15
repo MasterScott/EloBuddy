@@ -11,16 +11,18 @@ namespace VodkaJanna
         public static Spell.Targeted W { get; private set; }
         public static Spell.Targeted E { get; private set; }
         public static Spell.Active R { get; private set; }
+        public static Spell.Targeted Ignite { get; private set; }
 
         static SpellManager()
         {
             // Initialize spells
             Q = new Spell.Skillshot(SpellSlot.Q, 800, SkillShotType.Linear, 10, 900, 120);
             Q.AllowedCollisionCount = int.MaxValue;
-            //Q = new Spell.Chargeable(SpellSlot.Q, 800, 1700, 3000, 10, 900, 120);
             W = new Spell.Targeted(SpellSlot.W, 550);
             E = new Spell.Targeted(SpellSlot.E, 750);
             R = new Spell.Active(SpellSlot.R, 675);
+
+            Ignite = new Spell.Targeted(Player.Instance.GetSpellSlotFromName("summonerdot"), 600);
         }
 
         public static void Initialize()

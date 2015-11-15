@@ -25,7 +25,15 @@ namespace VodkaJanna
             ModeManager.Initialize();
             Events.Initialize();
 
-            Chat.Print("VodkaJanna Loaded. Have a splendid game!", Color.LightBlue);
+            WelcomeMsg();
+        }
+
+        private static void WelcomeMsg()
+        {
+            Chat.Print("Vodka{0} Loaded. Have a splendid game!", Color.LightBlue, ChampName);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Vodka{0} Loaded. Have a splendid game!", ChampName);
+            Console.ResetColor();
         }
     }
 }

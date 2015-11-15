@@ -6,6 +6,7 @@ using EloBuddy.SDK.Rendering;
 using SharpDX;
 using SettingsMisc = VodkaJanna.Config.MiscMenu;
 using SettingsModes = VodkaJanna.Config.ModesMenu;
+using SettingsDrawing = VodkaJanna.Config.DrawingMenu;
 
 namespace VodkaJanna
 {
@@ -29,25 +30,33 @@ namespace VodkaJanna
 
         private static void OnDraw(EventArgs args)
         {
-            if (Config.DrawingMenu.DrawQ)
+            if (SettingsDrawing.DrawQ)
             {
-                Circle.Draw(Color.Cyan, SpellManager.Q.Range, Player.Instance.Position);
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Q.IsReady()))
+                {
+                    Circle.Draw(Color.Cyan, SpellManager.Q.Range, Player.Instance.Position);
+                }
             }
-            if (Config.DrawingMenu.DrawQMax)
+            if (SettingsDrawing.DrawW)
             {
-                Circle.Draw(Color.Cyan, 1700, Player.Instance.Position);
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.W.IsReady()))
+                {
+                    Circle.Draw(Color.Magenta, SpellManager.W.Range, Player.Instance.Position);
+                }
             }
-            if (Config.DrawingMenu.DrawW)
+            if (SettingsDrawing.DrawE)
             {
-                Circle.Draw(Color.Magenta, SpellManager.W.Range, Player.Instance.Position);
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.E.IsReady()))
+                {
+                    Circle.Draw(Color.White, SpellManager.E.Range, Player.Instance.Position);
+                }
             }
-            if (Config.DrawingMenu.DrawE)
+            if (SettingsDrawing.DrawR)
             {
-                Circle.Draw(Color.White, SpellManager.E.Range, Player.Instance.Position);
-            }
-            if (Config.DrawingMenu.DrawR)
-            {
-                Circle.Draw(Color.Yellow, SpellManager.E.Range, Player.Instance.Position);
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.R.IsReady()))
+                {
+                    Circle.Draw(Color.Yellow, SpellManager.R.Range, Player.Instance.Position);
+                }
             }
         }
 
@@ -60,7 +69,7 @@ namespace VodkaJanna
             Debug.WriteChat("Interruptable Spell from {0}", sender.Name);
             if (SettingsMisc.InterrupterUseQ && SpellManager.Q.IsReady() && sender.IsEnemy && SpellManager.Q.IsInRange(sender))
             {
-                Debug.WriteChat("Interrupting with Q, Target: {0}, Distance: {1}", ((AIHeroClient)sender).ChampionName, ""+sender.Distance(Player.Instance));
+                Debug.WriteChat("Interrupting with Q, Target: {0}, Distance: {1}", ((AIHeroClient)sender).ChampionName, "" + sender.Distance(Player.Instance));
                 canInterruptR = false;
                 SpellManager.Q.Cast(sender);
                 Core.DelayAction(() => { SpellManager.Q.Cast(sender); }, 1);

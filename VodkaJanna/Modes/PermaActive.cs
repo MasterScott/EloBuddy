@@ -2,6 +2,7 @@
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using Settings = VodkaJanna.Config.MiscMenu;
 
 namespace VodkaJanna.Modes
@@ -32,15 +33,60 @@ namespace VodkaJanna.Modes
             {
                 return;
             }
+            foreach (
+                var enemy in
+                    EntityManager.Heroes.Enemies.Where(
+                        e => e.IsEnemy && e.IsVisible && !e.IsDead && !e.IsZombie && !e.IsInvulnerable && e.Health > 0))
+            {
+                if (Settings.KsQ && SpellManager.Q.IsReady() && Damages.QDamage(enemy) > enemy.Health &&
+                    SpellManager.Q.IsInRange(enemy))
+                {
+                    if (enemy.HasBuffOfType(BuffType.SpellImmunity) || enemy.HasBuffOfType(BuffType.SpellShield))
+                    {
+                        continue;
+                    }
+                    var pred = Q.GetPrediction(enemy);
+                    if (pred.HitChance >= HitChance.Low)
+                    {
+                        Debug.WriteChat("Casting Q in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
+                            "" + enemy.Health);
+                        Q.Cast(pred.CastPosition);
+                        break;
+                    }
+                }
+
+                if (Settings.KsW && SpellManager.W.IsReady() && Damages.WDamage(enemy) > enemy.Health &&
+                    SpellManager.W.IsInRange(enemy))
+                {
+                    if (enemy.HasBuffOfType(BuffType.SpellImmunity) || enemy.HasBuffOfType(BuffType.SpellShield))
+                    {
+                        continue;
+                    }
+                    Debug.WriteChat("Casting E in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
+                        "" + enemy.Health);
+                    W.Cast(enemy);
+                    break;
+                }
+
+                if (SpellManager.Ignite != null && Settings.KsIgnite && SpellManager.Ignite.IsReady() &&
+                    Damages.IgniteDmg(enemy) > enemy.Health && SpellManager.Ignite.IsInRange(enemy))
+                {
+                    Debug.WriteChat("Casting Ignite in KillSteal on {0}, who has {1} HP", enemy.ChampionName, "" + enemy.Health);
+                    SpellManager.Ignite.Cast(enemy);
+                    break;
+                }
+
+            }
+
             // Automatic ult usage
             if (Settings.AutoR && R.IsReady() && !Player.Instance.IsRecalling() && !Player.Instance.IsInShopRange())
             {
                 var wounded =
-                    EntityManager.Heroes.Allies.Where(a =>!a.IsDead && !a.IsRecalling() && R.IsInRange(a) && a.HealthPercent <= Settings.AutoRMinHP);
+                    EntityManager.Heroes.Allies.Where(a => !a.IsDead && !a.IsRecalling() && R.IsInRange(a) && a.HealthPercent <= Settings.AutoRMinHP);
                 var enemies = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && !e.IsRecalling() && e.Distance(Player.Instance.Position) < 1600);
                 if (wounded.Count() > 0 && enemies.Count() >= Settings.AutoRMinEnemies)
                 {
-                    Debug.WriteChat("AutoCasting R, Wounded allies: {0}, Enemies near: {1}", ""+wounded.Count(), ""+enemies.Count());
+                    Debug.WriteChat("AutoCasting R, Wounded allies: {0}, Enemies near: {1}", "" + wounded.Count(), "" + enemies.Count());
                     R.Cast();
                 }
             }
@@ -52,7 +98,7 @@ namespace VodkaJanna.Modes
                 {
                     if (Item.HasItem(HealthPotion.Id) && Item.CanUseItem(HealthPotion.Id))
                     {
-                        Debug.WriteChat("Using HealthPotion because below {0}% HP - have {1}% HP", ""+Settings.potionMinHP, String.Format("{0:##.##}", Player.Instance.HealthPercent));
+                        Debug.WriteChat("Using HealthPotion because below {0}% HP - have {1}% HP", "" + Settings.potionMinHP, String.Format("{0:##.##}", Player.Instance.HealthPercent));
                         HealthPotion.Cast();
                         return;
                     }

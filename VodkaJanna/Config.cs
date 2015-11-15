@@ -268,6 +268,9 @@ namespace VodkaJanna
             private static readonly CheckBox _interrupterR;
             private static readonly CheckBox _antigapcloserQ;
             private static readonly CheckBox _antigapcloserR;
+            private static readonly CheckBox _ksQ;
+            private static readonly CheckBox _ksW;
+            private static readonly CheckBox _ksIgnite;
             private static readonly CheckBox _autoR;
             private static readonly CheckBox _potion;
             private static readonly Slider _potionMinHP;
@@ -290,6 +293,18 @@ namespace VodkaJanna
             public static bool AntigapcloserUseR
             {
                 get { return _antigapcloserR.CurrentValue; }
+            }
+            public static bool KsQ
+            {
+                get { return _ksQ.CurrentValue; }
+            }
+            public static bool KsW
+            {
+                get { return _ksW.CurrentValue; }
+            }
+            public static bool KsIgnite
+            {
+                get { return _ksIgnite.CurrentValue; }
             }
             public static bool AutoR
             {
@@ -325,6 +340,10 @@ namespace VodkaJanna
                 MenuMisc.AddGroupLabel("Anti Gapcloser");
                 _antigapcloserQ = MenuMisc.Add("antigapcloserUseQ", new CheckBox("Use Q against gapclosers"));
                 _antigapcloserR = MenuMisc.Add("antigapcloserUseR", new CheckBox("Use R against gapclosers", false));
+                MenuMisc.AddGroupLabel("KillSteal");
+                _ksQ = MenuMisc.Add("ksQ", new CheckBox("KillSteal Q"));
+                _ksW = MenuMisc.Add("ksW", new CheckBox("KillSteal E"));
+                _ksIgnite = MenuMisc.Add("ksIgnite", new CheckBox("KillSteal Ignite", false));
                 MenuMisc.AddGroupLabel("Auto R usage");
                 _autoR = MenuMisc.Add("autoR", new CheckBox("Use R automatically when ally is low HP", false));
                 _autoRMinHP = MenuMisc.Add("autoRMinHP", new Slider("Minimum ally HP % to ult", 15));
@@ -348,6 +367,7 @@ namespace VodkaJanna
             private static readonly CheckBox _drawW;
             private static readonly CheckBox _drawE;
             private static readonly CheckBox _drawR;
+            private static readonly CheckBox _drawOnlyReady;
 
             public static bool DrawQ
             {
@@ -369,6 +389,10 @@ namespace VodkaJanna
             {
                 get { return _drawR.CurrentValue; }
             }
+            public static bool DrawOnlyReady
+            {
+                get { return _drawOnlyReady.CurrentValue; }
+            }
 
             static DrawingMenu()
             {
@@ -378,6 +402,7 @@ namespace VodkaJanna
                 _drawW = MenuDrawing.Add("drawW", new CheckBox("Draw W"));
                 _drawE = MenuDrawing.Add("drawE", new CheckBox("Draw E"));
                 _drawR = MenuDrawing.Add("drawR", new CheckBox("Draw R"));
+                _drawOnlyReady = MenuDrawing.Add("drawOnlyReady", new CheckBox("Draw Only Ready Skills"));
             }
 
             public static void Initialize()

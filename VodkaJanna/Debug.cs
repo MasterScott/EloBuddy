@@ -7,10 +7,10 @@ namespace VodkaJanna
 {
     class Debug
     {
-        private static int lastConsoleMsg = Environment.TickCount; // To prevent msg spam
-        private static int lastChatMsg = Environment.TickCount;
-        private static string lastChatMsgText = "Chat";
-        private static string lastConsoleMsgText = "Console";
+        private static int _lastConsoleMsg = Environment.TickCount; // To prevent msg spam
+        private static int _lastChatMsg = Environment.TickCount;
+        private static string _lastChatMsgText = "Chat";
+        private static string _lastConsoleMsgText = "Console";
 
         public static void Write(String text)
         {
@@ -42,13 +42,13 @@ namespace VodkaJanna
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat || (text.Substring(0, 20).Equals(lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - lastChatMsg < 150))
+            if (!Settings.DebugChat || (text.Substring(0, 20).Equals(_lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastChatMsg < 500))
             {
                 return;
             }
             Chat.Print("[Vodka{0}] {1}", color, Program.ChampName, text);
-            lastChatMsg = Environment.TickCount;
-            lastChatMsgText = text.Substring(0, 20);
+            _lastChatMsg = Environment.TickCount;
+            _lastChatMsgText = text.Substring(0, 20);
         }
 
         public static void WriteConsole(string text)
@@ -60,7 +60,7 @@ namespace VodkaJanna
         {
             WriteConsole(String.Format(format, args), ConsoleColor.Cyan);
         }
-        
+
         public static void WriteConsole(string format, ConsoleColor color, params string[] args)
         {
             WriteConsole(String.Format(format, args), color);
@@ -68,15 +68,15 @@ namespace VodkaJanna
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole || (text.Substring(0, 20).Equals(lastConsoleMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - lastConsoleMsg < 500))
+            if (!Settings.DebugConsole || (text.Substring(0, 20).Equals(_lastConsoleMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastConsoleMsg < 500))
             {
                 return;
             }
             Console.ForegroundColor = color;
             Console.WriteLine("[Vodka{0}] {1}", Program.ChampName, text);
             Console.ResetColor();
-            lastConsoleMsg = Environment.TickCount;
-            lastConsoleMsgText = text.Substring(0, 20);
+            _lastConsoleMsg = Environment.TickCount;
+            _lastConsoleMsgText = text.Substring(0, 20);
         }
     }
 }
