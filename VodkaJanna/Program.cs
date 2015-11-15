@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using EloBuddy;
 using EloBuddy.SDK.Events;
 
@@ -24,7 +25,7 @@ namespace VodkaJanna
             ModeManager.Initialize();
             Events.Initialize();
 
-            Chat.Print("VodkaJanna Loaded");
+            Chat.Print("VodkaJanna Loaded. Have a splendid game!", Color.LightBlue);
         }
     }
 }
