@@ -93,9 +93,19 @@ namespace VodkaJanna
             {
                 Debug.WriteChat("AntiGapcloser with Q, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.ChampionName, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
                 canAntiGapR = false;
-                SpellManager.Q.Cast(gapcloserEventArgs.End);
-                Core.DelayAction(() => { SpellManager.Q.Cast(gapcloserEventArgs.End); }, 1);
-                Core.DelayAction(() => { canAntiGapR = true; }, 200);
+                if (gapcloserEventArgs.Type == Gapcloser.GapcloserType.Targeted &&
+                    gapcloserEventArgs.End.Distance(Player.Instance.Position) < 50)
+                {
+                    SpellManager.Q.Cast(sender);
+                    Core.DelayAction(() => { SpellManager.Q.Cast(sender); }, 1);
+                    Core.DelayAction(() => { canAntiGapR = true; }, 200);
+                }
+                else
+                {
+                    SpellManager.Q.Cast(gapcloserEventArgs.End);
+                    Core.DelayAction(() => { SpellManager.Q.Cast(gapcloserEventArgs.End); }, 1);
+                    Core.DelayAction(() => { canAntiGapR = true; }, 200);
+                }
                 return;
             }
             if (SettingsMisc.AntigapcloserUseR && !SpellManager.R.IsOnCooldown && SpellManager.R.IsInRange(gapcloserEventArgs.End) && canAntiGapR)
