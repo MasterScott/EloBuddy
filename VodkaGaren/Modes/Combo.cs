@@ -1,9 +1,8 @@
-﻿using EloBuddy;
+﻿using System;
+using EloBuddy;
 using EloBuddy.SDK;
 using System.Linq;
-
-// Using the config like this makes your life easier, trust me
-using Settings = VodkaGaren.Config.Modes.Combo;
+using Settings = VodkaGaren.Config.ModesMenu.Combo;
 
 namespace VodkaGaren.Modes
 {
@@ -17,8 +16,7 @@ namespace VodkaGaren.Modes
         public override void Execute()
         {
             var target = TargetSelector.GetTarget(700, DamageType.Mixed);
-            int count = EntityManager.Heroes.Enemies.Count(enemy => enemy.IsValid && !enemy.IsDead && enemy.Distance(Player.Instance) <= 400);
-            if (Config.Modes.Combo.UseR && SpellManager.R.IsReady() && Damages.RDamage(target) > target.Health && SpellManager.R.IsInRange(target))
+            if (Settings.UseR && SpellManager.R.IsReady() && Damages.RDamage(target) > target.TotalShieldHealth() && SpellManager.R.IsInRange(target))
             {
                 if (!target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
                 {
@@ -26,20 +24,24 @@ namespace VodkaGaren.Modes
                     return;
                 }
             }
-            if (Q.IsReady() && Config.Modes.Combo.UseQ &&
+            if (Q.IsReady() && Settings.UseQ &&
                     (ObjectManager.Player.Distance(target) < 700))
             {
                 Q.Cast();
             }
 
-            if (W.IsReady() && Config.Modes.Combo.UseW &&
-                count >= Config.Modes.Combo.MinWEnemies)
+            if (Settings.UseW && W.IsReady())
             {
-                W.Cast();
+                int count = EntityManager.Heroes.Enemies.Count(enemy => enemy.IsValid && !enemy.IsDead && !enemy.IsZombie && !enemy.IsInvulnerable && enemy.Health > 0 && enemy.Distance(Player.Instance) <= 400);
+                if (
+                    count >= Settings.MinWEnemies)
+                {
+                    W.Cast();
+                }
             }
 
-            if (E.IsReady() && Config.Modes.Combo.UseE && !Player.HasBuff("GarenQ") &&
-                !Player.HasBuff("GarenE") && (ObjectManager.Player.Distance(target) < E.Range))
+            if (Settings.UseE && E.IsReady() && !Player.HasBuff("GarenQ") &&
+                !Player.HasBuff("GarenE") && (Player.Instance.Distance(target) < E.Range - 25))
             {
                 E.Cast();
             }

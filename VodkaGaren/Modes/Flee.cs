@@ -1,4 +1,5 @@
 ﻿using EloBuddy.SDK;
+using Settings = VodkaGaren.Config.ModesMenu.Flee;
 
 namespace VodkaGaren.Modes
 {
@@ -7,7 +8,8 @@ namespace VodkaGaren.Modes
         public override bool ShouldBeExecuted()
         {
             // Only execute this mode when the orbwalker is on flee mode
-            return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Flee);
+            //return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Flee);
+            return false;
         }
 
         public override void Execute()

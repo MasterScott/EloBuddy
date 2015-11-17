@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Damages.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="ModeManager.cs" />
     <Compile Include="Modes\PermaActive.cs" />
     <Compile Include="Modes\Flee.cs" />

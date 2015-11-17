@@ -1,4 +1,5 @@
 ﻿using EloBuddy.SDK;
+using Settings = VodkaGaren.Config.ModesMenu.LaneClear;
 
 namespace VodkaGaren.Modes
 {
@@ -7,7 +8,8 @@ namespace VodkaGaren.Modes
         public override bool ShouldBeExecuted()
         {
             // Only execute this mode when the orbwalker is on laneclear mode
-            return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear);
+            //return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear);
+            return false;
         }
 
         public override void Execute()

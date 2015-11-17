@@ -1,7 +1,6 @@
 ﻿using EloBuddy;
 using EloBuddy.SDK;
-
-// Using the config like this makes your life easier, trust me
+using Settings = VodkaGaren.Config.ModesMenu.Harass;
 
 namespace VodkaGaren.Modes
 {
@@ -10,7 +9,8 @@ namespace VodkaGaren.Modes
         public override bool ShouldBeExecuted()
         {
             // Only execute this mode when the orbwalker is on harass mode
-            return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass);
+            //return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass);
+            return false;
         }
 
         public override void Execute()
