@@ -36,6 +36,7 @@ namespace VodkaGaren
             Config.Initialize();
             SpellManager.Initialize();
             ModeManager.Initialize();
+            Events.Initialize();
         }
     }
 }

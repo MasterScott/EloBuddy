@@ -16,6 +16,10 @@ namespace VodkaGaren.Modes
         public override void Execute()
         {
             var target = TargetSelector.GetTarget(700, DamageType.Mixed);
+            if (target == null)
+            {
+                return;
+            }
             if (Settings.UseR && SpellManager.R.IsReady() && Damages.RDamage(target) > target.TotalShieldHealth() && SpellManager.R.IsInRange(target))
             {
                 if (!target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
@@ -40,8 +44,7 @@ namespace VodkaGaren.Modes
                 }
             }
 
-            if (Settings.UseE && E.IsReady() && !Player.HasBuff("GarenQ") &&
-                !Player.HasBuff("GarenE") && (Player.Instance.Distance(target) < E.Range - 25))
+            if (Settings.UseE && E.IsReady() && !Player.HasBuff("GarenE") && !Player.HasBuff("GarenQ") && (Player.Instance.Distance(target) < E.Range - 25))
             {
                 E.Cast();
             }
