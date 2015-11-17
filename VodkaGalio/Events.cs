@@ -18,7 +18,6 @@ namespace VodkaGalio
         {
             Interrupter.OnInterruptableSpell += InterrupterOnOnInterruptableSpell;
             Gapcloser.OnGapcloser += GapcloserOnOnGapcloser;
-            Orbwalker.OnPostAttack += OrbwalkerOnOnPostAttack;
             AIHeroClient.OnBuffGain += AIHeroClientOnOnBuffGain;
             AIHeroClient.OnBuffLose += AIHeroClientOnOnBuffLose;
             Drawing.OnDraw += OnDraw;
@@ -113,30 +112,6 @@ namespace VodkaGalio
                 Debug.WriteChat("AntiGapcloser with Q, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.ChampionName, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
                 SpellManager.Q.Cast(gapcloserEventArgs.End);
                 return;
-            }
-        }
-
-        private static void OrbwalkerOnOnPostAttack(AttackableUnit target, EventArgs args)
-        {
-            // No sense in checking if E is off cooldown
-            if (!SpellManager.W.IsReady())
-            {
-                return;
-            }
-            // Check if we should use W to attack minions/monsters/turrets
-            if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
-                Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
-            {
-                if (SpellManager.E.IsReady())
-                {
-                    if (SettingsModes.JungleClear.UseW && target is Obj_AI_Minion && target.Team == GameObjectTeam.Neutral)
-                    {
-                        if(EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, Player.Instance.GetAutoAttackRange()).Count(m => !m.IsDead && m.IsValid && m.Health > 0) > 0)
-                        Debug.WriteChat("Casting W, because attacking monster in JungleClear");
-                        SpellManager.E.Cast(Player.Instance);
-                    }
-                }
-
             }
         }
     }
