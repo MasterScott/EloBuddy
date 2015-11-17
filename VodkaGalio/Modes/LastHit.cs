@@ -3,6 +3,7 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaGalio.Config.ModesMenu.LastHit;
+using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
 {
@@ -18,7 +19,7 @@ namespace VodkaGalio.Modes
 
         public override void Execute()
         {
-            if (Settings.UseQ && Q.IsReady())
+            if (Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
             {
                 var minion = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, Q.Range).Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && m.Distance(Player.Instance)> 300 && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, Damages.QRawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
                 if (minion != null)
@@ -29,7 +30,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
             }
-            if (Settings.UseE && E.IsReady())
+            if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var minion = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, E.Range).Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && m.Distance(Player.Instance) > 300 && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, Damages.ERawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
                 if (minion != null)

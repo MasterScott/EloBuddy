@@ -3,6 +3,7 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaGalio.Config.ModesMenu.JungleClear;
+using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
 {
@@ -16,7 +17,7 @@ namespace VodkaGalio.Modes
 
         public override void Execute()
         {
-            if (Settings.UseQ && Q.IsReady())
+            if (Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
             {
                 var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, Q.Range).Where(t => !t.IsDead && t.IsValid && !t.IsInvulnerable);
                 foreach (var m in monsters)
@@ -31,7 +32,7 @@ namespace VodkaGalio.Modes
                     }
                 }
             }
-            if (Settings.UseE && E.IsReady())
+            if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, Q.Range).Where(t => !t.IsDead && t.IsValid && !t.IsInvulnerable);
                 foreach (var m in monsters)

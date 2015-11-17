@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX.Direct3D9;
 using Settings = VodkaGalio.Config.ModesMenu.LaneClear;
+using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
 {
@@ -17,7 +18,7 @@ namespace VodkaGalio.Modes
         public override void Execute()
         {
             {
-                if (Settings.UseQ && Q.IsReady())
+                if (Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
                 {
                     var minions =
                         EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, Q.Range).Where(
@@ -36,7 +37,7 @@ namespace VodkaGalio.Modes
 
                     }
                 }
-                if (Settings.UseE && E.IsReady())
+                if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
                 {
                     var minions =
                         EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, E.Range).Where(

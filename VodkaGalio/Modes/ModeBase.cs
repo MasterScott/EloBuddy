@@ -22,6 +22,11 @@ namespace VodkaGalio.Modes
             get { return SpellManager.R; }
         }
 
+        protected float PlayerMana
+        {
+            get { return Player.Instance.ManaPercent; }
+        }
+
         protected bool isUlting()
         {
             return Player.Instance.Spellbook.IsChanneling || Player.Instance.HasBuff("GalioIdolOfDurand");

@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaGalio.Config.ModesMenu.Combo;
+using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
 {
@@ -19,21 +20,23 @@ namespace VodkaGalio.Modes
             {
                 return;
             }
-            if (Settings.UseR && R.IsReady())
+            if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
             {
                 var enemies = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && !e.IsRecalling() && !e.IsZombie && !e.IsInvulnerable && R.IsInRange(e)).ToList();
                 if (enemies.Count() >= Settings.MinRTargets)
                 {
-                    if (Settings.UseW && W.IsReady() && Player.Instance.Mana >= 160)
+                    var wCasted = false;
+                    if (Settings.UseW && W.IsReady() && Player.Instance.Mana >= 160 && PlayerMana >= SettingsMana.MinWMana)
                     {
                         W.Cast(Player.Instance);
+                        wCasted = true;
                     }
-                    Debug.WriteChat("Casting R in combo, Enemies in range: {0}", "" + "" + enemies.Count());
+                    Debug.WriteChat("Casting R{0} in combo, Enemies in range: {1}", wCasted ? "+W" : "", "" + enemies.Count());
                     R.Cast();
                     return;
                 }
             }
-            if (Settings.UseQ && Q.IsReady() && !isUlting())
+            if (Settings.UseQ && Q.IsReady() && !isUlting() && PlayerMana >= SettingsMana.MinQMana)
             {
                 var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
                 if (target == null)
@@ -48,7 +51,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
             }
-            if (Settings.UseE && E.IsReady() && !isUlting())
+            if (Settings.UseE && E.IsReady() && !isUlting() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
                 if (target == null)

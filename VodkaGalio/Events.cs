@@ -8,6 +8,7 @@ using SharpDX;
 using SettingsMisc = VodkaGalio.Config.MiscMenu;
 using SettingsModes = VodkaGalio.Config.ModesMenu;
 using SettingsDrawing = VodkaGalio.Config.DrawingMenu;
+using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio
 {
@@ -21,6 +22,11 @@ namespace VodkaGalio
             AIHeroClient.OnBuffGain += AIHeroClientOnOnBuffGain;
             AIHeroClient.OnBuffLose += AIHeroClientOnOnBuffLose;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static float PlayerMana
+        {
+            get { return Player.Instance.ManaPercent; }
         }
 
         private static void AIHeroClientOnOnBuffGain(Obj_AI_Base sender, Obj_AI_BaseBuffGainEventArgs args)
@@ -102,7 +108,7 @@ namespace VodkaGalio
             {
                 return;
             }
-            if (SettingsMisc.AntigapcloserUseQ && SpellManager.Q.IsReady() && gapcloserEventArgs.End.Distance(Player.Instance) < 200)
+            if (SettingsMisc.AntigapcloserUseQ && SpellManager.Q.IsReady() && PlayerMana >= SettingsMana.MinQMana && gapcloserEventArgs.End.Distance(Player.Instance) < 200)
             {
                 Debug.WriteChat("AntiGapcloser with Q, Target: {0}, Distance: {1}, GapcloserSpell: {2}", sender.ChampionName, "" + sender.Distance(Player.Instance), gapcloserEventArgs.SpellName);
                 SpellManager.Q.Cast(gapcloserEventArgs.End);

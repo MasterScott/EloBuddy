@@ -3,6 +3,7 @@ using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using SharpDX;
 using Settings = VodkaGalio.Config.ModesMenu.Flee;
+using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
 {
@@ -15,8 +16,7 @@ namespace VodkaGalio.Modes
 
         public override void Execute()
         {
-            Chat.Print("{0}", Player.Instance.Position.Distance(Game.CursorPos)+"");
-            if (Settings.UseQ && Q.IsReady())
+            if (Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
             {
                 var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
                 if (target != null)
@@ -32,7 +32,7 @@ namespace VodkaGalio.Modes
                 }
 
             }
-            if (Settings.UseE && E.IsReady())
+            if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var cursorPos = Game.CursorPos;
                 var playerPos = Player.Instance.Position;
