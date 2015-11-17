@@ -2,6 +2,7 @@
 using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaJanna.Config.ModesMenu.LastHit;
+using SettingsMana = VodkaJanna.Config.ManaManagerMenu;
 
 namespace VodkaJanna.Modes
 {
@@ -15,7 +16,7 @@ namespace VodkaJanna.Modes
 
         public override void Execute()
         {
-            if (Settings.UseW && W.IsReady())
+            if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
             {
                 var minion = EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && m.IsInRange(Player.Instance.Position, W.Range) && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, SpellManager.WRawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
                 if (minion != null)

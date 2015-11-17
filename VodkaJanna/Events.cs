@@ -7,6 +7,7 @@ using SharpDX;
 using SettingsMisc = VodkaJanna.Config.MiscMenu;
 using SettingsModes = VodkaJanna.Config.ModesMenu;
 using SettingsDrawing = VodkaJanna.Config.DrawingMenu;
+using SettingsMana = VodkaJanna.Config.ManaManagerMenu;
 
 namespace VodkaJanna
 {
@@ -14,6 +15,11 @@ namespace VodkaJanna
     {
         private static bool canAntiGapR = true;
         private static bool canInterruptR = true;
+
+        private static float PlayerMana
+        {
+            get { return Player.Instance.ManaPercent; }
+        }
 
         static Events()
         {
@@ -118,7 +124,7 @@ namespace VodkaJanna
         private static void OrbwalkerOnOnPostAttack(AttackableUnit target, EventArgs args)
         {
             // No sense in checking if E is off cooldown
-            if (SpellManager.E.IsOnCooldown)
+            if (!SpellManager.E.IsReady())
             {
                 return;
             }
@@ -128,7 +134,7 @@ namespace VodkaJanna
                 (Orbwalker.LaneClearAttackChamps && SettingsModes.LaneClear.UseE &&
                  Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)))
             {
-                if (target is AIHeroClient && SpellManager.E.IsReady())
+                if (target is AIHeroClient && SpellManager.E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
                 {
                     Debug.WriteChat("Casting E, because attacking enemy in Combo or Harras");
                     SpellManager.E.Cast(Player.Instance);
@@ -139,14 +145,14 @@ namespace VodkaJanna
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
             {
-                if (SpellManager.E.IsReady())
+                if (SpellManager.E.IsReady() && target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinEMana)
                 {
-                    if (target is Obj_AI_Minion && target.Team == GameObjectTeam.Neutral && SettingsModes.JungleClear.UseE)
+                    if (SettingsModes.JungleClear.UseE && target.Team == GameObjectTeam.Neutral)
                     {
                         Debug.WriteChat("Casting E, because attacking monster in JungleClear");
                         SpellManager.E.Cast(Player.Instance);
                     }
-                    else if (target is Obj_AI_Minion && target.IsEnemy && SettingsModes.LaneClear.UseE)
+                    else if (SettingsModes.LaneClear.UseE && target.IsEnemy)
                     {
                         Debug.WriteChat("Casting E, because attacking minion in LaneClear");
                         SpellManager.E.Cast(Player.Instance);

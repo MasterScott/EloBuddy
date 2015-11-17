@@ -2,6 +2,7 @@
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaJanna.Config.ModesMenu.Flee;
+using SettingsMana = VodkaJanna.Config.ManaManagerMenu;
 
 namespace VodkaJanna.Modes
 {
@@ -14,7 +15,7 @@ namespace VodkaJanna.Modes
 
         public override void Execute()
         {
-            if (Settings.UseQ && QCastable())
+            if (Settings.UseQ && QCastable() && PlayerMana >= SettingsMana.MinQMana)
             {
                 var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical);
                 if (target == null)
@@ -24,13 +25,13 @@ namespace VodkaJanna.Modes
                 var pred = Q.GetPrediction(target);
                 if (pred.HitChance >= HitChance.Low)
                 {
-                    Debug.WriteChat("Castin Q in Flee, Target: {0}, Distance: {1}, Prediction: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
+                    Debug.WriteChat("Casting Q in Flee, Target: {0}, Distance: {1}, Prediction: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(target);
                     Core.DelayAction(() => { Q.Cast(target); }, 10);
                 }
 
             }
-            if (Settings.UseW && W.IsReady())
+            if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Magical);
                 if (target != null)

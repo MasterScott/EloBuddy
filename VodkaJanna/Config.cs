@@ -21,6 +21,7 @@ namespace VodkaJanna
             Menu.AddLabel("Created by Haker");
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
+            ManaManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
             DebugMenu.Initialize();
@@ -352,6 +353,39 @@ namespace VodkaJanna
                 _potion = MenuMisc.Add("potion", new CheckBox("Use potions"));
                 _potionMinHP = MenuMisc.Add("potionminHP", new Slider("Minimum Health % to use potion", 30));
                 _potionMinMP = MenuMisc.Add("potionMinMP", new Slider("Minimum Mana % to use potion", 20));
+            }
+
+            public static void Initialize()
+            {
+            }
+        }
+
+        public static class ManaManagerMenu
+        {
+            private static readonly Menu MenuManaManager;
+            private static readonly Slider _minQMana;
+            private static readonly Slider _minWMana;
+            private static readonly Slider _minEMana;
+
+            public static int MinQMana
+            {
+                get { return _minQMana.CurrentValue; }
+            }
+            public static int MinWMana
+            {
+                get { return _minWMana.CurrentValue; }
+            }
+            public static int MinEMana
+            {
+                get { return _minEMana.CurrentValue; }
+            }
+
+            static ManaManagerMenu()
+            {
+                MenuManaManager = Config.Menu.AddSubMenu("Mana Manager");
+                _minQMana = MenuManaManager.Add("minQMana", new Slider("Minimum mana % to use Q", 20, 0, 100));
+                _minWMana = MenuManaManager.Add("minWMana", new Slider("Minimum mana % to use W", 20, 0, 100));
+                _minEMana = MenuManaManager.Add("minEMana", new Slider("Minimum mana % to use E", 60, 0, 100));
             }
 
             public static void Initialize()

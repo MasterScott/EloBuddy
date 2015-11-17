@@ -22,6 +22,11 @@ namespace VodkaJanna.Modes
             get { return SpellManager.R; }
         }
 
+        protected float PlayerMana
+        {
+            get { return Player.Instance.ManaPercent; }
+        }
+
         protected bool QCastable()
         {
             return SpellManager.Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).ToggleState != 2;
