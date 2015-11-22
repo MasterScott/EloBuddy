@@ -37,6 +37,15 @@ namespace VodkaGaren
             SpellManager.Initialize();
             ModeManager.Initialize();
             Events.Initialize();
+            WelcomeMsg();
+        }
+
+        private static void WelcomeMsg()
+        {
+            Chat.Print("Vodka{0} Loaded. Have a splendid game!", System.Drawing.Color.LightBlue, ChampName);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Vodka{0} Loaded. Have a splendid game!", ChampName);
+            Console.ResetColor();
         }
     }
 }
