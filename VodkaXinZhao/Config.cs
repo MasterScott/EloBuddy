@@ -111,7 +111,7 @@ namespace VodkaXinZhao
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
                     _useR = MenuModes.Add("comboUseR", new CheckBox("Use R"));
-                    _useItems = MenuModes.Add("comboUseItems", new CheckBox("Use Tiamat/Hydra"));
+                    _useItems = MenuModes.Add("comboUseItems", new CheckBox("Use Tiamat/Hydra/BOTRK"));
                     _minEDistance = MenuModes.Add("comboMinEDistance",
                         new Slider("Minimum distance to use E", 175, 0, 550));
                     _minRTargets = MenuModes.Add("comboMinRTargets",
@@ -182,7 +182,7 @@ namespace VodkaXinZhao
                     _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q", false));
                     _useW = MenuModes.Add("laneUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("laneUseE", new CheckBox("Use E", false));
-                    _useItems = MenuModes.Add("laneUseItems", new CheckBox("Use Tiamat/Hydra"));
+                    _useItems = MenuModes.Add("laneUseItems", new CheckBox("Use Tiamat/Hydra/BOTRK"));
                     _minETargets = MenuModes.Add("minETargetsLC", new Slider("Minimum targets for E", 3, 1, 10));
                 }
 
@@ -230,7 +230,7 @@ namespace VodkaXinZhao
                     _useQ = MenuModes.Add("jungleUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("jungleUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("jungleUseE", new CheckBox("Use E", false));
-                    _useItems = MenuModes.Add("jungleUseItems", new CheckBox("Use Tiamat/Hydra"));
+                    _useItems = MenuModes.Add("jungleUseItems", new CheckBox("Use Tiamat/Hydra/BOTRK"));
                     _minETargets = MenuModes.Add("minETargetsJC", new Slider("Minimum targets for E", 2, 1, 10));
                 }
 
