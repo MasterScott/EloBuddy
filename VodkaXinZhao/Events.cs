@@ -14,8 +14,11 @@ namespace VodkaXinZhao
 {
     public static class Events
     {
-        static Item Tiamat;
-        static Item Hydra;
+        private static Item Tiamat;
+        private static Item Hydra;
+        private static Item Cutlass;
+        private static Item BOTRK;
+
 
         private static float PlayerMana
         {
@@ -26,6 +29,8 @@ namespace VodkaXinZhao
         {
             Tiamat = new Item(ItemId.Tiamat_Melee_Only, 250);
             Hydra = new Item(ItemId.Ravenous_Hydra_Melee_Only, 250);
+            Cutlass = new Item(ItemId.Bilgewater_Cutlass, 450);
+            BOTRK = new Item(ItemId.Blade_of_the_Ruined_King, 450);
 
             Interrupter.OnInterruptableSpell += InterrupterOnOnInterruptableSpell;
             Orbwalker.OnAttack += OrbwalkerOnOnAttack;
@@ -80,24 +85,43 @@ namespace VodkaXinZhao
                 }
 
             }
-
-            // Tiamat/Hydra usage
-            if ((SettingsModes.Combo.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) ||
-                (SettingsModes.LaneClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)) ||
-                (SettingsModes.JungleClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear)))
+            if (SettingsModes.Combo.UseItems)
             {
-                if (Item.HasItem(Tiamat.Id) && Item.CanUseItem(Tiamat.Id) && !target.IsDead && target.Distance(Player.Instance) < Tiamat.Range - 80)
+                if ((Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) || (SettingsModes.LaneClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)) || (SettingsModes.JungleClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear)))
                 {
-                    Debug.WriteChat("Using Tiamat.");
-                    Tiamat.Cast();
-                    return;
-                }
-                else if (Item.HasItem(Hydra.Id) && Item.CanUseItem(Hydra.Id) && !target.IsDead && target.Distance(Player.Instance) < Hydra.Range - 80)
-                {
+                    // Tiamat/Hydra usage
+                    if (Item.HasItem(Tiamat.Id) && Item.CanUseItem(Tiamat.Id) && !target.IsDead &&
+                        target.Distance(Player.Instance) < Tiamat.Range - 80)
+                    {
+                        Debug.WriteChat("Using Tiamat.");
+                        Tiamat.Cast();
+                        return;
+                    }
+                    else if (Item.HasItem(Hydra.Id) && Item.CanUseItem(Hydra.Id) && !target.IsDead &&
+                             target.Distance(Player.Instance) < Hydra.Range - 80)
+                    {
 
-                    Debug.WriteChat("Using Hydra.");
-                    Hydra.Cast();
-                    return;
+                        Debug.WriteChat("Using Hydra.");
+                        Hydra.Cast();
+                        return;
+                    }
+                    // Cutlass/BOTRK usage
+                    if(Item.HasItem(Cutlass.Id) && Item.CanUseItem(Cutlass.Id) && !target.IsDead &&
+                        target.Distance(Player.Instance) < Cutlass.Range)
+                    {
+                        Debug.WriteChat("Using Cutlass.");
+                        var spellSlot = Player.Instance.InventoryItems.FirstOrDefault(a => a.Id == Cutlass.Id);
+                        Player.CastSpell(spellSlot.SpellSlot, target);
+                        return;
+                    }
+                    else if (Item.HasItem(BOTRK.Id) && Item.CanUseItem(BOTRK.Id) && !target.IsDead &&
+                        target.Distance(Player.Instance) < BOTRK.Range && target.HealthPercent <= 80 && Player.Instance.HealthPercent <= 80)
+                    {
+                        Debug.WriteChat("Using BOTRK.");
+                        var spellSlot = Player.Instance.InventoryItems.FirstOrDefault(a => a.Id == BOTRK.Id);
+                        Player.CastSpell(spellSlot.SpellSlot, target);
+                        return;
+                    }
                 }
             }
         }
@@ -122,7 +146,7 @@ namespace VodkaXinZhao
                     return;
                 }
             }
-            // Check if we should use E to attack minions/monsters/turrets
+            // Check if we should use W to attack minions/monsters/turrets
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
             {
