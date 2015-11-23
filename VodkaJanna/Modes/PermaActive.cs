@@ -62,7 +62,7 @@ namespace VodkaJanna.Modes
                     {
                         continue;
                     }
-                    Debug.WriteChat("Casting E in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
+                    Debug.WriteChat("Casting W in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
                         "" + enemy.Health);
                     W.Cast(enemy);
                     break;

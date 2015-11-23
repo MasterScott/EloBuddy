@@ -343,7 +343,7 @@ namespace VodkaJanna
                 _antigapcloserR = MenuMisc.Add("antigapcloserUseR", new CheckBox("Use R against gapclosers", false));
                 MenuMisc.AddGroupLabel("KillSteal");
                 _ksQ = MenuMisc.Add("ksQ", new CheckBox("KillSteal Q"));
-                _ksW = MenuMisc.Add("ksW", new CheckBox("KillSteal E"));
+                _ksW = MenuMisc.Add("ksW", new CheckBox("KillSteal W"));
                 _ksIgnite = MenuMisc.Add("ksIgnite", new CheckBox("KillSteal Ignite", false));
                 MenuMisc.AddGroupLabel("Auto R usage");
                 _autoR = MenuMisc.Add("autoR", new CheckBox("Use R automatically when ally is low HP", false));
