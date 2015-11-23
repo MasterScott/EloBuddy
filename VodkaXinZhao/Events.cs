@@ -42,7 +42,7 @@ namespace VodkaXinZhao
         {
             // Use Q
             // No sense in checking if Q is off cooldown or enemy died
-            if (SpellManager.Q.IsReady() && !target.IsDead)
+            if (SpellManager.Q.IsReady() && !target.IsDead && !Player.Instance.Buffs.Any(b => b.Name.Equals("XenZhaoComboTarget", StringComparison.CurrentCultureIgnoreCase) || b.Name.Equals("xenzhaocomboauto", StringComparison.CurrentCultureIgnoreCase) || b.Name.Equals("xenzhaocomboautofinish", StringComparison.CurrentCultureIgnoreCase)))
             {
                 // Check if we should use Q to attack heroes
                 if ((SettingsModes.Combo.UseQ && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) ||
@@ -57,7 +57,7 @@ namespace VodkaXinZhao
                         Player.IssueOrder(GameObjectOrder.AttackUnit, target);
                     }
                 }
-                // Check if we should use E to attack minions/monsters/turrets
+                // Check if we should use Q to attack minions/monsters/turrets
                 if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
                     Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
                 {
