@@ -22,7 +22,8 @@ namespace VodkaSmite
             SpellManager.Initialize();
             if (!SpellManager.HasSmite())
             {
-                Chat.Print("No smite detected - unloading VodkaSmite.");
+                Chat.Print("No smite detected - unloading VodkaSmite.", System.Drawing.Color.Red);
+                return;
             }
             Config.Initialize();
             ModeManager.Initialize();

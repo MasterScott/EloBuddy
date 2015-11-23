@@ -42,88 +42,72 @@ namespace VodkaXinZhao
         {
             // Use Q
             // No sense in checking if Q is off cooldown or enemy died
-            if (!SpellManager.Q.IsReady() || target.IsDead)
+            if (SpellManager.Q.IsReady() && !target.IsDead)
             {
-                return;
-            }
-            // Check if we should use Q to attack heroes
-            if ((SettingsModes.Combo.UseQ && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) ||
-                (Orbwalker.LaneClearAttackChamps && SettingsModes.LaneClear.UseE &&
-                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)))
-            {
-                if (target is AIHeroClient && PlayerMana >= SettingsMana.MinQMana)
+                // Check if we should use Q to attack heroes
+                if ((SettingsModes.Combo.UseQ && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) ||
+                    (Orbwalker.LaneClearAttackChamps && SettingsModes.LaneClear.UseQ &&
+                     Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)))
                 {
-                    Debug.WriteChat("Casting Q, because attacking enemy in Combo or Harras");
-                    SpellManager.Q.Cast();
-                    Orbwalker.ResetAutoAttack();
-                    Player.IssueOrder(GameObjectOrder.AttackUnit, target);
-                    return;
-                }
-            }
-            // Check if we should use E to attack minions/monsters/turrets
-            if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
-                Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
-            {
-                if (target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinQMana)
-                {
-                    if (SettingsModes.JungleClear.UseQ && target.Team == GameObjectTeam.Neutral)
+                    if (target is AIHeroClient && PlayerMana >= SettingsMana.MinQMana)
                     {
-                        Debug.WriteChat("Casting Q, because attacking monster in Jungle Clear");
+                        Debug.WriteChat("Casting Q, because attacking enemy in Combo or Harras");
                         SpellManager.Q.Cast();
                         Orbwalker.ResetAutoAttack();
                         Player.IssueOrder(GameObjectOrder.AttackUnit, target);
-                        return;
-                    }
-                    else if (SettingsModes.LaneClear.UseQ && target.IsEnemy)
-                    {
-                        Debug.WriteChat("Casting Q, because attacking minion in Lane Clear");
-                        SpellManager.Q.Cast();
-                        Orbwalker.ResetAutoAttack();
-                        Player.IssueOrder(GameObjectOrder.AttackUnit, target);
-                        return;
                     }
                 }
+                // Check if we should use E to attack minions/monsters/turrets
+                if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
+                    Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
+                {
+                    if (target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinQMana)
+                    {
+                        if (SettingsModes.JungleClear.UseQ && target.Team == GameObjectTeam.Neutral)
+                        {
+                            Debug.WriteChat("Casting Q, because attacking monster in Jungle Clear");
+                            SpellManager.Q.Cast();
+                            Orbwalker.ResetAutoAttack();
+                            Player.IssueOrder(GameObjectOrder.AttackUnit, target);
+                        }
+                        else if (SettingsModes.LaneClear.UseQ && target.Team != GameObjectTeam.Neutral)
+                        {
+                            Debug.WriteChat("Casting Q, because attacking minion in Lane Clear");
+                            SpellManager.Q.Cast();
+                            Orbwalker.ResetAutoAttack();
+                            Player.IssueOrder(GameObjectOrder.AttackUnit, target);
+                        }
+                    }
 
+                }
             }
-            if (SettingsModes.Combo.UseItems)
-            {
-                if ((Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) || (SettingsModes.LaneClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)) || (SettingsModes.JungleClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear)))
+            // Item usage
+            if ((SettingsModes.Combo.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) || (SettingsModes.LaneClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)) || (SettingsModes.JungleClear.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear)))
                 {
-                    // Tiamat/Hydra usage
-                    if (Item.HasItem(Tiamat.Id) && Item.CanUseItem(Tiamat.Id) && !target.IsDead &&
-                        target.Distance(Player.Instance) < Tiamat.Range - 80)
+                    if (Item.HasItem(Tiamat.Id) && Tiamat.IsReady() && !target.IsDead && 
+                        target.Distance(Player.Instance) < Tiamat.Range)
                     {
-                        Debug.WriteChat("Using Tiamat.");
                         Tiamat.Cast();
-                        return;
                     }
-                    else if (Item.HasItem(Hydra.Id) && Item.CanUseItem(Hydra.Id) && !target.IsDead &&
-                             target.Distance(Player.Instance) < Hydra.Range - 80)
+                    else if (Item.HasItem(Hydra.Id) && Hydra.IsReady() && !target.IsDead &&
+                             target.Distance(Player.Instance) < Hydra.Range)
                     {
-
-                        Debug.WriteChat("Using Hydra.");
                         Hydra.Cast();
-                        return;
                     }
                     // Cutlass/BOTRK usage
-                    if(Item.HasItem(Cutlass.Id) && Item.CanUseItem(Cutlass.Id) && !target.IsDead &&
-                        target.Distance(Player.Instance) < Cutlass.Range)
+                    if(target is AIHeroClient && Item.HasItem(Cutlass.Id) && Cutlass.IsReady() && !target.IsDead &&
+                             target.Distance(Player.Instance) < Cutlass.Range)
                     {
-                        Debug.WriteChat("Using Cutlass.");
                         var spellSlot = Player.Instance.InventoryItems.FirstOrDefault(a => a.Id == Cutlass.Id);
                         Player.CastSpell(spellSlot.SpellSlot, target);
-                        return;
                     }
-                    else if (Item.HasItem(BOTRK.Id) && Item.CanUseItem(BOTRK.Id) && !target.IsDead &&
-                        target.Distance(Player.Instance) < BOTRK.Range && target.HealthPercent <= 80 && Player.Instance.HealthPercent <= 80)
+                    else if (target is AIHeroClient && Item.HasItem(BOTRK.Id) && BOTRK.IsReady() && !target.IsDead &&
+                             target.Distance(Player.Instance) < BOTRK.Range && Player.Instance.HealthPercent <= 80.0f && target.HealthPercent <= 80.0f)
                     {
-                        Debug.WriteChat("Using BOTRK.");
                         var spellSlot = Player.Instance.InventoryItems.FirstOrDefault(a => a.Id == BOTRK.Id);
                         Player.CastSpell(spellSlot.SpellSlot, target);
-                        return;
                     }
                 }
-            }
         }
 
         private static void OrbwalkerOnOnAttack(AttackableUnit target, EventArgs args)
@@ -157,7 +141,7 @@ namespace VodkaXinZhao
                         Debug.WriteChat("Casting W, because attacking monster in JungleClear");
                         SpellManager.W.Cast();
                     }
-                    else if (SettingsModes.LaneClear.UseW && target.IsEnemy)
+                    else if (SettingsModes.LaneClear.UseW && target.Team != GameObjectTeam.Neutral)
                     {
                         Debug.WriteChat("Casting W, because attacking minion in LaneClear");
                         SpellManager.W.Cast();
