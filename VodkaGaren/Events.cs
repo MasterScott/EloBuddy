@@ -113,7 +113,6 @@ namespace VodkaGaren
                     Orbwalker.ResetAutoAttack();
                     Player.IssueOrder(GameObjectOrder.AttackUnit, target);
                     Debug.WriteChat("Auto casting Q after autoattacking {0}", ((AIHeroClient)target).ChampionName);
-                    SpellManager.E.Cast(Player.Instance);
                     return;
                 }
             }

@@ -134,7 +134,7 @@ namespace VodkaJanna
                 (Orbwalker.LaneClearAttackChamps && SettingsModes.LaneClear.UseE &&
                  Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)))
             {
-                if (target is AIHeroClient && SpellManager.E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
+                if (target is AIHeroClient && PlayerMana >= SettingsMana.MinEMana)
                 {
                     Debug.WriteChat("Casting E, because attacking enemy in Combo or Harras");
                     SpellManager.E.Cast(Player.Instance);
@@ -145,7 +145,7 @@ namespace VodkaJanna
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
             {
-                if (SpellManager.E.IsReady() && target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinEMana)
+                if (target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinEMana)
                 {
                     if (SettingsModes.JungleClear.UseE && target.Team == GameObjectTeam.Neutral)
                     {
