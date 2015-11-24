@@ -26,7 +26,7 @@ namespace VodkaDrMundo.Modes
                 if (enemy != null)
                 {
                     var pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.Low)
+                    if (pred.HitChance >= HitChance.Medium)
                     {
                         Q.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting Q in Flee on {0}", enemy.ChampionName);

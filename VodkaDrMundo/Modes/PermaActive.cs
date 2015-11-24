@@ -98,7 +98,7 @@ namespace VodkaDrMundo.Modes
                     if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
                     {
                         var pred = Q.GetPrediction(enemy);
-                        if (pred.HitChance >= HitChance.Medium)
+                        if (pred.HitChance >= HitChance.High)
                         {
                             Q.Cast(enemy);
                             Debug.WriteChat("Casting Q in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName,

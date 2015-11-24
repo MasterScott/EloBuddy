@@ -22,11 +22,11 @@ namespace VodkaDrMundo.Modes
             {
                 var minion =
                 EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, _PlayerPos, Q.Range)
-                    .FirstOrDefault(e => e.IsValidTarget(SettingsCombo.MaxQDistance) && e.Distance(_Player) > _Player.GetAutoAttackRange() && e.Health < Damages.QDamage(e) && Q.GetPrediction(e).HitChance >= HitChance.Low);
+                    .FirstOrDefault(e => e.IsValidTarget(SettingsCombo.MaxQDistance) && e.Distance(_Player) > _Player.GetAutoAttackRange() && e.Health < Damages.QDamage(e) && Q.GetPrediction(e).HitChance >= HitChance.Medium);
                 if (minion != null)
                 {
                     var pred = Q.GetPrediction(minion);
-                    if (pred.HitChance >= HitChance.Low)
+                    if (pred.HitChance >= HitChance.Medium)
                     {
                         Q.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting Q in LastHit");
