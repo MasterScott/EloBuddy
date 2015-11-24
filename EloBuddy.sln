@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaSmite", "VodkaSmite\Vo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaXinZhao", "VodkaXinZhao\VodkaXinZhao.csproj", "{1F136D4F-0DBB-4C14-8D20-B9DF8B4AD446}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaDrMundo", "VodkaDrMundo\VodkaDrMundo.csproj", "{021602F5-DFAB-4958-9794-3FC23C32BC70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{1F136D4F-0DBB-4C14-8D20-B9DF8B4AD446}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F136D4F-0DBB-4C14-8D20-B9DF8B4AD446}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F136D4F-0DBB-4C14-8D20-B9DF8B4AD446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
