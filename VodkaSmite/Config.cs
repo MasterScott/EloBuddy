@@ -74,6 +74,7 @@ namespace VodkaSmite
             smiterMenu.Add("vSmiteSRU_Krug", new CheckBox("Krug"));
             smiterMenu.Add("vSmiteSRU_Razorbeak", new CheckBox("Razorbeak"));
             smiterMenu.Add("vSmiteSru_Crab", new CheckBox("Crab"));
+            smiterMenu.Add("vSmiteSRU_RiftHerald", new CheckBox("Rift Herald", false));
             smiterMenu.AddGroupLabel("Drawing");
             _drawSmiteStatus = smiterMenu.Add("vSmiteDrawSmiteStatus", new CheckBox("Draw Smite Status"));
             _drawSmiteable = smiterMenu.Add("vSmiteDrawSmiteable", new CheckBox("Draw Smiteable Monsters"));
