@@ -38,7 +38,7 @@ namespace VodkaXinZhao.Modes
             // KillSteal
             if (Settings.KsE && E.IsReady())
             {
-                var enemy = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.Health > 0 && E.IsInRange(e) && e.IsVisible && !e.IsZombie && !e.IsInvulnerable &&  e.TotalShieldHealth() < Damages.EDamage(e)).OrderByDescending(e => e.Health).FirstOrDefault();
+                var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(e => !e.IsDead && e.Health > 0 && E.IsInRange(e) && e.IsVisible && !e.IsZombie && !e.IsInvulnerable && e.TotalShieldHealth() < Damages.EDamage(e));
                 if (enemy != null)
                 {
                     if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
@@ -49,9 +49,13 @@ namespace VodkaXinZhao.Modes
                     }
                 }
             }
-            if(Settings.KsR && R.IsReady())
+            if (Settings.KsR && R.IsReady())
             {
-                var enemy = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.Health > 0 && R.IsInRange(e) && e.IsVisible && !e.IsZombie && !e.IsInvulnerable && e.TotalShieldHealth() < Damages.RDamage(e)).OrderByDescending(e => e.Health).FirstOrDefault();
+                var enemy =
+                    EntityManager.Heroes.Enemies.FirstOrDefault(
+                        e =>
+                            !e.IsDead && e.Health > 0 && R.IsInRange(e) && e.IsVisible && !e.IsZombie &&
+                            !e.IsInvulnerable && e.TotalShieldHealth() < Damages.RDamage(e));
                 if (enemy != null)
                 {
                     if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
@@ -60,6 +64,21 @@ namespace VodkaXinZhao.Modes
                         R.Cast();
                         return;
                     }
+                }
+            }
+            if (Settings.KsIgnite && HasIgnite && Ignite.IsReady())
+            {
+                var enemy =
+                    EntityManager.Heroes.Enemies.FirstOrDefault(
+                        e =>
+                            !e.IsDead && e.Health > 0 && Ignite.IsInRange(e) && e.IsVisible && !e.IsZombie &&
+                            !e.IsInvulnerable && e.TotalShieldHealth() < Damages.IgniteDmg(e));
+                if (enemy != null)
+                {
+
+                    Debug.WriteChat("Casting Ignite in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName, "" + enemy.Health);
+                    Ignite.Cast(enemy);
+                    return;
                 }
             }
 

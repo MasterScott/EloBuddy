@@ -22,10 +22,19 @@ namespace VodkaXinZhao.Modes
         {
             get { return SpellManager.R; }
         }
+        protected Spell.Targeted Ignite
+        {
+            get { return SpellManager.Ignite; }
+        }
 
         protected float PlayerMana
         {
             get { return Player.Instance.ManaPercent; }
+        }
+
+        protected bool HasIgnite
+        {
+            get { return SpellManager.HasIgnite(); }
         }
 
         protected AIHeroClient _Player

@@ -24,7 +24,7 @@ namespace VodkaXinZhao.Modes
                 {
                     return;
                 }
-                Debug.WriteChat("Casting E in Combo, Target: {0}", target.ChampionName, "" + Player.Instance.Distance(target));
+                Debug.WriteChat("Casting E in Combo, Target: {0}, Distance: {1}", target.ChampionName, "" + Player.Instance.Distance(target));
                 E.Cast(target);
             }
             if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
