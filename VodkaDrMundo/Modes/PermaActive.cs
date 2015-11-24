@@ -64,13 +64,11 @@ namespace VodkaDrMundo.Modes
             }
 
             // Auto Q Harass
-            if (SettingsHarass.AutoQ && Q.IsReady() && PlayerHealth >= SettingsHarass.MinAutoQHealth)
+            if (SettingsHarass.AutoQ && Q.IsReady() && PlayerHealth >= SettingsHarass.MinAutoQHealth && !_Player.IsRecalling() && !PlayerIsUnderEnemyTurret() /* Don't harass under enemy turrets */)
             {
+                
                 var enemies = EntityManager.Heroes.Enemies.Where(
-                    e =>
-                        !e.IsDead && e.Health > 0 && _Player.Distance(e) <= SettingsCombo.MaxQDistance && e.IsVisible &&
-                        !e.IsZombie &&
-                        !e.IsInvulnerable).OrderBy(e => _Player.Distance(e));
+                    e => e.IsValidTarget(SettingsCombo.MaxQDistance)).OrderBy(e => _Player.Distance(e));
                 foreach (var enemy in enemies)
                 {
                     if (
@@ -83,7 +81,8 @@ namespace VodkaDrMundo.Modes
                     if (pred.HitChance >= HitChance.High)
                     {
                         Q.Cast(pred.CastPosition);
-                        Debug.WriteChat("Casting Q in Auto Harass, Target: {0}");
+                        Debug.WriteChat("Casting Q in Auto Harass, Target: {0}", enemy.ChampionName);
+                        break;
                     }
                 }
             }
@@ -93,20 +92,18 @@ namespace VodkaDrMundo.Modes
             {
                 var enemies =
                     EntityManager.Heroes.Enemies.Where(
-                        e =>
-                            !e.IsDead && e.Health > 0 && Q.IsInRange(e) && e.IsVisible && !e.IsZombie &&
-                            !e.IsInvulnerable && e.TotalShieldHealth() < Damages.QDamage(e));
+                        e => e.IsValidTarget(Q.Range) && e.TotalShieldHealth() < Damages.QDamage(e));
                 foreach (var enemy in enemies)
                 {
                     if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
                     {
                         var pred = Q.GetPrediction(enemy);
-                        if (pred.HitChance >= HitChance.Low)
+                        if (pred.HitChance >= HitChance.Medium)
                         {
                             Q.Cast(enemy);
                             Debug.WriteChat("Casting Q in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName,
                                 "" + enemy.Health);
-                            return;
+                            break;
                         }
                     }
                 }
@@ -115,26 +112,22 @@ namespace VodkaDrMundo.Modes
             {
                 var enemy =
                     EntityManager.Heroes.Enemies.FirstOrDefault(
-                        e =>
-                            !e.IsDead && e.Health > 0 && Ignite.IsInRange(e) && e.IsVisible && !e.IsZombie &&
-                            !e.IsInvulnerable && e.TotalShieldHealth() < Damages.IgniteDmg(e));
+                        e => e.IsValidTarget(Ignite.Range) && e.TotalShieldHealth() < Damages.IgniteDmg(e));
                 if (enemy != null)
                 {
-                    Debug.WriteChat("Casting Ignite in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName, "" + enemy.Health);
                     Ignite.Cast(enemy);
-                    return;
+                    Debug.WriteChat("Casting Ignite in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName, "" + enemy.Health);
                 }
             }
 
             // Automatic ult usage
             if (Settings.AutoR && R.IsReady() && !Player.Instance.IsRecalling() && !Player.Instance.IsInShopRange())
             {
-                var enemiesAround = EntityManager.Heroes.Enemies.Count(e => e.Distance(Player.Instance) < 1500 && !e.IsDead && e.Health > 0 && !e.IsZombie && !e.IsInvulnerable);
-                if (enemiesAround >= Settings.AutoRMinEnemies && Player.Instance.HealthPercent < Settings.AutoRMinHP)
+                var enemiesAround = EntityManager.Heroes.Enemies.Count(e => e.Distance(Player.Instance) < 1500 && e.IsValidTarget());
+                if (enemiesAround >= Settings.AutoRMinEnemies && Player.Instance.HealthPercent <= Settings.AutoRMinHP)
                 {
-                    Debug.WriteChat("AutoCasting R, Enemies around: {0}", "" + "" + enemiesAround);
                     R.Cast();
-                    return;
+                    Debug.WriteChat("AutoCasting R, Enemies around: {0}, Current HP: {1}", "" + enemiesAround, "" + ((int)PlayerHealth));
                 }
             }
 

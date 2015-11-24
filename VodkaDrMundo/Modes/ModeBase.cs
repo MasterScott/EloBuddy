@@ -1,4 +1,5 @@
-﻿using EloBuddy;
+﻿using System.Linq;
+using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX;
 
@@ -49,6 +50,12 @@ namespace VodkaDrMundo.Modes
         protected Vector3 _PlayerPos
         {
             get { return Player.Instance.Position; }
+        }
+
+        protected bool PlayerIsUnderEnemyTurret()
+        {
+            var player = Player.Instance;
+            return ObjectManager.Get<Obj_AI_Turret>().Where(a => a.Team != _Player.Team && a.Health > 0).Any(turret => turret.Distance(_Player) < 1000);
         }
 
         public abstract bool ShouldBeExecuted();

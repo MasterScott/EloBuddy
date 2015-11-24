@@ -20,15 +20,15 @@ namespace VodkaDrMundo.Modes
             if (Settings.UseQ && Q.IsReady() && PlayerHealth >= SettingsHealth.MinQHealth)
             {
                 var target = TargetSelector.GetTarget(SettingsCombo.MaxQDistance, DamageType.Magical);
-                if (target == null)
+                if (target != null)
                 {
-                    return;
-                }
-                var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
-                {
-                    Q.Cast(pred.CastPosition);
-                    Debug.WriteChat("Casting Q in Harass, Target: {0}, Distance: {0}", target.ChampionName, "" + Player.Instance.Distance(target));
+                    var pred = Q.GetPrediction(target);
+                    if (pred.HitChance >= HitChance.Medium)
+                    {
+                        Q.Cast(pred.CastPosition);
+                        Debug.WriteChat("Casting Q in Harass, Target: {0}, Distance: {0}", target.ChampionName,
+                            "" + Player.Instance.Distance(target));
+                    }
                 }
             }
             if (Settings.UseW && W.IsReady() && !WActive && PlayerHealth >= SettingsHealth.MinWHealth)
@@ -40,6 +40,7 @@ namespace VodkaDrMundo.Modes
                 {
                     W.Cast();
                     Debug.WriteChat("Casting W in Combo");
+                    return;
                 }
             }
             if (Settings.UseW && W.IsReady() && !WActive)

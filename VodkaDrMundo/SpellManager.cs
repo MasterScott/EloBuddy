@@ -21,7 +21,15 @@ namespace VodkaDrMundo
             E = new Spell.Active(SpellSlot.E);
             R = new Spell.Active(SpellSlot.R);
             
-            Ignite = new Spell.Targeted(Player.Instance.GetSpellSlotFromName("summonerdot"), 600);
+            
+            if (ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Summoner1).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Ignite = new Spell.Targeted(SpellSlot.Summoner1, 600);
+            }
+            else if ((ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Summoner2).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Ignite = new Spell.Targeted(SpellSlot.Summoner2, 600);
+            }
         }
 
         public static void Initialize()

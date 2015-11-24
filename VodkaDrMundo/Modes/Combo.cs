@@ -19,22 +19,21 @@ namespace VodkaDrMundo.Modes
             if (Settings.UseQ && Q.IsReady() && PlayerHealth >= SettingsHealth.MinQHealth)
             {
                 var target = TargetSelector.GetTarget(Settings.MaxQDistance, DamageType.Magical);
-                if (target == null)
+                if (target != null)
                 {
-                    return;
-                }
-                var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
-                {
-                    Q.Cast(pred.CastPosition);
-                    Debug.WriteChat("Casting Q in Combo, Target: {0}", target.ChampionName);
+                    var pred = Q.GetPrediction(target);
+                    if (pred.HitChance >= HitChance.Medium)
+                    {
+                        Q.Cast(pred.CastPosition);
+                        Debug.WriteChat("Casting Q in Combo, Target: {0}", target.ChampionName);
+                    }
                 }
             }
             if (Settings.UseW && W.IsReady() && !WActive && PlayerHealth >= SettingsHealth.MinWHealth)
             {
                 var enemy =
                     EntityManager.Heroes.Enemies
-                        .FirstOrDefault(e => !e.IsDead && e.Health > 0 && e.IsVisible && e.IsValidTarget() && _Player.Distance(e) < W.Range);
+                        .FirstOrDefault(e => e.IsValidTarget(W.Range));
                 if (enemy != null)
                 {
                     W.Cast();

@@ -22,7 +22,7 @@ namespace VodkaDrMundo.Modes
             {
                 var minion =
                 EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, _PlayerPos, Q.Range)
-                    .Where(e => !e.IsDead && e.Health > 0 && e.IsVisible && e.IsValidTarget() && Q.GetPrediction(e).HitChance >= HitChance.Low).OrderByDescending(e => e.Health).FirstOrDefault();
+                    .Where(e => e.IsValidTarget(SettingsCombo.MaxQDistance) && Q.GetPrediction(e).HitChance >= HitChance.Low).OrderByDescending(e => e.Health).FirstOrDefault();
                 if (minion != null)
                 {
                     var pred = Q.GetPrediction(minion);
@@ -38,7 +38,7 @@ namespace VodkaDrMundo.Modes
             {
                 var minion =
                     EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, _PlayerPos, W.Range)
-                        .FirstOrDefault(e => !e.IsDead && e.Health > 0 && e.IsVisible && e.IsValidTarget());
+                        .FirstOrDefault(e => e.IsValidTarget());
                 if (minion != null)
                 {
                     W.Cast();

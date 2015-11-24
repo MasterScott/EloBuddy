@@ -23,7 +23,7 @@ namespace VodkaDrMundo.Modes
             {
                 var monster =
                 EntityManager.MinionsAndMonsters.GetJungleMonsters(_PlayerPos, SettingsCombo.MaxQDistance)
-                    .Where(e => !e.IsDead && e.Health > 0 && e.IsVisible && e.IsValidTarget() && Q.GetPrediction(e).HitChance >= HitChance.Low).OrderByDescending(e => e.Health).FirstOrDefault();
+                    .Where(e => e.IsValidTarget(SettingsCombo.MaxQDistance) && Q.GetPrediction(e).HitChance >= HitChance.Low).OrderByDescending(e => e.Health).FirstOrDefault();
                 if (monster != null)
                 {
                     var pred = Q.GetPrediction(monster);
@@ -39,7 +39,7 @@ namespace VodkaDrMundo.Modes
             {
                 var monster =
                     EntityManager.MinionsAndMonsters.GetJungleMonsters(_PlayerPos, W.Range)
-                        .FirstOrDefault(e => !e.IsDead && e.Health > 0 && e.IsVisible && e.IsValidTarget());
+                        .FirstOrDefault(e => e.IsValidTarget(SettingsCombo.MaxQDistance));
                 if (monster != null)
                 {
                     W.Cast();

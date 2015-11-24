@@ -20,8 +20,8 @@ namespace VodkaDrMundo.Modes
             if (Settings.UseQ && Q.IsReady() && SettingsHealth.MinQHealth < PlayerHealth)
             {
                 var enemy =
-                    EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.Health > 0 && e.IsValidTarget())
-                        .OrderByDescending(e => e.Distance(Player.Instance))
+                    EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(Q.Range))
+                        .OrderBy(e => e.Distance(Player.Instance))
                         .FirstOrDefault();
                 if (enemy != null)
                 {
