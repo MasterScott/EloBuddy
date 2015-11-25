@@ -12,7 +12,7 @@ namespace VodkaSmite
     {
         public static float SmiteDmgMonster(Obj_AI_Base target)
         {
-            return ObjectManager.Player.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Smite);
+            return Player.Instance.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Smite);
         }
 
         public static float SmiteDmgHero(AIHeroClient target)

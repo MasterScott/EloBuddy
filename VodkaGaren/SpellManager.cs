@@ -23,7 +23,7 @@ namespace VodkaGaren
             E = new Spell.Active(SpellSlot.E, 300);
             R = new Spell.Targeted(SpellSlot.R, 400);
 
-            Ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
+            Ignite = new Spell.Targeted(Player.Instance.GetSpellSlotFromName("summonerdot"), 600);
         }
 
         public static void Initialize()

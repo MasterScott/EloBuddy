@@ -10,7 +10,7 @@ namespace VodkaGalio
             return
                 (int)
                     (new int[] { 80, 135, 190, 245, 300 }[SpellManager.Q.Level - 1] +
-                     0.6 * (ObjectManager.Player.TotalMagicalDamage));
+                     0.6 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static float QDamage(Obj_AI_Base target)
@@ -24,7 +24,7 @@ namespace VodkaGalio
             return
                 (int)
                     (new int[] { 60, 105, 150, 195, 240 }[SpellManager.E.Level - 1] +
-                     0.5 * (ObjectManager.Player.TotalMagicalDamage));
+                     0.5 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static float EDamage(Obj_AI_Base target)
@@ -38,7 +38,7 @@ namespace VodkaGalio
             return
                 (int)
                     (new int[] { 200, 300, 400 }[SpellManager.R.Level - 1] +
-                     0.6 * (ObjectManager.Player.TotalMagicalDamage));
+                     0.6 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static float RDamage(Obj_AI_Base target)
@@ -49,7 +49,7 @@ namespace VodkaGalio
 
         public static float IgniteDmg(Obj_AI_Base target)
         {
-            return ObjectManager.Player.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
+            return Player.Instance.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
             
         }
     }

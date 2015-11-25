@@ -22,7 +22,7 @@ namespace VodkaGaren
             return
                 (int)
                     (new int[] { 30, 55, 80, 105, 130 }[SpellManager.Q.Level - 1] +
-                     1.4 * (ObjectManager.Player.TotalAttackDamage));
+                     1.4 * (Player.Instance.TotalAttackDamage));
         }
 
         public static float RDamage(Obj_AI_Base target)
@@ -46,7 +46,7 @@ namespace VodkaGaren
 
         public static float IgniteDmg(Obj_AI_Base target)
         {
-            return ObjectManager.Player.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
+            return Player.Instance.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
             
         }
     }

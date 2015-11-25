@@ -26,7 +26,7 @@ namespace VodkaDrMundo
 
         public static float IgniteDmg(Obj_AI_Base target)
         {
-            return ObjectManager.Player.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
+            return Player.Instance.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
         }
     }
 }

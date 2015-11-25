@@ -10,12 +10,12 @@ namespace VodkaSmite
 
         static SpellManager()
         {
-            if (Util.SmiteNames.ToList().Contains(ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Summoner1).Name))
+            if (Util.SmiteNames.ToList().Contains(Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner1).Name))
             {
                 Smite = new Spell.Targeted(SpellSlot.Summoner1, 570);
                 return;
             }
-            if (Util.SmiteNames.ToList().Contains(ObjectManager.Player.Spellbook.GetSpell(SpellSlot.Summoner2).Name))
+            if (Util.SmiteNames.ToList().Contains(Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner2).Name))
             {
                 Smite = new Spell.Targeted(SpellSlot.Summoner2, 570);
             }

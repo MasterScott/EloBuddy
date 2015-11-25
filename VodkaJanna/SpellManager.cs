@@ -35,7 +35,7 @@ namespace VodkaJanna
             return
                 (int)
                     (new int[] { 60, 115, 170, 225, 280 }[SpellManager.W.Level - 1] +
-                     0.5 * (ObjectManager.Player.TotalMagicalDamage));
+                     0.5 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static bool QCastable()

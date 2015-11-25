@@ -17,7 +17,7 @@ namespace VodkaJanna
             return
                 (int)
                     (new int[] { 60, 85, 110, 135, 160 }[SpellManager.Q.Level - 1] +
-                     0.35 * (ObjectManager.Player.TotalMagicalDamage));
+                     0.35 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static float WRawDamage()
@@ -25,7 +25,7 @@ namespace VodkaJanna
             return
                 (int)
                     (new int[] { 60, 115, 170, 225, 280 }[SpellManager.E.Level - 1] +
-                     0.5 * (ObjectManager.Player.TotalMagicalDamage));
+                     0.5 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static float WDamage(Obj_AI_Base target)
@@ -36,7 +36,7 @@ namespace VodkaJanna
 
         public static float IgniteDmg(Obj_AI_Base target)
         {
-            return ObjectManager.Player.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
+            return Player.Instance.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Ignite);
             
         }
     }

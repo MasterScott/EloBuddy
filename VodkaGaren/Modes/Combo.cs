@@ -29,7 +29,7 @@ namespace VodkaGaren.Modes
                 }
             }
             if (Q.IsReady() && Settings.UseQ &&
-                    (ObjectManager.Player.Distance(target) < 700))
+                    (Player.Instance.Distance(target) < 700))
             {
                 Q.Cast();
             }
