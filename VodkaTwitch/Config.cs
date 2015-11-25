@@ -410,11 +410,11 @@ namespace VodkaTwitch
 
             public static bool DrawQ
             {
-                get { return _drawE.CurrentValue; }
+                get { return _drawQ.CurrentValue; }
             }
             public static bool DrawW
             {
-                get { return _drawE.CurrentValue; }
+                get { return _drawW.CurrentValue; }
             }
             public static bool DrawE
             {

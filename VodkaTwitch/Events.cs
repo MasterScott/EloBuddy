@@ -15,8 +15,13 @@ namespace VodkaTwitch
 {
     public static class Events
     {
+        private static Circle QCircle;
+
         static Events()
         {
+            var QColor = new ColorBGRA(Color.GreenYellow.ToVector3(), 0.1f);
+            QCircle = new Circle(QColor, 500.0f, 3F, true);
+
             Gapcloser.OnGapcloser += GapcloserOnOnGapcloser;
             Drawing.OnDraw += OnDraw;
         }
@@ -42,14 +47,14 @@ namespace VodkaTwitch
 
         private static void OnDraw(EventArgs args)
         {
-            if (SettingsDrawing.DrawQ && SpellManager.QActive)
+            if (SettingsDrawing.DrawQ)
             {
-                    var QBuff = Player.Instance.GetBuff("TwitchHideInShadows");
-                    if (QBuff != null)
-                    {
-                        var maxDistance = Player.Instance.MoveSpeed*(QBuff.EndTime - Game.Time) + Player.Instance.BoundingRadius;
-                        Circle.Draw(Color.DarkBlue, maxDistance, Player.Instance.Position);
-                    }
+                var QBuff = Player.Instance.GetBuff("TwitchHideInShadows");
+                if (QBuff != null)
+                {
+                    QCircle.Radius = Player.Instance.MoveSpeed*(QBuff.EndTime - Game.Time) + Player.Instance.BoundingRadius;
+                    QCircle.Draw(Player.Instance.Position);
+                }
             }
             if (SettingsDrawing.DrawW)
             {
