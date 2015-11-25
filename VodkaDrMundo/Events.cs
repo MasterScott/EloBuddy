@@ -94,26 +94,38 @@ namespace VodkaDrMundo
 
         private static void OnDraw(EventArgs args)
         {
+            var _PlayerPos = Player.Instance.Position;
             if (SettingsDrawing.DrawQ)
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Q.IsReady()))
                 {
-                    Circle.Draw(Color.LightBlue, SettingsModes.Combo.MaxQDistance, Player.Instance.Position);
+                    Circle.Draw(Color.LightBlue, SettingsModes.Combo.MaxQDistance, _PlayerPos);
                 }
             }
             if (SettingsDrawing.DrawW)
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.W.IsReady()))
                 {
-                    Circle.Draw(Color.Orange, SpellManager.W.Range, Player.Instance.Position);
+                    Circle.Draw(Color.Orange, SpellManager.W.Range, _PlayerPos);
                 }
             }
             if (SettingsDrawing.DrawIgnite && SpellManager.HasIgnite())
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Ignite.IsReady()))
                 {
-                    Circle.Draw(Color.Red, SpellManager.Ignite.Range, Player.Instance.Position);
+                    Circle.Draw(Color.Red, SpellManager.Ignite.Range, _PlayerPos);
                 }
+            }
+            if (SettingsDrawing.DrawLastHitable)
+            {
+                var minions =
+               EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, _PlayerPos, SettingsModes.Combo.MaxQDistance+200)
+                   .Where(e => e.IsValidTarget() && e.Health < Damages.QDamage(e)).OrderBy(e => e.Health).ToList();
+                foreach (var minion in minions)
+                {
+                    Circle.Draw(Color.GreenYellow, minion.BoundingRadius, minion.Position);
+                }
+
             }
         }
     }

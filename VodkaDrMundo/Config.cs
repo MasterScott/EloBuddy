@@ -382,7 +382,8 @@ namespace VodkaDrMundo
             private static readonly CheckBox _drawW;
             private static readonly CheckBox _drawIgnite;
             private static readonly CheckBox _drawOnlyReady;
-            
+            private static readonly CheckBox _drawLastHitable;
+
             public static bool DrawQ
             {
                 get { return _drawQ.CurrentValue; }
@@ -399,6 +400,10 @@ namespace VodkaDrMundo
             {
                 get { return _drawIgnite.CurrentValue; }
             }
+            public static bool DrawLastHitable
+            {
+                get { return _drawIgnite.CurrentValue; }
+            }
 
             static DrawingMenu()
             {
@@ -407,6 +412,7 @@ namespace VodkaDrMundo
                 _drawW = MenuDrawing.Add("drawW", new CheckBox("Draw W", false));
                 _drawIgnite = MenuDrawing.Add("drawIgnite", new CheckBox("Draw Ignite"));
                 _drawOnlyReady = MenuDrawing.Add("drawOnlyReady", new CheckBox("Draw Only Ready Spells", false));
+                _drawLastHitable = MenuDrawing.Add("drawLastHitable", new CheckBox("Draw LastHitable with Q"));
             }
 
             public static void Initialize()
