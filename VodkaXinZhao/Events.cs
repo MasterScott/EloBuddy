@@ -102,7 +102,7 @@ namespace VodkaXinZhao
                         Player.CastSpell(spellSlot.SpellSlot, target);
                     }
                     else if (target is AIHeroClient && Item.HasItem(BOTRK.Id) && BOTRK.IsReady() && !target.IsDead &&
-                             target.Distance(Player.Instance) < BOTRK.Range && Player.Instance.HealthPercent <= 80.0f && target.HealthPercent <= 80.0f)
+                             target.Distance(Player.Instance) < BOTRK.Range && Player.Instance.HealthPercent <= 90.0f && target.HealthPercent <= 80.0f)
                     {
                         var spellSlot = Player.Instance.InventoryItems.FirstOrDefault(a => a.Id == BOTRK.Id);
                         Player.CastSpell(spellSlot.SpellSlot, target);
