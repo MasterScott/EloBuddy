@@ -54,7 +54,8 @@ namespace VodkaTwitch
 
         public static int EStacks(Obj_AI_Base obj)
         {
-            return obj.GetBuffCount("twitchdeadlyvenom");
+            var bc = obj.GetBuffCount("twitchdeadlyvenom");
+            return bc >= 0 ? bc : 0;
         }
     }
 }

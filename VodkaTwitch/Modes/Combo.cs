@@ -25,6 +25,11 @@ namespace VodkaTwitch.Modes
 
         public override void Execute()
         {
+            if (Settings.UseQ && Q.IsReady() && !QActive && PlayerMana >= SettingsMana.MinQMana)
+            {
+                Q.Cast();
+                Debug.WriteChat("Casting Q in Combo");
+            }
             if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var enemy =

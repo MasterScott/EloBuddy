@@ -60,6 +60,7 @@ namespace VodkaTwitch
 
             public static class Combo
             {
+                private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
                 private static readonly CheckBox _useR;
@@ -68,6 +69,11 @@ namespace VodkaTwitch
                 private static readonly Slider _minREnemies;
                 private static readonly Slider _maxBOTRKHPEnemy;
                 private static readonly Slider _maxBOTRKHPPlayer;
+
+                public static bool UseQ
+                {
+                    get { return _useQ.CurrentValue; }
+                }
 
                 public static bool UseW
                 {
@@ -112,6 +118,7 @@ namespace VodkaTwitch
                 static Combo()
                 {
                     MenuModes.AddGroupLabel("Combo");
+                    _useQ = MenuModes.Add("comboUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
                     _useR = MenuModes.Add("comboUseR", new CheckBox("Use R"));
