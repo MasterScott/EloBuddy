@@ -1,0 +1,47 @@
+﻿using System.Linq;
+using EloBuddy;
+using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
+using Settings = VodkaTwitch.Config.ModesMenu.Harass;
+using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
+
+namespace VodkaTwitch.Modes
+{
+    public sealed class Harass : ModeBase
+    {
+        public override bool ShouldBeExecuted()
+        {
+            return Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass);
+        }
+
+        public override void Execute()
+        {
+            if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
+            {
+                var enemy =
+                    EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(E.Range) && EStacks(e) >= Settings.MinEStacks)
+                        .FirstOrDefault();
+                if (enemy != null)
+                {
+                    E.Cast();
+                    Debug.WriteChat("Casting E in Combo, Target: {0}, Distance: {1}", enemy.ChampionName,
+                        "" + Player.Instance.Distance(enemy));
+                }
+            }
+            if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
+            {
+                var enemy = TargetSelector.GetTarget(W.Range, DamageType.True);
+                if (enemy != null && enemy.IsValidTarget(W.Range))
+                {
+                    var pred = W.GetPrediction(enemy);
+                    if (pred.HitChance >= HitChance.High)
+                    {
+                        W.Cast(pred.CastPosition);
+                        Debug.WriteChat("Casting W in Combo, Target: {0}, Distance: {1}", enemy.ChampionName,
+                            "" + Player.Instance.Distance(enemy));
+                    }
+                }
+            }
+        }
+    }
+}

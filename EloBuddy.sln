@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaXinZhao", "VodkaXinZha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaDrMundo", "VodkaDrMundo\VodkaDrMundo.csproj", "{021602F5-DFAB-4958-9794-3FC23C32BC70}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaTwitch", "VodkaTwitch\VodkaTwitch.csproj", "{953456DE-6853-4DF9-B417-0112CC0643C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021602F5-DFAB-4958-9794-3FC23C32BC70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{953456DE-6853-4DF9-B417-0112CC0643C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953456DE-6853-4DF9-B417-0112CC0643C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953456DE-6853-4DF9-B417-0112CC0643C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953456DE-6853-4DF9-B417-0112CC0643C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
