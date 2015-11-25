@@ -42,7 +42,7 @@ namespace VodkaGalio
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat || (text.Substring(0, 20).Equals(_lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastChatMsg < 500))
+            if (!Settings.DebugChat || (text.Substring(0, text.Length >= 20 ? 20 : text.Length).Equals(_lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastChatMsg < 500))
             {
                 return;
             }
