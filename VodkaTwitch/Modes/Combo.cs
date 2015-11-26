@@ -27,8 +27,12 @@ namespace VodkaTwitch.Modes
         {
             if (Settings.UseQ && Q.IsReady() && !QActive && PlayerMana >= SettingsMana.MinQMana)
             {
-                Q.Cast();
-                Debug.WriteChat("Casting Q in Combo");
+                var enemiesAround = EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget(2500.0f));
+                if (enemiesAround)
+                {
+                    Q.Cast();
+                    Debug.WriteChat("Casting Q in Combo, because enemies in 2500 range.");
+                }
             }
             if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
@@ -38,8 +42,7 @@ namespace VodkaTwitch.Modes
                 if (enemy != null)
                 {
                     E.Cast();
-                    Debug.WriteChat("Casting E in Combo, Target: {0}, Distance: {1}", enemy.ChampionName,
-                        "" + Player.Instance.Distance(enemy));
+                    Debug.WriteChat("Casting E in Combo, Target: {0}", enemy.ChampionName);
                 }
             }
             if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
@@ -62,8 +65,7 @@ namespace VodkaTwitch.Modes
                     if (pred.HitChance >= HitChance.High)
                     {
                         W.Cast(pred.CastPosition);
-                        Debug.WriteChat("Casting W in Combo, Target: {0}, Distance: {1}", enemy.ChampionName,
-                            "" + Player.Instance.Distance(enemy));
+                        Debug.WriteChat("Casting W in Combo, Target: {0}", enemy.ChampionName);
                     }
                 }
             }
@@ -76,12 +78,12 @@ namespace VodkaTwitch.Modes
                     if (CanUseItem(ItemId.Bilgewater_Cutlass))
                     {
                         Cutlass.Cast(enemy);
-                        Debug.WriteChat("Using Bilgewater Cutlass");
+                        Debug.WriteChat("Using Bilgewater Cutlass on {0}", enemy.ChampionName);
                     } else if (CanUseItem(ItemId.Blade_of_the_Ruined_King) &&
                                enemy.HealthPercent <= Settings.MaxBOTRKHPEnemy && PlayerHealth <= Settings.MaxBOTRKHPPlayer)
                     {
                         BOTRK.Cast(enemy);
-                        Debug.WriteChat("Using BOTRK");
+                        Debug.WriteChat("Using BOTRK on {0}", enemy.ChampionName);
                     }
                 }
             }
