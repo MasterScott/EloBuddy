@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -54,8 +55,18 @@ namespace VodkaTwitch
 
         public static int EStacks(Obj_AI_Base obj)
         {
-            var bc = obj.GetBuffCount("twitchdeadlyvenom");
-            return bc >= 0 ? bc : 0;
+            // TODO This is a hotifx, replace with proper code after EB updated
+            var twitchECount = 0;
+            for (var i = 1; i < 7; i++)
+            {
+                if (ObjectManager.Get<Obj_GeneralParticleEmitter>()
+                .Any(e => e.Position.Distance(obj.ServerPosition) <= 55 &&
+                e.Name == "twitch_poison_counter_0" + i + ".troy"))
+                {
+                    twitchECount = i;
+                }
+            }
+            return twitchECount;
         }
     }
 }

@@ -63,8 +63,7 @@ namespace VodkaTwitch.Modes
 
         protected int EStacks(Obj_AI_Base obj)
         {
-            var bc = obj.GetBuffCount("twitchdeadlyvenom");
-            return bc >= 0 ? bc : 0;
+            return SpellManager.EStacks(obj);
         }
 
         public abstract bool ShouldBeExecuted();
