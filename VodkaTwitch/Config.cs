@@ -468,7 +468,7 @@ namespace VodkaTwitch
             {
                 MenuDebug = Config.Menu.AddSubMenu("Debug");
                 MenuDebug.AddLabel("This is for debugging purposes only.");
-                _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat"));
+                _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat", false));
                 _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console", false));
             }
 

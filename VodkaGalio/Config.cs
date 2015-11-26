@@ -480,8 +480,8 @@ namespace VodkaGalio
             {
                 MenuDebug = Config.Menu.AddSubMenu("Debug");
                 MenuDebug.AddLabel("This is for debugging purposes only.");
-                _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat"));
-                _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console"));
+                _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat", false));
+                _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console", false));
             }
 
             public static void Initialize()
