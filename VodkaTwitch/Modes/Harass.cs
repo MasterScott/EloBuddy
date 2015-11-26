@@ -19,8 +19,7 @@ namespace VodkaTwitch.Modes
             if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var enemy =
-                    EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(E.Range) && EStacks(e) >= Settings.MinEStacks)
-                        .FirstOrDefault();
+                    EntityManager.Heroes.Enemies.FirstOrDefault(e => e.IsValidTarget(E.Range) && EStacks(e) >= Settings.MinEStacks);
                 if (enemy != null)
                 {
                     E.Cast();
