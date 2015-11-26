@@ -53,7 +53,7 @@ namespace VodkaTwitch.Modes
                 if (enemiesAround >= Settings.MinREnemies)
                 {
                     R.Cast();
-                    Debug.WriteChat("Casting R in Combo, Enemies in 1500 range: {0}", "" + enemiesAround);
+                    Debug.WriteChat("Casting R in Combo, Enemies in 1000 range: {0}", "" + enemiesAround);
                 }
             }
             if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
