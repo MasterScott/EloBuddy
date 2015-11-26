@@ -7,7 +7,7 @@ namespace VodkaTwitch
     {
         public static float ERawDamage(Obj_AI_Base target)
         {
-            var stacks = target.GetBuffCount("twitchdeadlyvenom");
+            var stacks = SpellManager.EStacks(target);
             if (stacks <= 0)
             {
                 return 0.0f;
