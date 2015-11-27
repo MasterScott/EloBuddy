@@ -66,7 +66,7 @@ namespace VodkaTwitch.Modes
             if (Settings.AutoQ && Q.IsReady() && !QActive && !Player.Instance.IsRecalling())
             {
                 var enemiesNear =
-                    EntityManager.Heroes.Enemies.Count(e => !e.IsDead && e.Health > 0 && e.Distance(_Player) < 1500);
+                    EntityManager.Heroes.Enemies.Count(e => !e.IsDead && e.Health > 0 && e.IsVisible && e.Distance(_Player) < 1500 );
                 if (enemiesNear >= Settings.AutoQMinEnemies)
                 {
                     Q.Cast();
