@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Menu;
+using EloBuddy.SDK.Menu.Values;
 
 namespace VodkaSmite
 {
@@ -19,5 +17,30 @@ namespace VodkaSmite
         {
             "summonersmite", "s5_summonersmiteplayerganker", "s5_summonersmiteduel"
         };
+
+        public static Slider CreateHCSlider(string identifier, string displayName, HitChance defaultValue, Menu menu)
+        {
+            var slider = menu.Add(identifier, new Slider(displayName, 5, 0, 8));
+            var hcNames = new[]
+            {"Unknown", "Impossible", "Collision", "Low", "AveragePoint", "Medium", "High", "Dashing", "Immobile"};
+            slider.CurrentValue = (int)defaultValue;
+            slider.DisplayName = hcNames[slider.CurrentValue];
+            slider.OnValueChange +=
+                delegate (ValueBase<int> sender, ValueBase<int>.ValueChangeArgs changeArgs)
+                {
+                    sender.DisplayName = hcNames[changeArgs.NewValue];
+                };
+            return slider;
+        }
+
+        public static HitChance GetHCSliderHitChance(Slider slider)
+        {
+            if (slider == null)
+            {
+                return HitChance.Impossible;
+            }
+            var currVal = slider.CurrentValue;
+            return (HitChance)currVal;
+        }
     }
 }

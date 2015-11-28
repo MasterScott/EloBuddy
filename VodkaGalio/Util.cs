@@ -1,8 +1,13 @@
-﻿using EloBuddy.SDK.Enumerations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
-namespace VodkaDrMundo
+namespace VodkaGalio
 {
     public static class Util
     {
