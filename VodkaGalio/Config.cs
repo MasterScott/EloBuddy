@@ -22,6 +22,7 @@ namespace VodkaGalio
             Menu.AddLabel("Created by Haker");
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
+            PredictionMenu.Initialize();
             ManaManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
@@ -496,14 +497,12 @@ namespace VodkaGalio
             private static readonly Menu MenuPrediction;
             private static readonly Slider _minQHCCombo;
             private static readonly Slider _minQHCHarass;
-            private static readonly Slider _minQHCAutoHarass;
             private static readonly Slider _minQHCLastHit;
             private static readonly Slider _minQHCJungleClear;
             private static readonly Slider _minQHCKillSteal;
             private static readonly Slider _minQHCFlee;
             private static readonly Slider _minEHCCombo;
             private static readonly Slider _minEHCHarass;
-            private static readonly Slider _minEHCAutoHarass;
             private static readonly Slider _minEHCLastHit;
             private static readonly Slider _minEHCJungleClear;
             private static readonly Slider _minEHCKillSteal;
@@ -517,12 +516,7 @@ namespace VodkaGalio
             {
                 get { return Util.GetHCSliderHitChance(_minQHCHarass); }
             }
-
-            public static HitChance MinQHCAutoHarass
-            {
-                get { return Util.GetHCSliderHitChance(_minQHCAutoHarass); }
-            }
-
+            
             public static HitChance MinQHCLastHit
             {
                 get { return Util.GetHCSliderHitChance(_minQHCLastHit); }
@@ -553,11 +547,6 @@ namespace VodkaGalio
                 get { return Util.GetHCSliderHitChance(_minEHCHarass); }
             }
 
-            public static HitChance MinEHCAutoHarass
-            {
-                get { return Util.GetHCSliderHitChance(_minEHCAutoHarass); }
-            }
-
             public static HitChance MinEHCLastHit
             {
                 get { return Util.GetHCSliderHitChance(_minEHCLastHit); }
@@ -576,14 +565,12 @@ namespace VodkaGalio
             static PredictionMenu()
             {
                 MenuPrediction = Config.Menu.AddSubMenu("Skills HitChance Prediction");
-                MenuPrediction.AddGroupLabel("Q Prediction");
                 MenuPrediction.AddLabel("Here you can control the minimum HitChance to cast skills.");
+                MenuPrediction.AddGroupLabel("Q Prediction");
                 MenuPrediction.AddGroupLabel("Combo");
-                _minQHCCombo = Util.CreateHCSlider("comboMinQHitChance", "Combo", HitChance.High, MenuPrediction);
+                _minQHCCombo = Util.CreateHCSlider("comboMinQHitChance", "Combo", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Harass");
                 _minQHCHarass = Util.CreateHCSlider("harassMinQHitChance", "Harass", HitChance.High, MenuPrediction);
-                MenuPrediction.AddGroupLabel("Auto Harass");
-                _minQHCAutoHarass = Util.CreateHCSlider("autoHarassMinQHitChance", "Auto Harass", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Jungle Clear");
                 _minQHCJungleClear = Util.CreateHCSlider("jungleClearMinQHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Last Hit");
@@ -596,15 +583,13 @@ namespace VodkaGalio
                 MenuPrediction.AddSeparator();
                 MenuPrediction.AddGroupLabel("E Prediction");
                 MenuPrediction.AddGroupLabel("Combo");
-                _minEHCCombo = Util.CreateHCSlider("comboMinEHitChance", "Combo", HitChance.High, MenuPrediction);
+                _minEHCCombo = Util.CreateHCSlider("comboMinEHitChance", "Combo", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Harass");
                 _minEHCHarass = Util.CreateHCSlider("harassMinEHitChance", "Harass", HitChance.High, MenuPrediction);
-                MenuPrediction.AddGroupLabel("Auto Harass");
-                _minEHCAutoHarass = Util.CreateHCSlider("autoHarassMinEHitChance", "Auto Harass", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Jungle Clear");
                 _minEHCJungleClear = Util.CreateHCSlider("jungleClearMinEHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Last Hit");
-                _minEHCLastHit = Util.CreateHCSlider("lastHitMinEHitChance", "Last Hit", HitChance.Medium, MenuPrediction);
+                _minEHCLastHit = Util.CreateHCSlider("lastHitMinEHitChance", "Last Hit", HitChance.High, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Kill Steal");
                 _minEHCKillSteal = Util.CreateHCSlider("killStealMinEHitChance", "Kill Steal", HitChance.Medium, MenuPrediction);
             }
