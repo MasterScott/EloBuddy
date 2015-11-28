@@ -42,13 +42,13 @@ namespace VodkaSmite
 
         public static void WriteChat(string text, Color color)
         {
-            if (!Settings.DebugChat || (text.Substring(0, text.Length >= 20 ? 20 : text.Length).Equals(_lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastChatMsg < 500))
+            if (!Settings.DebugChat || text == null || text.Length == 0 || (text.Substring(0, text.Length >= 20 ? 20 : text.Length - 1).Equals(_lastChatMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastChatMsg < 500))
             {
                 return;
             }
             Chat.Print("[Vodka{0}] {1}", color, Program.ChampName, text);
             _lastChatMsg = Environment.TickCount;
-            _lastChatMsgText = text.Substring(0, 20);
+            _lastChatMsgText = text.Substring(0, text.Length >= 20 ? 20 : text.Length - 1);
         }
 
         public static void WriteConsole(string text)
@@ -68,7 +68,7 @@ namespace VodkaSmite
 
         public static void WriteConsole(string text, ConsoleColor color)
         {
-            if (!Settings.DebugConsole || (text.Substring(0, 20).Equals(_lastConsoleMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastConsoleMsg < 500))
+            if (!Settings.DebugConsole || text == null || text.Length == 0 || (text.Substring(0, 20).Equals(_lastConsoleMsgText, StringComparison.CurrentCultureIgnoreCase) && Environment.TickCount - _lastConsoleMsg < 500))
             {
                 return;
             }
@@ -76,7 +76,7 @@ namespace VodkaSmite
             Console.WriteLine("[Vodka{0}] {1}", Program.ChampName, text);
             Console.ResetColor();
             _lastConsoleMsg = Environment.TickCount;
-            _lastConsoleMsgText = text.Substring(0, 20);
+            _lastConsoleMsgText = text.Substring(0, text.Length >= 20 ? 20 : text.Length - 1);
         }
     }
 }
