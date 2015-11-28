@@ -9,6 +9,7 @@ using SettingsMisc = VodkaGalio.Config.MiscMenu;
 using SettingsModes = VodkaGalio.Config.ModesMenu;
 using SettingsDrawing = VodkaGalio.Config.DrawingMenu;
 using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
+using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 
 namespace VodkaGalio
 {

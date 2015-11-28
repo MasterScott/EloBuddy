@@ -2,6 +2,7 @@
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaGalio.Config.ModesMenu.Harass;
+using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
@@ -24,7 +25,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
                 var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.High)
+                if (pred.HitChance >= SettingsPrediction.MinQHCHarass)
                 {
                     Debug.WriteChat("Casting Q in Harass, Target: {0}, Distance: {1}, Prediction: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(pred.CastPosition);
@@ -39,7 +40,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
                 var pred = E.GetPrediction(target);
-                if (pred.HitChance >= HitChance.High)
+                if (pred.HitChance >= SettingsPrediction.MinEHCHarass)
                 {
                     Debug.WriteChat("Casting E in Harass, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     E.Cast(pred.CastPosition);

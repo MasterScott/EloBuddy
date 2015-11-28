@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaGalio.Config.ModesMenu.Combo;
+using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
@@ -22,8 +23,8 @@ namespace VodkaGalio.Modes
             }
             if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
             {
-                var enemies = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && !e.IsRecalling() && !e.IsZombie && !e.IsInvulnerable && R.IsInRange(e)).ToList();
-                if (enemies.Count() >= Settings.MinRTargets)
+                var enemiesAround = EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(R.Range)).Count();
+                if (enemiesAround >= Settings.MinRTargets)
                 {
                     var wCasted = false;
                     if (Settings.UseW && W.IsReady() && Player.Instance.Mana >= 160 && PlayerMana >= SettingsMana.MinWMana)
@@ -31,7 +32,7 @@ namespace VodkaGalio.Modes
                         W.Cast(Player.Instance);
                         wCasted = true;
                     }
-                    Debug.WriteChat("Casting R{0} in combo, Enemies in range: {1}", wCasted ? "+W" : "", "" + enemies.Count());
+                    Debug.WriteChat("Casting R{0} in combo, Enemies in range: {1}", wCasted ? "+W" : "", "" + enemiesAround);
                     R.Cast();
                     return;
                 }
@@ -44,9 +45,9 @@ namespace VodkaGalio.Modes
                     return;
                 }
                 var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
+                if (pred.HitChance >= SettingsPrediction.MinQHCCombo)
                 {
-                    Debug.WriteChat("Casting Q in Combo, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, ""+target.Distance(Player.Instance), pred.HitChance.ToString());
+                    Debug.WriteChat("Casting Q in Combo, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(pred.CastPosition);
                     return;
                 }
@@ -59,7 +60,7 @@ namespace VodkaGalio.Modes
                     return;
                 }
                 var pred = E.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
+                if (pred.HitChance >= SettingsPrediction.MinEHCCombo)
                 {
                     Debug.WriteChat("Casting E in Combo, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                     E.Cast(pred.CastPosition);

@@ -3,6 +3,7 @@ using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using SharpDX;
 using Settings = VodkaGalio.Config.ModesMenu.Flee;
+using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
@@ -22,9 +23,9 @@ namespace VodkaGalio.Modes
                 if (target != null)
                 {
                     var pred = Q.GetPrediction(target);
-                    if (pred.HitChance >= HitChance.Medium)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCFlee)
                     {
-                        Debug.WriteChat("Casting Q in Flee, Target: {0}, Distance: {1}, Prediction: {2}",
+                        Debug.WriteChat("Casting Q in Flee, Target: {0}, Distance: {1}, HitChance: {2}",
                             target.ChampionName, "" + target.Distance(Player.Instance), pred.HitChance.ToString());
                         Q.Cast(target);
                         return;
@@ -38,7 +39,7 @@ namespace VodkaGalio.Modes
                 var playerPos = Player.Instance.Position;
                 if (playerPos.Distance(cursorPos) > 300)
                 {
-                    E.Cast(new Vector3(playerPos.Extend(cursorPos, 500), cursorPos.Z));
+                    E.Cast(new Vector3(playerPos.Extend(cursorPos, 450), cursorPos.Z));
                 }
             }
         }

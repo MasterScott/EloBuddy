@@ -4,6 +4,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaGalio.Config.MiscMenu;
+using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 
 namespace VodkaGalio.Modes
 {
@@ -47,7 +48,7 @@ namespace VodkaGalio.Modes
                             continue;
                         }
                         var pred = Q.GetPrediction(enemy);
-                        if (pred.HitChance >= HitChance.High)
+                        if (pred.HitChance >= SettingsPrediction.MinQHCKillSteal)
                         {
                             Debug.WriteChat("Casting Q in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
                                 "" + enemy.Health);
@@ -64,7 +65,7 @@ namespace VodkaGalio.Modes
                             continue;
                         }
                         var pred = E.GetPrediction(enemy);
-                        if (pred.HitChance >= HitChance.High)
+                        if (pred.HitChance >= SettingsPrediction.MinEHCKillSteal)
                         {
                             Debug.WriteChat("Casting E in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
                                 "" + enemy.Health);

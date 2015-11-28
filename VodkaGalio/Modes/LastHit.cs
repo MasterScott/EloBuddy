@@ -3,6 +3,7 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaGalio.Config.ModesMenu.LastHit;
+using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 using SettingsMana = VodkaGalio.Config.ManaManagerMenu;
 
 namespace VodkaGalio.Modes
@@ -21,7 +22,7 @@ namespace VodkaGalio.Modes
         {
             if (Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
             {
-                var minion = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, Q.Range).Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && m.Distance(Player.Instance)> 300 && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, Damages.QRawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
+                var minion = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, Q.Range).FirstOrDefault(m => m.IsValidTarget() && m.Distance(Player.Instance)> 300 && m.Health <= Damages.QDamage(m) && Q.GetPrediction(m).HitChance >= SettingsPrediction.MinQHCLastHit);
                 if (minion != null)
                 {
                     lastQCast = Environment.TickCount;
@@ -32,7 +33,7 @@ namespace VodkaGalio.Modes
             }
             if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
-                var minion = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, E.Range).Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && m.Distance(Player.Instance) > 300 && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, Damages.ERawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
+                var minion = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, Player.Instance.Position, E.Range).FirstOrDefault(m => m.IsValidTarget() && m.Distance(Player.Instance) > 300 && m.Health <= Damages.QDamage(m) && E.GetPrediction(m).HitChance >= SettingsPrediction.MinEHCLastHit);
                 if (minion != null)
                 {
                     if (Environment.TickCount - lastQCast < 1500)
