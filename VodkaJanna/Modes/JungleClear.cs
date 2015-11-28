@@ -3,6 +3,7 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaJanna.Config.ModesMenu.JungleClear;
+using SettingsPrediction = VodkaJanna.Config.PredictionMenu;
 using SettingsMana = VodkaJanna.Config.ManaManagerMenu;
 
 namespace VodkaJanna.Modes
@@ -19,23 +20,27 @@ namespace VodkaJanna.Modes
         {
             if (Settings.UseQ && QCastable() && PlayerMana >= SettingsMana.MinQMana)
             {
-                var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, Q.Range).Where(t => !t.IsDead && t.IsValid && !t.IsInvulnerable);
+                var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, Q.Range).Where(t => t.IsValidTarget());
                 foreach (var m in monsters)
                 {
-                    var cols =
-                        Q.GetPrediction(m).CollisionObjects.Count(t => !t.IsDead && t.IsValid && !t.IsInvulnerable);
+                    var pred = Q.GetPrediction(m);
+                    if (pred.HitChance < SettingsPrediction.MinQHCJungleClear)
+                    {
+                        continue;
+                    }
+                    var cols = pred.CollisionObjects.Count(t => t.IsValidTarget());
                     if (cols >= Settings.MinQTargets - 1)
                     {
                         Debug.WriteChat("Casting Q in JungleClear, Target: {0}, Distance: {1}, Collisions: {2}", m.Name, "" + m.Distance(Player.Instance), "" + (cols + 1));
-                        Q.Cast(m);
-                        Core.DelayAction(() => { Q.Cast(m); }, 10);
+                        Q.Cast(pred.CastPosition);
+                        Core.DelayAction(() => { Q.Cast(pred.CastPosition); }, 10);
                         return;
                     }
                 }
             }
             if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
             {
-                var monster = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, W.Range).Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable).OrderByDescending(m => m.Health).FirstOrDefault();
+                var monster = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, W.Range).Where(m => m.IsValidTarget()).OrderByDescending(m => m.MaxHealth).FirstOrDefault();
                 if (monster != null)
                 {
                     W.Cast(monster);

@@ -1,5 +1,6 @@
 ﻿using System;
 using EloBuddy;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
@@ -21,6 +22,7 @@ namespace VodkaJanna
             Menu.AddLabel("Created by Haker");
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
+            PredictionMenu.Initialize();
             ManaManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
@@ -465,6 +467,63 @@ namespace VodkaJanna
                 MenuDebug.AddLabel("This is for debugging purposes only.");
                 _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat", false));
                 _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console", false));
+            }
+
+            public static void Initialize()
+            {
+
+            }
+        }
+
+        public static class PredictionMenu
+        {
+            private static readonly Menu MenuPrediction;
+            private static readonly Slider _minQHCCombo;
+            private static readonly Slider _minQHCHarass;
+            private static readonly Slider _minQHCJungleClear;
+            private static readonly Slider _minQHCKillSteal;
+            private static readonly Slider _minQHCFlee;
+
+            public static HitChance MinQHCCombo
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCCombo); }
+            }
+
+            public static HitChance MinQHCHarass
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCHarass); }
+            }
+
+            public static HitChance MinQHCJungleClear
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCJungleClear); }
+            }
+
+            public static HitChance MinQHCKillSteal
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCKillSteal); }
+            }
+
+            public static HitChance MinQHCFlee
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCFlee); }
+            }
+            
+            static PredictionMenu()
+            {
+                MenuPrediction = Config.Menu.AddSubMenu("Skills HitChance Prediction");
+                MenuPrediction.AddLabel("Here you can control the minimum HitChance to cast skills.");
+                MenuPrediction.AddGroupLabel("Q Prediction");
+                MenuPrediction.AddGroupLabel("Combo");
+                _minQHCCombo = Util.CreateHCSlider("comboMinQHitChance", "Combo", HitChance.High, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Harass");
+                _minQHCHarass = Util.CreateHCSlider("harassMinQHitChance", "Harass", HitChance.High, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Jungle Clear");
+                _minQHCJungleClear = Util.CreateHCSlider("jungleClearMinQHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Kill Steal");
+                _minQHCKillSteal = Util.CreateHCSlider("killStealMinQHitChance", "Kill Steal", HitChance.Medium, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Flee");
+                _minQHCFlee = Util.CreateHCSlider("fleeMinQHitChance", "Flee", HitChance.Low, MenuPrediction);
             }
 
             public static void Initialize()

@@ -4,6 +4,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaJanna.Config.MiscMenu;
+using SettingsPrediction = VodkaJanna.Config.PredictionMenu;
 
 namespace VodkaJanna.Modes
 {
@@ -36,7 +37,7 @@ namespace VodkaJanna.Modes
             foreach (
                 var enemy in
                     EntityManager.Heroes.Enemies.Where(
-                        e => e.IsEnemy && e.IsVisible && !e.IsDead && !e.IsZombie && !e.IsInvulnerable && e.Health > 0))
+                        e => e.IsValidTarget()))
             {
                 if (Settings.KsQ && SpellManager.Q.IsReady() && Damages.QDamage(enemy) > enemy.Health &&
                     SpellManager.Q.IsInRange(enemy))
@@ -46,7 +47,7 @@ namespace VodkaJanna.Modes
                         continue;
                     }
                     var pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.Low)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCKillSteal)
                     {
                         Debug.WriteChat("Casting Q in KillSteal on {0}, who has {1} HP", enemy.ChampionName,
                             "" + enemy.Health);
@@ -81,12 +82,12 @@ namespace VodkaJanna.Modes
             // Automatic ult usage
             if (Settings.AutoR && R.IsReady() && !Player.Instance.IsRecalling() && !Player.Instance.IsInShopRange())
             {
-                var wounded =
-                    EntityManager.Heroes.Allies.Where(a => !a.IsDead && !a.IsRecalling() && R.IsInRange(a) && a.HealthPercent <= Settings.AutoRMinHP);
-                var enemies = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && !e.IsRecalling() && e.Distance(Player.Instance.Position) < 1600);
-                if (wounded.Count() > 0 && enemies.Count() >= Settings.AutoRMinEnemies)
+                var woundedAround =
+                    EntityManager.Heroes.Allies.Count(a => !a.IsDead && !a.IsRecalling() && R.IsInRange(a) && a.HealthPercent <= Settings.AutoRMinHP);
+                var enemiesAround = EntityManager.Heroes.Enemies.Count(e => e.IsValid() && !e.IsRecalling() && e.Distance(Player.Instance.Position) < 1600);
+                if (woundedAround > 0 && enemiesAround >= Settings.AutoRMinEnemies)
                 {
-                    Debug.WriteChat("AutoCasting R, Wounded allies: {0}, Enemies near: {1}", "" + wounded.Count(), "" + enemies.Count());
+                    Debug.WriteChat("AutoCasting R, Wounded allies: {0}, Enemies near in 1600 range: {1}", "" + woundedAround, "" + enemiesAround);
                     R.Cast();
                 }
             }

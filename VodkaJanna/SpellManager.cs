@@ -22,20 +22,19 @@ namespace VodkaJanna
             E = new Spell.Targeted(SpellSlot.E, 750);
             R = new Spell.Active(SpellSlot.R, 675);
 
-            Ignite = new Spell.Targeted(Player.Instance.GetSpellSlotFromName("summonerdot"), 600);
+            if (Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner1).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase))
+            {
+                Ignite = new Spell.Targeted(SpellSlot.Summoner1, 600);
+            }
+            else if ((Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner2).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Ignite = new Spell.Targeted(SpellSlot.Summoner2, 600);
+            }
         }
 
         public static void Initialize()
         {
 
-        }
-
-        public static float WRawDamage()
-        {
-            return
-                (int)
-                    (new int[] { 60, 115, 170, 225, 280 }[SpellManager.W.Level - 1] +
-                     0.5 * (Player.Instance.TotalMagicalDamage));
         }
 
         public static bool QCastable()

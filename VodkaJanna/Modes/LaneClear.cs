@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX.Direct3D9;
 using Settings = VodkaJanna.Config.ModesMenu.LaneClear;
+using SettingsPrediction = VodkaJanna.Config.PredictionMenu;
 using SettingsMana = VodkaJanna.Config.ManaManagerMenu;
 
 namespace VodkaJanna.Modes
@@ -21,28 +22,19 @@ namespace VodkaJanna.Modes
                 if (Settings.UseQ && QCastable() && PlayerMana >= SettingsMana.MinQMana)
                 {
                     var minions =
-                        EntityManager.MinionsAndMonsters.EnemyMinions.Where(
-                            m =>
-                                m.IsEnemy && !m.IsDead && m.IsValid && !m.IsInvulnerable &&
-                                m.IsInRange(Player.Instance.Position, Q.Range));
-
-                    foreach (var m in minions)
+                        EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                            Player.Instance.Position, Q.Range).Where(m => m.IsValidTarget());
+                    var farmPos = EntityManager.MinionsAndMonsters.GetLineFarmLocation(minions, Q.Width, (int) Q.Range);
+                    if (farmPos.HitNumber >= Settings.MinQTargets)
                     {
-                        var cols =
-                            Q.GetPrediction(m).CollisionObjects.Count(t => t.IsEnemy && !t.IsDead && t.IsValid && !t.IsInvulnerable);
-                        if (cols >= Settings.MinQTargets - 1)
-                        {
-                            Debug.WriteChat("Casting Q in LaneClear, Target: {0}, Distance: {1}, Collisions: {2}", m.Name, "" + m.Distance(Player.Instance), "" + (cols+1));
-                            Q.Cast(m);
-                            Core.DelayAction(() => { Q.Cast(m); }, 10);
-                            return;
-                        }
-
+                        Q.Cast(farmPos.CastPosition);
                     }
                 }
                 if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
                 {
-                    var minion = EntityManager.MinionsAndMonsters.EnemyMinions.Where(m => !m.IsDead && m.IsValid && !m.IsInvulnerable && W.IsInRange(m) && m.Health <= Player.Instance.CalculateDamageOnUnit(m, DamageType.Magical, SpellManager.WRawDamage())).OrderByDescending(m => m.Health).FirstOrDefault();
+                    var minion =
+                        EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                            Player.Instance.Position, W.Range).Where(m => m.IsValidTarget()).OrderBy(m => m.Health).FirstOrDefault();
                     if (minion != null)
                     {
                         W.Cast(minion);

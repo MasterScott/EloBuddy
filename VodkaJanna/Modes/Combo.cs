@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaJanna.Config.ModesMenu.Combo;
+using SettingsPrediction = VodkaJanna.Config.PredictionMenu;
 using SettingsMana = VodkaJanna.Config.ManaManagerMenu;
 
 namespace VodkaJanna.Modes
@@ -24,7 +25,7 @@ namespace VodkaJanna.Modes
                     return;
                 }
                 var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.Medium)
+                if (pred.HitChance >= SettingsPrediction.MinQHCCombo)
                 {
                     Debug.WriteChat("Casting Q in Combo, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName, ""+target.Distance(Player.Instance), pred.HitChance.ToString());
                     Q.Cast(pred.CastPosition);
