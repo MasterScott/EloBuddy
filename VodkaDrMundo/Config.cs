@@ -1,6 +1,7 @@
 ﻿using System;
 using EloBuddy;
 using EloBuddy.SDK;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
@@ -68,6 +69,7 @@ namespace VodkaDrMundo
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
                 private static readonly Slider _maxQDistance;
+                private static readonly Slider _minQHitChance;
 
 
                 public static bool UseQ
@@ -90,14 +92,21 @@ namespace VodkaDrMundo
                     get { return _maxQDistance.CurrentValue; }
                 }
 
+                public static HitChance MinQHitChance
+                {
+                    get { return Util.GetHCSliderHitChance(_minQHitChance); }
+                }
+
                 static Combo()
                 {
                     MenuModes.AddGroupLabel("Combo");
                     _useQ = MenuModes.Add("comboUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
+                    _minQHitChance = Util.CreateHCSlider("comboMinQHitChance", "Minimum HitChance to Q in Combo", HitChance.High, MenuModes);
                     _maxQDistance = MenuModes.Add("comboMaxQDistance",
-                        new Slider("Max Q Distance (applies to all modes)", 800, 175, 1000));
+                        new Slider("Max Q Distance (applies to all modes)", 800, 0, 1000));
+                    
                 }
 
                 public static void Initialize()
@@ -112,6 +121,8 @@ namespace VodkaDrMundo
                 private static readonly CheckBox _useE;
                 private static readonly CheckBox _autoQ;
                 private static readonly Slider _minAutoQHealth;
+                private static readonly Slider _minQHitChance;
+
 
                 public static bool UseQ
                 {
@@ -130,12 +141,17 @@ namespace VodkaDrMundo
 
                 public static bool AutoQ
                 {
-                    get { return _useE.CurrentValue; }
+                    get { return _autoQ.CurrentValue; }
                 }
 
                 public static int MinAutoQHealth
                 {
                     get { return _minAutoQHealth.CurrentValue; }
+                }
+                
+                public static HitChance MinQHitChance
+                {
+                    get { return Util.GetHCSliderHitChance(_minQHitChance); }
                 }
 
                 static Harass()
@@ -145,6 +161,7 @@ namespace VodkaDrMundo
                     _autoQ = MenuModes.Add("harassAutoQ", new CheckBox("Use Q automatically"));
                     _useW = MenuModes.Add("harassUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("harassUseE", new CheckBox("Use E"));
+                    _minQHitChance = Util.CreateHCSlider("harassMinQHitChance", "Minimum HitChance to Q in Harass", HitChance.Medium, MenuModes);
                     _minAutoQHealth = MenuModes.Add("minAutoQHealth", new Slider("Minimum health % to auto Q", 65, 0, 100));
                     foreach (var enemy in EntityManager.Heroes.Enemies)
                     {

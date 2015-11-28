@@ -78,10 +78,10 @@ namespace VodkaDrMundo.Modes
                         continue;
                     }
                     var pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.High)
+                    if (pred.HitChance >= SettingsHarass.MinQHitChance)
                     {
                         Q.Cast(pred.CastPosition);
-                        Debug.WriteChat("Casting Q in Auto Harass, Target: {0}", enemy.ChampionName);
+                        Debug.WriteChat("Casting Q in Auto Harass, Target: {0}, HitChance: {1}", enemy.ChampionName, pred.HitChance.ToString());
                         break;
                     }
                 }
@@ -98,7 +98,7 @@ namespace VodkaDrMundo.Modes
                     if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
                     {
                         var pred = Q.GetPrediction(enemy);
-                        if (pred.HitChance >= HitChance.High)
+                        if (pred.HitChance >= HitChance.Medium)
                         {
                             Q.Cast(enemy);
                             Debug.WriteChat("Casting Q in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName,

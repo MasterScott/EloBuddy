@@ -22,10 +22,10 @@ namespace VodkaDrMundo.Modes
                 if (target != null)
                 {
                     var pred = Q.GetPrediction(target);
-                    if (pred.HitChance >= HitChance.High)
+                    if (pred.HitChance >= Settings.MinQHitChance)
                     {
                         Q.Cast(pred.CastPosition);
-                        Debug.WriteChat("Casting Q in Combo, Target: {0}", target.ChampionName);
+                        Debug.WriteChat("Casting Q in Combo, Target: {0}, HitChance: {1}", target.ChampionName, pred.HitChance.ToString());
                     }
                 }
             }

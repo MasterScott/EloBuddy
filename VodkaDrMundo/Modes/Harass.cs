@@ -23,11 +23,11 @@ namespace VodkaDrMundo.Modes
                 if (target != null)
                 {
                     var pred = Q.GetPrediction(target);
-                    if (pred.HitChance >= HitChance.High)
+                    if (pred.HitChance >= Settings.MinQHitChance)
                     {
                         Q.Cast(pred.CastPosition);
-                        Debug.WriteChat("Casting Q in Harass, Target: {0}, Distance: {0}", target.ChampionName,
-                            "" + Player.Instance.Distance(target));
+                        Debug.WriteChat("Casting Q in Harass, Target: {0}, Distance: {1}, HitChance: {2}", target.ChampionName,
+                            "" + Player.Instance.Distance(target), pred.HitChance.ToString());
                     }
                 }
             }
