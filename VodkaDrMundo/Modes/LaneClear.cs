@@ -5,6 +5,7 @@ using EloBuddy.SDK.Enumerations;
 using SharpDX.Direct3D9;
 using Settings = VodkaDrMundo.Config.ModesMenu.LaneClear;
 using SettingsCombo = VodkaDrMundo.Config.ModesMenu.Combo;
+using SettingsPrediction = VodkaDrMundo.Config.PredictionMenu;
 using SettingsHealth = VodkaDrMundo.Config.HealthManagerMenu;
 
 namespace VodkaDrMundo.Modes
@@ -26,10 +27,10 @@ namespace VodkaDrMundo.Modes
                 if (minion != null)
                 {
                     var pred = Q.GetPrediction(minion);
-                    if (pred.HitChance >= HitChance.Medium)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCLaneClear)
                     {
                         Q.Cast(pred.CastPosition);
-                        Debug.WriteChat("Casting Q in LaneClear");
+                        Debug.WriteChat("Casting Q in LaneClear, HitChance: {0}", pred.HitChance.ToString());
                     }
                 }
 

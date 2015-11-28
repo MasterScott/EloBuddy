@@ -23,6 +23,7 @@ namespace VodkaDrMundo
             Menu.AddLabel("Created by Haker");
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
+            PredictionMenu.Initialize();
             HealthManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
@@ -69,7 +70,6 @@ namespace VodkaDrMundo
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
                 private static readonly Slider _maxQDistance;
-                private static readonly Slider _minQHitChance;
 
 
                 public static bool UseQ
@@ -92,18 +92,12 @@ namespace VodkaDrMundo
                     get { return _maxQDistance.CurrentValue; }
                 }
 
-                public static HitChance MinQHitChance
-                {
-                    get { return Util.GetHCSliderHitChance(_minQHitChance); }
-                }
-
                 static Combo()
                 {
                     MenuModes.AddGroupLabel("Combo");
                     _useQ = MenuModes.Add("comboUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
-                    _minQHitChance = Util.CreateHCSlider("comboMinQHitChance", "Minimum HitChance to Q in Combo", HitChance.High, MenuModes);
                     _maxQDistance = MenuModes.Add("comboMaxQDistance",
                         new Slider("Max Q Distance (applies to all modes)", 800, 0, 1000));
                     
@@ -121,7 +115,6 @@ namespace VodkaDrMundo
                 private static readonly CheckBox _useE;
                 private static readonly CheckBox _autoQ;
                 private static readonly Slider _minAutoQHealth;
-                private static readonly Slider _minQHitChance;
 
 
                 public static bool UseQ
@@ -149,11 +142,6 @@ namespace VodkaDrMundo
                     get { return _minAutoQHealth.CurrentValue; }
                 }
                 
-                public static HitChance MinQHitChance
-                {
-                    get { return Util.GetHCSliderHitChance(_minQHitChance); }
-                }
-
                 static Harass()
                 {
                     MenuModes.AddGroupLabel("Harass");
@@ -161,7 +149,6 @@ namespace VodkaDrMundo
                     _autoQ = MenuModes.Add("harassAutoQ", new CheckBox("Use Q automatically"));
                     _useW = MenuModes.Add("harassUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("harassUseE", new CheckBox("Use E"));
-                    _minQHitChance = Util.CreateHCSlider("harassMinQHitChance", "Minimum HitChance to Q in Harass", HitChance.Medium, MenuModes);
                     _minAutoQHealth = MenuModes.Add("minAutoQHealth", new Slider("Minimum health % to auto Q", 65, 0, 100));
                     foreach (var enemy in EntityManager.Heroes.Enemies)
                     {
@@ -458,6 +445,87 @@ namespace VodkaDrMundo
                 MenuDebug.AddLabel("This is for debugging purposes only.");
                 _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat", false));
                 _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console", false));
+            }
+
+            public static void Initialize()
+            {
+
+            }
+        }
+
+        public static class PredictionMenu
+        {
+            private static readonly Menu MenuPrediction;
+            private static readonly Slider _minQHCCombo;
+            private static readonly Slider _minQHCHarass;
+            private static readonly Slider _minQHCAutoHarass;
+            private static readonly Slider _minQHCLastHit;
+            private static readonly Slider _minQHCLaneClear;
+            private static readonly Slider _minQHCJungleClear;
+            private static readonly Slider _minQHCKillSteal;
+            private static readonly Slider _minQHCFlee;
+
+            public static HitChance MinQHCCombo
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCCombo); }
+            }
+
+            public static HitChance MinQHCHarass
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCHarass); }
+            }
+
+            public static HitChance MinQHCAutoHarass
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCAutoHarass); }
+            }
+
+            public static HitChance MinQHCLastHit
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCLastHit); }
+            }
+
+            public static HitChance MinQHCLaneClear
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCLaneClear); }
+            }
+
+            public static HitChance MinQHCJungleClear
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCJungleClear); }
+            }
+
+            public static HitChance MinQHCKillSteal
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCKillSteal); }
+            }
+
+            public static HitChance MinQHCFlee
+            {
+                get { return Util.GetHCSliderHitChance(_minQHCFlee); }
+            }
+
+            static PredictionMenu()
+            {
+                MenuPrediction = Config.Menu.AddSubMenu("Q Prediction");
+                MenuPrediction.AddGroupLabel("Q Prediction");
+                MenuPrediction.AddLabel("Here you can control the minimum HitChance to cast Q in diffrent modes.");
+                MenuPrediction.AddGroupLabel("Combo");
+                _minQHCCombo = Util.CreateHCSlider("comboMinQHitChance", "Combo", HitChance.High, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Harass");
+                _minQHCHarass = Util.CreateHCSlider("harassMinQHitChance", "Harass", HitChance.High, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Auto Harass");
+                _minQHCAutoHarass = Util.CreateHCSlider("autoHarassMinQHitChance", "Auto Harass", HitChance.Medium, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Lane Clear");
+                _minQHCLaneClear = Util.CreateHCSlider("laneClearMinQHitChance", "Lane Clear", HitChance.Low, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Jungle Clear");
+                _minQHCJungleClear = Util.CreateHCSlider("jungleClearMinQHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Last Hit");
+                _minQHCLastHit = Util.CreateHCSlider("lastHitMinQHitChance", "Last Hit", HitChance.Medium, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Kill Steal");
+                _minQHCKillSteal = Util.CreateHCSlider("killStealMinQHitChance", "Kill Steal", HitChance.Medium, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Flee");
+                _minQHCFlee = Util.CreateHCSlider("fleeMinQHitChance", "Flee", HitChance.Low, MenuPrediction);
             }
 
             public static void Initialize()

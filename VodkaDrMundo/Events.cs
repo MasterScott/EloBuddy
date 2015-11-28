@@ -116,7 +116,7 @@ namespace VodkaDrMundo
                     Circle.Draw(Color.Red, SpellManager.Ignite.Range, _PlayerPos);
                 }
             }
-            if (SettingsDrawing.DrawLastHitable)
+            if (SettingsDrawing.DrawLastHitable && SpellManager.Q.IsReady())
             {
                 var minions =
                EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy, _PlayerPos, SettingsModes.Combo.MaxQDistance+200)

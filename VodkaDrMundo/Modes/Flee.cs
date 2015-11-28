@@ -4,6 +4,7 @@ using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using SharpDX;
 using Settings = VodkaDrMundo.Config.ModesMenu.Flee;
+using SettingsPrediction = VodkaDrMundo.Config.PredictionMenu;
 using SettingsHealth = VodkaDrMundo.Config.HealthManagerMenu;
 
 namespace VodkaDrMundo.Modes
@@ -26,7 +27,7 @@ namespace VodkaDrMundo.Modes
                 if (enemy != null)
                 {
                     var pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.Medium)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCFlee)
                     {
                         Q.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting Q in Flee on {0}", enemy.ChampionName);

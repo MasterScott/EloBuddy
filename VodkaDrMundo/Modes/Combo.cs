@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaDrMundo.Config.ModesMenu.Combo;
+using SettingsPrediction = VodkaDrMundo.Config.PredictionMenu;
 using SettingsHealth = VodkaDrMundo.Config.HealthManagerMenu;
 
 namespace VodkaDrMundo.Modes
@@ -22,7 +23,7 @@ namespace VodkaDrMundo.Modes
                 if (target != null)
                 {
                     var pred = Q.GetPrediction(target);
-                    if (pred.HitChance >= Settings.MinQHitChance)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCCombo)
                     {
                         Q.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting Q in Combo, Target: {0}, HitChance: {1}", target.ChampionName, pred.HitChance.ToString());

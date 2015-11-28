@@ -5,6 +5,7 @@ using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaDrMundo.Config.ModesMenu.JungleClear;
 using SettingsCombo = VodkaDrMundo.Config.ModesMenu.Combo;
+using SettingsPrediction = VodkaDrMundo.Config.PredictionMenu;
 using SettingsHealth = VodkaDrMundo.Config.HealthManagerMenu;
 
 namespace VodkaDrMundo.Modes
@@ -27,7 +28,7 @@ namespace VodkaDrMundo.Modes
                 if (monster != null)
                 {
                     var pred = Q.GetPrediction(monster);
-                    if (pred.HitChance >= HitChance.Collision)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCJungleClear)
                     {
                         Q.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting Q in JungleClear");

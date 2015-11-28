@@ -7,6 +7,7 @@ using EloBuddy.SDK.Menu.Values;
 using Settings = VodkaDrMundo.Config.MiscMenu;
 using SettingsHarass = VodkaDrMundo.Config.ModesMenu.Harass;
 using SettingsCombo = VodkaDrMundo.Config.ModesMenu.Combo;
+using SettingsPrediction = VodkaDrMundo.Config.PredictionMenu;
 using SettingsHealth = VodkaDrMundo.Config.HealthManagerMenu;
 
 namespace VodkaDrMundo.Modes
@@ -78,7 +79,7 @@ namespace VodkaDrMundo.Modes
                         continue;
                     }
                     var pred = Q.GetPrediction(enemy);
-                    if (pred.HitChance >= SettingsHarass.MinQHitChance)
+                    if (pred.HitChance >= SettingsPrediction.MinQHCAutoHarass)
                     {
                         Q.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting Q in Auto Harass, Target: {0}, HitChance: {1}", enemy.ChampionName, pred.HitChance.ToString());
@@ -98,7 +99,7 @@ namespace VodkaDrMundo.Modes
                     if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
                     {
                         var pred = Q.GetPrediction(enemy);
-                        if (pred.HitChance >= HitChance.Medium)
+                        if (pred.HitChance >= SettingsPrediction.MinQHCKillSteal)
                         {
                             Q.Cast(enemy);
                             Debug.WriteChat("Casting Q in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName,
