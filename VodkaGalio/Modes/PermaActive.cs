@@ -25,15 +25,11 @@ namespace VodkaGalio.Modes
 
         public override bool ShouldBeExecuted()
         {
-            return true;
+            return !Player.Instance.IsDead;
         }
 
         public override void Execute()
         {
-            if (Player.Instance.IsDead)
-            {
-                return;
-            }
             // KillSteal
             var enemies = EntityManager.Heroes.Enemies.Where(e => e.IsEnemy && e.IsVisible && !e.IsDead && !e.IsZombie && !e.IsInvulnerable && e.Health > 0).ToList();
             if (!isUlting())

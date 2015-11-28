@@ -26,15 +26,11 @@ namespace VodkaXinZhao.Modes
 
         public override bool ShouldBeExecuted()
         {
-            return true;
+            return !Player.Instance.IsDead;
         }
 
         public override void Execute()
         {
-            if (Player.Instance.IsDead)
-            {
-                return;
-            }
             // KillSteal
             if (Settings.KsE && E.IsReady())
             {

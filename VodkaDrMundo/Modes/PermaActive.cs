@@ -31,16 +31,11 @@ namespace VodkaDrMundo.Modes
 
         public override bool ShouldBeExecuted()
         {
-            return true;
+            return !Player.Instance.IsDead;
         }
 
         public override void Execute()
         {
-            if (Player.Instance.IsDead)
-            {
-                return;
-            }
-
             // Auto-toggle W off
             if (Settings.AutoWOff && WActive)
             {
