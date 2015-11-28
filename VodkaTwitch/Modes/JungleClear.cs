@@ -4,6 +4,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaTwitch.Config.ModesMenu.JungleClear;
+using SettingsPrediction = VodkaTwitch.Config.PredictionMenu;
 using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
 
 namespace VodkaTwitch.Modes

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using EloBuddy;
-using EloBuddy.SDK;
-using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
+﻿using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
+using SettingsPrediction = VodkaTwitch.Config.PredictionMenu;
 
 namespace VodkaTwitch.Modes
 {

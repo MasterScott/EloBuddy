@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX.Direct3D9;
 using Settings = VodkaTwitch.Config.ModesMenu.LaneClear;
+using SettingsPrediction = VodkaTwitch.Config.PredictionMenu;
 using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
 
 namespace VodkaTwitch.Modes

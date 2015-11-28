@@ -4,6 +4,7 @@ using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using SharpDX;
 using Settings = VodkaTwitch.Config.ModesMenu.Flee;
+using SettingsPrediction = VodkaTwitch.Config.PredictionMenu;
 using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
 
 namespace VodkaTwitch.Modes
@@ -25,8 +26,8 @@ namespace VodkaTwitch.Modes
             {
                 var enemy =
                     EntityManager.Heroes.Enemies.Where(
-                        e => e.IsValidTarget(W.Range) && W.GetPrediction(e).HitChance >= HitChance.High)
-                        .OrderByDescending(e => e.Distance(_Player))
+                        e => e.IsValidTarget(W.Range) && W.GetPrediction(e).HitChance >= SettingsPrediction.MinWHCFlee)
+                        .OrderBy(e => e.Distance(_Player))
                         .FirstOrDefault();
                 if (enemy != null)
                 {

@@ -3,6 +3,7 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using Settings = VodkaTwitch.Config.ModesMenu.Harass;
+using SettingsPrediction = VodkaTwitch.Config.PredictionMenu;
 using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
 
 namespace VodkaTwitch.Modes
@@ -33,7 +34,7 @@ namespace VodkaTwitch.Modes
                 if (enemy != null && enemy.IsValidTarget(W.Range))
                 {
                     var pred = W.GetPrediction(enemy);
-                    if (pred.HitChance >= HitChance.High)
+                    if (pred.HitChance >= SettingsPrediction.MinWHCHarass)
                     {
                         W.Cast(pred.CastPosition);
                         Debug.WriteChat("Casting W in Combo, Target: {0}, Distance: {1}", enemy.ChampionName,

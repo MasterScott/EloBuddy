@@ -2,8 +2,8 @@
 using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Enumerations;
 using Settings = VodkaTwitch.Config.MiscMenu;
+using SettingsPrediction = VodkaTwitch.Config.PredictionMenu;
 
 namespace VodkaTwitch.Modes
 {

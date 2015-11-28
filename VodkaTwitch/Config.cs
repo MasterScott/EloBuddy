@@ -1,5 +1,6 @@
 ﻿using System;
 using EloBuddy;
+using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
@@ -21,6 +22,7 @@ namespace VodkaTwitch
             Menu.AddLabel("Created by Haker");
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
+            PredictionMenu.Initialize();
             ManaManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
@@ -470,6 +472,54 @@ namespace VodkaTwitch
                 MenuDebug.AddLabel("This is for debugging purposes only.");
                 _debugChat = MenuDebug.Add("debugChat", new CheckBox("Show debug messages in chat", false));
                 _debugConsole = MenuDebug.Add("debugConsole", new CheckBox("Show debug messages in console", false));
+            }
+
+            public static void Initialize()
+            {
+
+            }
+        }
+
+        public static class PredictionMenu
+        {
+            private static readonly Menu MenuPrediction;
+            private static readonly Slider _minWHCCombo;
+            private static readonly Slider _minWHCHarass;
+            private static readonly Slider _minWHCJungleClear;
+            private static readonly Slider _minWHCFlee;
+
+            public static HitChance MinWHCCombo
+            {
+                get { return Util.GetHCSliderHitChance(_minWHCCombo); }
+            }
+
+            public static HitChance MinWHCHarass
+            {
+                get { return Util.GetHCSliderHitChance(_minWHCHarass); }
+            }
+
+            public static HitChance MinWHCJungleClear
+            {
+                get { return Util.GetHCSliderHitChance(_minWHCJungleClear); }
+            }
+            
+
+            public static HitChance MinWHCFlee
+            {
+                get { return Util.GetHCSliderHitChance(_minWHCFlee); }
+            }
+
+            static PredictionMenu()
+            {
+                MenuPrediction = Config.Menu.AddSubMenu("Skills HitChance Prediction");
+                MenuPrediction.AddLabel("Here you can control the minimum HitChance to cast skills.");
+                MenuPrediction.AddGroupLabel("W Prediction");
+                MenuPrediction.AddGroupLabel("Combo");
+                _minWHCCombo = Util.CreateHCSlider("comboMinWHitChance", "Combo", HitChance.High, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Harass");
+                _minWHCHarass = Util.CreateHCSlider("harassMinWHitChance", "Harass", HitChance.High, MenuPrediction);
+                MenuPrediction.AddGroupLabel("Flee");
+                _minWHCFlee = Util.CreateHCSlider("fleeMinWHitChance", "Flee", HitChance.Low, MenuPrediction);
             }
 
             public static void Initialize()
