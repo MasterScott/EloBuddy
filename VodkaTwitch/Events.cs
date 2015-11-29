@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
-using EloBuddy.SDK.Menu;
-using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
 using SettingsMisc = VodkaTwitch.Config.MiscMenu;
-using SettingsModes = VodkaTwitch.Config.ModesMenu;
 using SettingsDrawing = VodkaTwitch.Config.DrawingMenu;
-using SettingsMana = VodkaTwitch.Config.ManaManagerMenu;
 
 namespace VodkaTwitch
 {
@@ -32,10 +27,9 @@ namespace VodkaTwitch
         private static void OnRecall(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
             // Stealth Recall
-            if (SettingsMisc.StealthRecall && args.Slot == SpellSlot.Recall && !SpellManager.QActive && SpellManager.Q.IsReady())
+            if (SettingsMisc.StealthRecall && args.Slot == SpellSlot.Recall && !SpellManager.QActive && SpellManager.Q.IsReady() && !Player.Instance.IsInShopRange())
             {
                 SpellManager.Q.Cast();
-                SpellManager.Recall.Cast();
             }
         }
 
