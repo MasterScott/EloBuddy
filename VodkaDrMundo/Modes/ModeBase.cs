@@ -55,7 +55,7 @@ namespace VodkaDrMundo.Modes
         protected bool PlayerIsUnderEnemyTurret()
         {
             var player = Player.Instance;
-            return ObjectManager.Get<Obj_AI_Turret>().Where(a => a.Team != _Player.Team && a.Health > 0).Any(turret => turret.Distance(_Player) < 1000);
+            return ObjectManager.Get<Obj_AI_Turret>().Any(turret => turret.Team != _Player.Team && turret.Health > 0 && turret.Distance(_Player) < 1000);
         }
 
         public abstract bool ShouldBeExecuted();
