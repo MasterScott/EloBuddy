@@ -571,8 +571,6 @@ namespace VodkaGalio
                 _minQHCCombo = Util.CreateHCSlider("comboMinQHitChance", "Combo", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Harass");
                 _minQHCHarass = Util.CreateHCSlider("harassMinQHitChance", "Harass", HitChance.High, MenuPrediction);
-                MenuPrediction.AddGroupLabel("Jungle Clear");
-                _minQHCJungleClear = Util.CreateHCSlider("jungleClearMinQHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Last Hit");
                 _minQHCLastHit = Util.CreateHCSlider("lastHitMinQHitChance", "Last Hit", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Kill Steal");
@@ -586,8 +584,6 @@ namespace VodkaGalio
                 _minEHCCombo = Util.CreateHCSlider("comboMinEHitChance", "Combo", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Harass");
                 _minEHCHarass = Util.CreateHCSlider("harassMinEHitChance", "Harass", HitChance.High, MenuPrediction);
-                MenuPrediction.AddGroupLabel("Jungle Clear");
-                _minEHCJungleClear = Util.CreateHCSlider("jungleClearMinEHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Last Hit");
                 _minEHCLastHit = Util.CreateHCSlider("lastHitMinEHitChance", "Last Hit", HitChance.High, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Kill Steal");

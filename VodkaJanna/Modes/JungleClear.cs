@@ -21,21 +21,10 @@ namespace VodkaJanna.Modes
             if (Settings.UseQ && QCastable() && PlayerMana >= SettingsMana.MinQMana)
             {
                 var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(Player.Instance.Position, Q.Range).Where(t => t.IsValidTarget());
-                foreach (var m in monsters)
+                var farmPos = EntityManager.MinionsAndMonsters.GetLineFarmLocation(monsters, Q.Width, (int)Q.Range);
+                if (farmPos.HitNumber >= Settings.MinQTargets)
                 {
-                    var pred = Q.GetPrediction(m);
-                    if (pred.HitChance < SettingsPrediction.MinQHCJungleClear)
-                    {
-                        continue;
-                    }
-                    var cols = pred.CollisionObjects.Count(t => t.IsValidTarget());
-                    if (cols >= Settings.MinQTargets - 1)
-                    {
-                        Debug.WriteChat("Casting Q in JungleClear, Target: {0}, Distance: {1}, Collisions: {2}", m.Name, "" + m.Distance(Player.Instance), "" + (cols + 1));
-                        Q.Cast(pred.CastPosition);
-                        Core.DelayAction(() => { Q.Cast(pred.CastPosition); }, 10);
-                        return;
-                    }
+                    Q.Cast(farmPos.CastPosition);
                 }
             }
             if (Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)

@@ -518,8 +518,6 @@ namespace VodkaJanna
                 _minQHCCombo = Util.CreateHCSlider("comboMinQHitChance", "Combo", HitChance.High, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Harass");
                 _minQHCHarass = Util.CreateHCSlider("harassMinQHitChance", "Harass", HitChance.High, MenuPrediction);
-                MenuPrediction.AddGroupLabel("Jungle Clear");
-                _minQHCJungleClear = Util.CreateHCSlider("jungleClearMinQHitChance", "Jungle Clear", HitChance.Collision, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Kill Steal");
                 _minQHCKillSteal = Util.CreateHCSlider("killStealMinQHitChance", "Kill Steal", HitChance.Medium, MenuPrediction);
                 MenuPrediction.AddGroupLabel("Flee");
