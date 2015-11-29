@@ -511,7 +511,7 @@ namespace VodkaJanna
             
             static PredictionMenu()
             {
-                MenuPrediction = Config.Menu.AddSubMenu("Skills HitChance Prediction");
+                MenuPrediction = Config.Menu.AddSubMenu("Prediction");
                 MenuPrediction.AddLabel("Here you can control the minimum HitChance to cast skills.");
                 MenuPrediction.AddGroupLabel("Q Prediction");
                 MenuPrediction.AddGroupLabel("Combo");
