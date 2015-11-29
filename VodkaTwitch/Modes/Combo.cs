@@ -12,11 +12,13 @@ namespace VodkaTwitch.Modes
     {
         static Item Cutlass;
         static Item BOTRK;
+        static Item Youmuu;
 
         static Combo()
         {
             Cutlass = new Item(ItemId.Bilgewater_Cutlass, 450);
             BOTRK = new Item(ItemId.Blade_of_the_Ruined_King, 450);
+            Youmuu = new Item(ItemId.Youmuus_Ghostblade);
         }
 
         public override bool ShouldBeExecuted()
@@ -73,6 +75,10 @@ namespace VodkaTwitch.Modes
             // Items
             if (Settings.UseItems)
             {
+                if (CanUseItem(ItemId.Youmuus_Ghostblade))
+                {
+                    Youmuu.Cast();
+                }
                 var enemy = TargetSelector.GetTarget(BOTRK.Range, DamageType.Physical);
                 if (enemy != null)
                 {

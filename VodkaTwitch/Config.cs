@@ -124,7 +124,7 @@ namespace VodkaTwitch
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
                     _useR = MenuModes.Add("comboUseR", new CheckBox("Use R"));
-                    _useItems = MenuModes.Add("comboUseItems", new CheckBox("Use Cutlass/BOTRK"));
+                    _useItems = MenuModes.Add("comboUseItems", new CheckBox("Use Cutlass/BOTRK/Youmuu"));
                     _minEStacks = MenuModes.Add("comboMinEStacks",
                         new Slider("Minimum stacks to use E", 6, 1, 6));
                     _minREnemies = MenuModes.Add("comboMinREnemies",
