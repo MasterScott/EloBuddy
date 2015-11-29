@@ -302,6 +302,7 @@ namespace VodkaTwitch
             private static readonly CheckBox _ksE;
             private static readonly CheckBox _ksIgnite;
             private static readonly CheckBox _autoQ;
+            private static readonly CheckBox _stealthRecall;
             private static readonly Slider _potionMinHP;
             private static readonly Slider _potionMinMP;
             private static readonly Slider _autoQMinEnemies;
@@ -325,6 +326,10 @@ namespace VodkaTwitch
             public static bool Potion
             {
                 get { return _potion.CurrentValue; }
+            }
+            public static bool StealthRecall
+            {
+                get { return _stealthRecall.CurrentValue; }
             }
             public static int potionMinHP
             {
@@ -354,6 +359,8 @@ namespace VodkaTwitch
                 _potion = MenuMisc.Add("potion", new CheckBox("Use potions"));
                 _potionMinHP = MenuMisc.Add("potionminHP", new Slider("Minimum Health % to use potion", 70));
                 _potionMinMP = MenuMisc.Add("potionMinMP", new Slider("Minimum Mana % to use potion", 20));
+                MenuMisc.AddGroupLabel("Other");
+                _stealthRecall = MenuMisc.Add("stealthRecall", new CheckBox("Use Stealth when recalling"));
             }
 
             public static void Initialize()
@@ -511,7 +518,7 @@ namespace VodkaTwitch
 
             static PredictionMenu()
             {
-                MenuPrediction = Config.Menu.AddSubMenu("Skills HitChance Prediction");
+                MenuPrediction = Config.Menu.AddSubMenu("Prediction");
                 MenuPrediction.AddLabel("Here you can control the minimum HitChance to cast skills.");
                 MenuPrediction.AddGroupLabel("W Prediction");
                 MenuPrediction.AddGroupLabel("Combo");

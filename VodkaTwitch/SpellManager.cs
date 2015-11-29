@@ -13,6 +13,7 @@ namespace VodkaTwitch
         public static Spell.Active E { get; private set; }
         public static Spell.Active R { get; private set; }
         public static Spell.Targeted Ignite { get; private set; }
+        public static Spell.Active Recall { get; private set; }
 
         static SpellManager()
         {
@@ -22,6 +23,7 @@ namespace VodkaTwitch
             W.AllowedCollisionCount = Int32.MaxValue;
             E = new Spell.Active(SpellSlot.E, 1200);
             R = new Spell.Active(SpellSlot.R, 850);
+            Recall = new Spell.Active(SpellSlot.Recall);
 
             if (Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner1).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase))
             {

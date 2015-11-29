@@ -4,6 +4,8 @@ using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
+using EloBuddy.SDK.Menu;
+using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
 using SettingsMisc = VodkaTwitch.Config.MiscMenu;
@@ -23,7 +25,18 @@ namespace VodkaTwitch
             QCircle = new Circle(QColor, 500.0f, 3F, true);
 
             Gapcloser.OnGapcloser += GapcloserOnOnGapcloser;
+            Spellbook.OnCastSpell += OnRecall;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static void OnRecall(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            // Stealth Recall
+            if (SettingsMisc.StealthRecall && args.Slot == SpellSlot.Recall && !SpellManager.QActive && SpellManager.Q.IsReady())
+            {
+                SpellManager.Q.Cast();
+                SpellManager.Recall.Cast();
+            }
         }
 
         private static void GapcloserOnOnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs e)
@@ -52,7 +65,7 @@ namespace VodkaTwitch
                 var QBuff = Player.Instance.GetBuff("TwitchHideInShadows");
                 if (QBuff != null)
                 {
-                    QCircle.Radius = Player.Instance.MoveSpeed*(QBuff.EndTime - Game.Time) + Player.Instance.BoundingRadius;
+                    QCircle.Radius = Player.Instance.MoveSpeed * (QBuff.EndTime - Game.Time) + Player.Instance.BoundingRadius;
                     QCircle.Draw(Player.Instance.Position);
                 }
             }
