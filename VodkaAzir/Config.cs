@@ -170,7 +170,7 @@ namespace VodkaAzir
                 static LaneClear()
                 {
                     MenuModes.AddGroupLabel("LaneClear");
-                    _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q", false)); // Can cause lags
+                    _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q (may cause FPS drop)", false)); // Can cause lags
                     _useW = MenuModes.Add("laneUseW", new CheckBox("Use W"));
                     _minQTargets = MenuModes.Add("minQTargetsLC", new Slider("Minimum targets for Q", 3, 1, 10));
                     _minWTargets = MenuModes.Add("minWTargetsLC", new Slider("Minimum targets for W", 2, 1, 10));
