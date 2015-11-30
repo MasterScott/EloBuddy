@@ -14,7 +14,18 @@ namespace VodkaAzir
     {
         static Events()
         {
+            Interrupter.OnInterruptableSpell += InterrupterOnInterruptableSpell;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static void InterrupterOnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs interruptableSpellEventArgs)
+        {
+            if (sender.IsEnemy && sender.IsValidTarget() && Player.Instance.Distance(sender) < 250 &&
+                SpellManager.R.IsReady())
+            {
+                SpellManager.R.Cast(sender);
+                Chat.Print("Interrupting spell from {0}", ((AIHeroClient)sender).ChampionName);
+            }
         }
 
         public static void Initialize()

@@ -52,6 +52,8 @@ namespace VodkaAzir.Modes
                                 if (pred.HitChance >= SettingsPrediction.MinQHCKillSteal)
                                 {
                                     Q.Cast(pred.CastPosition.Extend(pred.UnitPosition, 115.0f).To3D());
+                                    Chat.Print("Casting Q in KS on {0}, who has {1}HP.", target.ChampionName, target.Health.ToString());
+                                    break;
                                 }
                             }
                         }
@@ -64,6 +66,7 @@ namespace VodkaAzir.Modes
                             {
                                 W.Cast(wCastPos);
                                 Q.Cast(pred.CastPosition.Extend(pred.UnitPosition, 115.0f).To3D());
+                                Chat.Print("Casting WQ in KS on {0}, who has {1}HP.", target.ChampionName, target.Health.ToString());
                             }
                         }
                     }
@@ -80,6 +83,7 @@ namespace VodkaAzir.Modes
                                 if (target.Position.Between(_PlayerPos, soldier.Position))
                                 {
                                     E.Cast();
+                                    Chat.Print("Casting E in KS on {0}, who has {1}HP.", target.ChampionName, target.Health.ToString());
                                     break;
                                 }
                             }
@@ -89,6 +93,7 @@ namespace VodkaAzir.Modes
                             var wCastPos = _PlayerPos.Extend(target, W.Range).To3D();
                             W.Cast(wCastPos);
                             E.Cast();
+                            Chat.Print("Casting WE in KS on {0}, who has {1}HP.", target.ChampionName, target.Health.ToString());
                         }
                     }
                 }
@@ -98,6 +103,7 @@ namespace VodkaAzir.Modes
                     if (target != null)
                     {
                         Ignite.Cast(target);
+                        Chat.Print("Casting Ignite in KS on {0}, who has {1}HP.", target.ChampionName, target.Health.ToString());
                     }
                 }
             }
@@ -114,17 +120,20 @@ namespace VodkaAzir.Modes
                     if (soldier != null)
                     {
                         E.Cast();
+                        Chat.Print("Dashing to existing soldier.");
                     }
                     else if (PlayerManaExact >= 100 && _PlayerPos.Distance(cursorPos) < W.Range && W.IsReady())
                     {
                         W.Cast(cursorPos);
                         E.Cast();
+                        Chat.Print("Using WE to dash to location");
                     }
                     else if (PlayerManaExact >= 170 && _PlayerPos.Distance(cursorPos) < Q.Range - 100 &&  W.IsReady() && Q.IsReady())
                     {
                         W.Cast(_PlayerPos.Extend(cursorPos, W.Range).To3D());
                         Q.Cast(cursorPos);
                         E.Cast();
+                        Chat.Print("Using QWE to dash to location");
                     }
                 }
                 else

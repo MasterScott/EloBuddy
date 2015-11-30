@@ -27,6 +27,7 @@ namespace VodkaAzir.Modes
                     if (pred.HitChance >= SettingsPrediction.MinRHCCombo && target.IsValidTarget())
                     {
                         R.Cast(pred.CastPosition);
+                        Chat.Print("Casting R in Combo on {0}", target.ChampionName);
                     }
                 }
             }
@@ -42,6 +43,7 @@ namespace VodkaAzir.Modes
                         {
                             var castPos = _PlayerPos.Extend(target, W.Range).To3D();
                             W.Cast(castPos);
+                            Chat.Print("Casting W in Combo on {0} to be able to use Q", target.ChampionName);
                         }
                     }
                     // Make one for autoattacking
@@ -52,6 +54,7 @@ namespace VodkaAzir.Modes
                         {
                             var castPos = _PlayerPos.Extend(target, W.Range).To3D();
                             W.Cast(castPos);
+                            Chat.Print("Casting W in Combo on {0} to autoattack him.", target.ChampionName);
                         }
                     }
                 }
@@ -70,6 +73,7 @@ namespace VodkaAzir.Modes
                             if (pred.HitChance >= SettingsPrediction.MinQHCCombo)
                             {
                                 Q.Cast(pred.CastPosition.Extend(pred.UnitPosition, 115.0f).To3D());
+                                Chat.Print("Casting Q in Combo on {0}", target.ChampionName);
                                 break;
                             }
                         }
@@ -85,6 +89,8 @@ namespace VodkaAzir.Modes
                             if (target.Position.Between(_PlayerPos, target.Position))
                             {
                                 E.Cast();
+                                Chat.Print("Casting E in Combo on {0}", target.ChampionName);
+                                break;
                             }
                         }
                     }
@@ -98,6 +104,7 @@ namespace VodkaAzir.Modes
                         if (pred.HitChance >= HitChance.Low)
                         {
                             W.Cast(pred.CastPosition);
+                            Chat.Print("Casting W in Combo on {0}", target.ChampionName);
                         }
                     }
                 }

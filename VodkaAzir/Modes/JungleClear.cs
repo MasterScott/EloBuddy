@@ -25,6 +25,7 @@ namespace VodkaAzir.Modes
                 if (farmLoc.HitNumber >= Settings.MinWTargets)
                 {
                     W.Cast(farmLoc.CastPosition);
+                    Chat.Print("Casting W in Jungle Clear on {0} minions.", farmLoc.HitNumber.ToString());
                 }
             }
 
@@ -37,9 +38,11 @@ namespace VodkaAzir.Modes
                     {
                         var pred = Prediction.Position.PredictLinearMissile(soldier, Q.Range, (int)soldier.BoundingRadius * 2, Q.CastDelay,
                             Q.Speed, Int32.MaxValue, soldier.Position);
-                        if (pred.CollisionObjects.Count() >= Settings.MinQTargets - 1)
+                        var cols = pred.CollisionObjects.Count();
+                        if (cols >= Settings.MinQTargets - 1)
                         {
                             Q.Cast(monster);
+                            Chat.Print("Casting Q in Jungle Clear on {0} minions.", (cols+1).ToString());
                             qCasted = true;
                             break;
                         }
