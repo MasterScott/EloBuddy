@@ -37,6 +37,11 @@ namespace VodkaAzir.Modes
             get { return Player.Instance.ManaPercent; }
         }
 
+        protected float PlayerManaExact
+        {
+            get { return Player.Instance.Mana; }
+        }
+
         protected bool HasIgnite
         {
             get { return SpellManager.HasIgnite(); }

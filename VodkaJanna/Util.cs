@@ -9,10 +9,9 @@ namespace VodkaJanna
 
         public static Slider CreateHCSlider(string identifier, string displayName, HitChance defaultValue, Menu menu)
         {
-            var slider = menu.Add(identifier, new Slider(displayName, 5, 0, 8));
+            var slider = menu.Add(identifier, new Slider(displayName, (int)defaultValue, 0, 8));
             var hcNames = new[]
             {"Unknown", "Impossible", "Collision", "Low", "AveragePoint", "Medium", "High", "Dashing", "Immobile"};
-            slider.CurrentValue = (int)defaultValue;
             slider.DisplayName = hcNames[slider.CurrentValue];
             slider.OnValueChange +=
                 delegate (ValueBase<int> sender, ValueBase<int>.ValueChangeArgs changeArgs)

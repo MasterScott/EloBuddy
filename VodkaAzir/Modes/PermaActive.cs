@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography;
 using EloBuddy;
 using EloBuddy.SDK;
-using VodkaXinZhao.Other;
+using SharpDX;
 using Settings = VodkaAzir.Config.MiscMenu;
 using SettingsPrediction = VodkaAzir.Config.PredictionMenu;
 using SettingsMana = VodkaAzir.Config.ManaManagerMenu;
@@ -33,6 +34,104 @@ namespace VodkaAzir.Modes
 
         public override void Execute()
         {
+            // KillSteal
+            if (Settings.KsQ || Settings.KsE || (Settings.KsIgnite && HasIgnite))
+            {
+                var enemies = EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(1500.0f));
+                if (Settings.KsQ && Q.IsReady())
+                {
+                    var target = enemies.FirstOrDefault(e => Q.IsInRange(e) && e.Health < Damages.QDamage(e));
+                    if (target != null)
+                    {
+                        if (Orbwalker.AzirSoldiers.Count > 0)
+                        {
+                            foreach (var soldier in Orbwalker.AzirSoldiers) // Q KS
+                            {
+                                var pred = Prediction.Position.PredictLinearMissile(target, Q.Range, Q.Width,
+                                Q.CastDelay, Q.Speed, Int32.MaxValue, soldier.Position, true);
+                                if (pred.HitChance >= SettingsPrediction.MinQHCKillSteal)
+                                {
+                                    Q.Cast(pred.CastPosition.Extend(pred.UnitPosition, 115.0f).To3D());
+                                }
+                            }
+                        }
+                        else if (Orbwalker.AzirSoldiers.Count == 0 && W.IsReady() && PlayerManaExact >= 110) // WQ KS
+                        {
+                            var wCastPos = _PlayerPos.Extend(target, W.Range).To3D();
+                            var pred = Prediction.Position.PredictLinearMissile(target, Q.Range, Q.Width,
+                                Q.CastDelay, Q.Speed, Int32.MaxValue, wCastPos, true);
+                            if (pred.HitChance >= SettingsPrediction.MinQHCKillSteal)
+                            {
+                                W.Cast(wCastPos);
+                                Q.Cast(pred.CastPosition.Extend(pred.UnitPosition, 115.0f).To3D());
+                            }
+                        }
+                    }
+                }
+                else if (Settings.KsE && E.IsReady())
+                {
+                    var target = enemies.FirstOrDefault(e => E.IsInRange(e) && e.Health < Damages.EDamage(e));
+                    if (target != null)
+                    {
+                        if (Orbwalker.AzirSoldiers.Count > 0)
+                        {
+                            foreach (var soldier in Orbwalker.AzirSoldiers) // E KS
+                            {
+                                if (target.Position.Between(_PlayerPos, soldier.Position))
+                                {
+                                    E.Cast();
+                                    break;
+                                }
+                            }
+                        }
+                        else if (Orbwalker.AzirSoldiers.Count == 0 && W.IsReady() && _PlayerPos.Distance(target) <= W.Range-50 && PlayerManaExact >= 100) // WE KS
+                        {
+                            var wCastPos = _PlayerPos.Extend(target, W.Range).To3D();
+                            W.Cast(wCastPos);
+                            E.Cast();
+                        }
+                    }
+                }
+                else if (Settings.KsIgnite && HasIgnite && Ignite.IsReady())
+                {
+                    var target = enemies.FirstOrDefault(e => Ignite.IsInRange(e) && e.Health < Damages.IgniteDmg(e));
+                    if (target != null)
+                    {
+                        Ignite.Cast(target);
+                    }
+                }
+            }
+
+            // DashToCursor
+            if (Settings.QWEToCursor)
+            {
+                var cursorPos = Game.CursorPos;
+                var distanceToPlayer = cursorPos.Distance(_PlayerPos);
+                if (E.IsReady() && distanceToPlayer > Orbwalker.HoldRadius)
+                {
+                    var soldier =
+                        Orbwalker.ValidAzirSoldiers.FirstOrDefault(s => s.Distance(cursorPos) <= 150 && s.Distance(_PlayerPos) < E.Range);
+                    if (soldier != null)
+                    {
+                        E.Cast();
+                    }
+                    else if (PlayerManaExact >= 100 && _PlayerPos.Distance(cursorPos) < W.Range && W.IsReady())
+                    {
+                        W.Cast(cursorPos);
+                        E.Cast();
+                    }
+                    else if (PlayerManaExact >= 170 && _PlayerPos.Distance(cursorPos) < Q.Range - 100 &&  W.IsReady() && Q.IsReady())
+                    {
+                        W.Cast(_PlayerPos.Extend(cursorPos, W.Range).To3D());
+                        Q.Cast(cursorPos);
+                        E.Cast();
+                    }
+                }
+                else
+                {
+                    Orbwalker.MoveTo(cursorPos);
+                }
+            }
 
             // Potion manager
             if (Settings.Potion && !Player.Instance.IsInShopRange() && Player.Instance.HealthPercent <= Settings.potionMinHP && !(Player.Instance.HasBuff("RegenerationPotion") || Player.Instance.HasBuff("ItemCrystalFlaskJungle") || Player.Instance.HasBuff("ItemMiniRegenPotion") || Player.Instance.HasBuff("ItemCrystalFlask") || Player.Instance.HasBuff("ItemDarkCrystalFlask")))
@@ -74,8 +173,6 @@ namespace VodkaAzir.Modes
                 {
                     Debug.WriteChat("Using HealthPotion because below {0}% MP - have {1}% MP", String.Format("{0}", Settings.potionMinMP), String.Format("{0:##.##}", Player.Instance.ManaPercent));
                     CorruptingPotion.Cast();
-                    Soldier s = new Soldier(new GameObject(), 0);
-
                 }
             }
         }

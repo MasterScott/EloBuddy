@@ -138,9 +138,9 @@ namespace VodkaAzir
 
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
                 private static readonly Slider _minQTargets;
-                private static readonly Slider _minETargets;
+                private static readonly Slider _minWTargets;
+                private static readonly Slider _maxSoldiersForFarming;
 
                 public static bool UseQ
                 {
@@ -151,30 +151,30 @@ namespace VodkaAzir
                 {
                     get { return _useW.CurrentValue; }
                 }
-
-                public static bool UseE
-                {
-                    get { return _useE.CurrentValue; }
-                }
-
+                
                 public static int MinQTargets
                 {
                     get { return _minQTargets.CurrentValue; }
                 }
-
-                public static int MinETargets
+                
+                public static int MinWTargets
                 {
-                    get { return _minETargets.CurrentValue; }
+                    get { return _minWTargets.CurrentValue; }
+                }
+                
+                public static int MaxSoldiersForFarming
+                {
+                    get { return _maxSoldiersForFarming.CurrentValue; }
                 }
 
                 static LaneClear()
                 {
                     MenuModes.AddGroupLabel("LaneClear");
-                    _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q"));
+                    _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q", false)); // Can cause lags
                     _useW = MenuModes.Add("laneUseW", new CheckBox("Use W"));
-                    _useE = MenuModes.Add("laneUseE", new CheckBox("Use E"));
-                    _minQTargets = MenuModes.Add("minWTargetsLC", new Slider("Minimum targets for Q", 4, 1, 10));
-                    _minETargets = MenuModes.Add("minETargetsLC", new Slider("Minimum targets for E", 4, 1, 10));
+                    _minQTargets = MenuModes.Add("minQTargetsLC", new Slider("Minimum targets for Q", 3, 1, 10));
+                    _minWTargets = MenuModes.Add("minWTargetsLC", new Slider("Minimum targets for W", 2, 1, 10));
+                    _maxSoldiersForFarming = MenuModes.Add("maxSoldiersLC", new Slider("Max soldiers to farm with", 3, 1, 3));
                 }
 
                 public static void Initialize()
@@ -186,18 +186,18 @@ namespace VodkaAzir
             {
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
                 private static readonly Slider _minQTargets;
-                private static readonly Slider _minETargets;
+                private static readonly Slider _minWTargets;
+                private static readonly Slider _maxSoldiersForFarming;
 
                 public static bool UseQ
                 {
                     get { return _useQ.CurrentValue; }
                 }
 
-                public static bool UseE
+                public static bool UseW
                 {
-                    get { return _useE.CurrentValue; }
+                    get { return _useW.CurrentValue; }
                 }
 
                 public static int MinQTargets
@@ -205,18 +205,24 @@ namespace VodkaAzir
                     get { return _minQTargets.CurrentValue; }
                 }
 
-                public static int MinETargets
+                public static int MinWTargets
                 {
-                    get { return _minETargets.CurrentValue; }
+                    get { return _minWTargets.CurrentValue; }
+                }
+
+                public static int MaxSoldiersForFarming
+                {
+                    get { return _maxSoldiersForFarming.CurrentValue; }
                 }
 
                 static JungleClear()
                 {
                     MenuModes.AddGroupLabel("JungleClear");
                     _useQ = MenuModes.Add("jungleUseQ", new CheckBox("Use Q"));
-                    _useE = MenuModes.Add("jungleUseE", new CheckBox("Use E"));
-                    _minQTargets = MenuModes.Add("minWTargetsJC", new Slider("Minimum targets for Q", 2, 1, 10));
-                    _minETargets = MenuModes.Add("minETargetsJC", new Slider("Minimum targets for E", 2, 1, 10));
+                    _useW = MenuModes.Add("jungleUseW", new CheckBox("Use W"));
+                    _minQTargets = MenuModes.Add("minQTargetsJC", new Slider("Minimum targets for Q", 2, 1, 10));
+                    _minWTargets = MenuModes.Add("minWTargetsJC", new Slider("Minimum targets for W", 1, 1, 10));
+                    _maxSoldiersForFarming = MenuModes.Add("maxSoldiersJC", new Slider("Max soldiers to farm with", 3, 1, 3));
                 }
 
                 public static void Initialize()
@@ -234,7 +240,7 @@ namespace VodkaAzir
                     get { return _useQWE.CurrentValue; }
                 }
                 
-                public static bool UseW
+                public static bool UseR
                 {
                     get { return _useR.CurrentValue; }
                 }
@@ -242,8 +248,8 @@ namespace VodkaAzir
                 static Flee()
                 {
                     MenuModes.AddGroupLabel("Flee");
-                    _useQWE = MenuModes.Add("fleeUseQ", new CheckBox("Use QWE combo"));
-                    _useR = MenuModes.Add("fleeUseW", new CheckBox("Use R", false));
+                    _useQWE = MenuModes.Add("fleeUseQWE", new CheckBox("Use QWE combo"));
+                    _useR = MenuModes.Add("fleeUseR", new CheckBox("Use R", false));
                 }
 
                 public static void Initialize()
@@ -260,6 +266,7 @@ namespace VodkaAzir
             private static readonly CheckBox _ksQ;
             private static readonly CheckBox _ksE;
             private static readonly CheckBox _ksIgnite;
+            private static readonly KeyBind _QWEToCursor;
             private static readonly Slider _potionMinHP;
             private static readonly Slider _potionMinMP;
 
@@ -291,6 +298,10 @@ namespace VodkaAzir
             {
                 get { return _potionMinMP.CurrentValue; }
             }
+            public static bool QWEToCursor
+            {
+                get { return _QWEToCursor.CurrentValue; }
+            }
 
             static MiscMenu()
             {
@@ -298,13 +309,16 @@ namespace VodkaAzir
                 MenuMisc.AddGroupLabel("Interrupter");
                 _interruptR = MenuMisc.Add("interruptR", new CheckBox("Use R to interrupt important spells", false));
                 MenuMisc.AddGroupLabel("KillSteal");
-                _ksE = MenuMisc.Add("ksE", new CheckBox("KillSteal Q"));
+                _ksQ = MenuMisc.Add("ksQ", new CheckBox("KillSteal Q"));
                 _ksE = MenuMisc.Add("ksE", new CheckBox("KillSteal E"));
                 _ksIgnite = MenuMisc.Add("ksIgnite", new CheckBox("KillSteal Ignite"));
                 MenuMisc.AddGroupLabel("Auto pot usage");
                 _potion = MenuMisc.Add("potion", new CheckBox("Use potions"));
                 _potionMinHP = MenuMisc.Add("potionminHP", new Slider("Minimum Health % to use potion", 70));
                 _potionMinMP = MenuMisc.Add("potionMinMP", new Slider("Minimum Mana % to use potion", 20));
+                 MenuMisc.AddGroupLabel("Other");
+                _QWEToCursor = MenuMisc.Add("QWEToCuror",
+                    new KeyBind("Dash to cursor", false, KeyBind.BindTypes.HoldActive, 'H'));
             }
 
             public static void Initialize()

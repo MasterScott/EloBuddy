@@ -67,8 +67,6 @@
     <Compile Include="Modes\Harass.cs" />
     <Compile Include="Modes\Combo.cs" />
     <Compile Include="Modes\ModeBase.cs" />
-    <Compile Include="Other\Soldier.cs" />
-    <Compile Include="Other\SoldierManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpellManager.cs" />

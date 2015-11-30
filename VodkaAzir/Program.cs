@@ -30,8 +30,8 @@ namespace VodkaAzir
 
         private static void WelcomeMsg()
         {
-            Chat.Print("Vodka{0} Loaded. Have a splendid game!", Color.GreenYellow, ChampName);
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Chat.Print("Vodka{0} Loaded. Have a splendid game!", Color.LightGoldenrodYellow, ChampName);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Vodka{0} Loaded. Have a splendid game!", ChampName);
             Console.ResetColor();
         }
