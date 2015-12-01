@@ -155,32 +155,25 @@ namespace VodkaTristana
         private static void OnDraw(EventArgs args)
         {
             var ERRange = SpellManager.ERRange();
-            if (SettingsDrawing.DrawQ)
-            {
-                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Q.IsReady()))
-                {
-                    Circle.Draw(Color.LightGreen, 250.0f, Player.Instance.Position);
-                }
-            }
             if (SettingsDrawing.DrawW)
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.W.IsReady()))
                 {
-                    Circle.Draw(Color.LightGreen, SpellManager.W.Range, Player.Instance.Position);
+                    Circle.Draw(Color.LightBlue, SpellManager.W.Range, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawE)
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.E.IsReady()))
                 {
-                    Circle.Draw(Color.DarkGreen, ERRange, Player.Instance.Position);
+                    Circle.Draw(Color.Orange, ERRange, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawR)
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.R.IsReady()))
                 {
-                    Circle.Draw(Color.Orange, ERRange, Player.Instance.Position);
+                    Circle.Draw(Color.OrangeRed, ERRange, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawIgnite && SpellManager.HasIgnite())

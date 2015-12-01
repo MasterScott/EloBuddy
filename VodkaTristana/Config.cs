@@ -430,17 +430,12 @@ namespace VodkaTristana
         public static class DrawingMenu
         {
             private static readonly Menu MenuDrawing;
-            private static readonly CheckBox _drawQ;
             private static readonly CheckBox _drawW;
             private static readonly CheckBox _drawE;
             private static readonly CheckBox _drawR;
             private static readonly CheckBox _drawIgnite;
             private static readonly CheckBox _drawOnlyReady;
-
-            public static bool DrawQ
-            {
-                get { return _drawQ.CurrentValue; }
-            }
+            
             public static bool DrawW
             {
                 get { return _drawW.CurrentValue; }
@@ -465,7 +460,6 @@ namespace VodkaTristana
             static DrawingMenu()
             {
                 MenuDrawing = Config.Menu.AddSubMenu("Drawing");
-                _drawQ = MenuDrawing.Add("drawQ", new CheckBox("Draw Q"));
                 _drawW = MenuDrawing.Add("drawW", new CheckBox("Draw W"));
                 _drawE = MenuDrawing.Add("drawE", new CheckBox("Draw E"));
                 _drawR = MenuDrawing.Add("drawR", new CheckBox("Draw R"));
