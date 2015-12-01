@@ -34,6 +34,15 @@ namespace VodkaWarwick
             {
                 Youmuu.Cast();
             }
+            if (target is AIHeroClient && SettingsModes.Combo.UseSmite && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
+                (SpellManager.HasChillingSmite() || SpellManager.HasDuelistSmite()) && SpellManager.Smite.IsReady())
+            {
+                var enemy = (AIHeroClient) target;
+                if (enemy.IsValidTarget(SpellManager.Smite.Range))
+                {
+                    SpellManager.Smite.Cast(enemy);
+                }
+            }
             // No sense in checking if W is off cooldown
             if (!SpellManager.W.IsReady())
             {

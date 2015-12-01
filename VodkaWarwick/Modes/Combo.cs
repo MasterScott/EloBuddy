@@ -57,6 +57,10 @@ namespace VodkaWarwick.Modes
                 }
                 if (target != null && target.IsValidTarget() && !target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
                 {
+                    if (Settings.UseSmite && SpellManager.HasDuelistSmite() && Smite.IsReady())
+                    {
+                        Smite.Cast(target);
+                    }
                     R.Cast(target);
                 }
             }
