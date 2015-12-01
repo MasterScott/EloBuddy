@@ -128,7 +128,7 @@ namespace VodkaWarwick
             }
             if (SettingsDrawing.DrawSmite && SpellManager.HasSmite())
             {
-                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Ignite.IsReady()))
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Smite.IsReady()))
                 {
                     Circle.Draw(Color.White, SpellManager.Smite.Range, Player.Instance.Position);
                 }

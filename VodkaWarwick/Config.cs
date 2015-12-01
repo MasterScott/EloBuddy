@@ -330,6 +330,7 @@ namespace VodkaWarwick
                 MenuMisc.AddGroupLabel("KillSteal");
                 _ksQ = MenuMisc.Add("ksQ", new CheckBox("KillSteal Q", false));
                 _ksIgnite = MenuMisc.Add("ksIgnite", new CheckBox("KillSteal Ignite"));
+                _ksSmite = MenuMisc.Add("ksSmite", new CheckBox("KillSteal Smite"));
                 MenuMisc.AddGroupLabel("Auto pot usage");
                 _potion = MenuMisc.Add("potion", new CheckBox("Use potions"));
                 _potionMinHP = MenuMisc.Add("potionminHP", new Slider("Minimum Health % to use potion", 70));
