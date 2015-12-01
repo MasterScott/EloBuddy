@@ -4,6 +4,7 @@ using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Rendering;
 using SharpDX;
 using System;
+using System.Linq;
 using SettingsDrawing = VodkaWarwick.Config.DrawingMenu;
 using SettingsMana = VodkaWarwick.Config.ManaManagerMenu;
 using SettingsMisc = VodkaWarwick.Config.MiscMenu;
@@ -24,8 +25,7 @@ namespace VodkaWarwick
         {
             Youmuu = new Item(ItemId.Youmuus_Ghostblade);
             Interrupter.OnInterruptableSpell += InterrupterOnInterruptableSpell;
-            Orbwalker.OnAttack += OrbwalkerOnAttack;
-            Drawing.OnDraw += OnDraw;
+            Orbwalker.OnAttack += OrbwalkerOnAttack;Drawing.OnDraw += OnDraw;
         }
 
         private static void OrbwalkerOnAttack(AttackableUnit target, EventArgs args)
@@ -35,7 +35,7 @@ namespace VodkaWarwick
                 Youmuu.Cast();
             }
             if (target is AIHeroClient && SettingsModes.Combo.UseSmite && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
-                (SpellManager.HasChillingSmite() || SpellManager.HasDuelistSmite()) && SpellManager.Smite.IsReady())
+                (SpellManager.HasChillingSmite() || SpellManager.HasChallengingSmite()) && SpellManager.Smite.IsReady())
             {
                 var enemy = (AIHeroClient) target;
                 if (enemy.IsValidTarget(SpellManager.Smite.Range))
@@ -102,7 +102,7 @@ namespace VodkaWarwick
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Q.IsReady()))
                 {
-                    Circle.Draw(Color.LightGray, SpellManager.Q.Range, Player.Instance.Position);
+                    Circle.Draw(Color.LightBlue, SpellManager.Q.Range, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawE)
@@ -131,6 +131,20 @@ namespace VodkaWarwick
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Smite.IsReady()))
                 {
                     Circle.Draw(Color.White, SpellManager.Smite.Range, Player.Instance.Position);
+                }
+            }
+            if (SettingsDrawing.DrawLasthittable)
+            {
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Q.IsReady()))
+                {
+                    var minions =
+                        EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                            Player.Instance.Position, 1000.0f)
+                            .Where(e => e.IsValidTarget() && e.Health < Damages.QDamage(e));
+                    foreach (var m in minions)
+                    {
+                        Circle.Draw(Color.Red, m.BoundingRadius, m.Position);
+                    }
                 }
             }
         }

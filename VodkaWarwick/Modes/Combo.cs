@@ -1,4 +1,5 @@
-﻿using EloBuddy;
+﻿using System.Linq;
+using EloBuddy;
 using EloBuddy.SDK;
 using Settings = VodkaWarwick.Config.ModesMenu.Combo;
 using SettingsMana = VodkaWarwick.Config.ManaManagerMenu;
@@ -44,6 +45,14 @@ namespace VodkaWarwick.Modes
                 }
             }
             // Skills
+            if (Settings.UseE && E.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
+            {
+                var useE = EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.Health < 0.5f*e.MaxHealth);
+                if (useE)
+                {
+                    E.Cast();
+                }
+            }
             if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
             {
                 AIHeroClient target = null;
@@ -55,11 +64,11 @@ namespace VodkaWarwick.Modes
                 {
                     target = TargetSelector.GetTarget(R.Range, DamageType.Magical);
                 }
-                if (target != null && target.IsValidTarget() && !target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
+                if (target != null && target.IsValidTarget(R.Range) && !target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
                 {
-                    if (Settings.UseSmite && SpellManager.HasDuelistSmite() && Smite.IsReady())
+                    if (Settings.UseSmite && SpellManager.HasChallengingSmite() && SpellManager.Smite.IsReady())
                     {
-                        Smite.Cast(target);
+                            SpellManager.Smite.Cast(target);
                     }
                     R.Cast(target);
                 }

@@ -69,7 +69,7 @@ namespace VodkaWarwick
                    Smite.Name.Equals("s5_summonersmiteplayerganker", StringComparison.CurrentCultureIgnoreCase);
         }
 
-        public static bool HasDuelistSmite()
+        public static bool HasChallengingSmite()
         {
             return Smite != null &&
                    Smite.Name.Equals("s5_summonersmiteduel", StringComparison.CurrentCultureIgnoreCase);
