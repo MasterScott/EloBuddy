@@ -20,8 +20,7 @@ namespace VodkaAzir
 
         private static void InterrupterOnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs interruptableSpellEventArgs)
         {
-            if (sender.IsEnemy && sender.IsValidTarget() && Player.Instance.Distance(sender) < 250 &&
-                SpellManager.R.IsReady())
+            if (SettingsMisc.InterruptR && SpellManager.R.IsReady() && sender.IsEnemy && sender.IsValidTarget(SpellManager.R.Range))
             {
                 SpellManager.R.Cast(sender);
                 Debug.WriteChat("Interrupting spell from {0}", ((AIHeroClient)sender).ChampionName);
