@@ -24,7 +24,7 @@ namespace VodkaAzir.Modes
                 if (farmLoc.HitNumber >= Settings.MinWTargets)
                 {
                     W.Cast(farmLoc.CastPosition);
-                    Chat.Print("Casting W in Lane Clear on {0} minions.", farmLoc.HitNumber.ToString());
+                    Debug.WriteChat("Casting W in Lane Clear on {0} minions.", farmLoc.HitNumber.ToString());
                 }
             }
 
@@ -42,7 +42,7 @@ namespace VodkaAzir.Modes
                         {
                             Q.Cast(minion);
                             qCasted = true;
-                            Chat.Print("Casting Q in Jungle Clear on {0} minions.", (cols + 1).ToString());
+                            Debug.WriteChat("Casting Q in Jungle Clear on {0} minions.", (cols + 1).ToString());
                             break;
                         }
                     }

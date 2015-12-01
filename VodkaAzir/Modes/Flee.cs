@@ -23,11 +23,11 @@ namespace VodkaAzir.Modes
                 {
                     return;
                 }
-                Chat.Print("Casting QWE combo in Flee mode");
                 W.Cast(_PlayerPos.Extend(cursorPos, W.Range).To3D());
                 var qCastPos = _PlayerPos.Extend(cursorPos, Q.Range).To3D();
                 Q.Cast(qCastPos);
                 E.Cast();
+                Debug.WriteChat("Casting QWE combo in Flee mode");
             }
             if (Settings.UseR && R.IsReady())
             {
@@ -38,7 +38,7 @@ namespace VodkaAzir.Modes
                     if (pred.HitChance >= HitChance.Low)
                     {
                         R.Cast(pred.CastPosition);
-                        Chat.Print("Casting R in Flee mode on {0}", target.ChampionName);
+                        Debug.WriteChat("Casting R in Flee mode on {0}", target.ChampionName);
                     }
                 }
             }

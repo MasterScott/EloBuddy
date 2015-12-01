@@ -24,7 +24,7 @@ namespace VodkaAzir
                 SpellManager.R.IsReady())
             {
                 SpellManager.R.Cast(sender);
-                Chat.Print("Interrupting spell from {0}", ((AIHeroClient)sender).ChampionName);
+                Debug.WriteChat("Interrupting spell from {0}", ((AIHeroClient)sender).ChampionName);
             }
         }
 
@@ -53,7 +53,7 @@ namespace VodkaAzir
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.E.IsReady()))
                 {
-                    Circle.Draw(Color.DarkGreen, SpellManager.E.Range, Player.Instance.Position);
+                    Circle.Draw(Color.Yellow, SpellManager.E.Range, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawR)
