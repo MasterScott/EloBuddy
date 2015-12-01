@@ -25,10 +25,24 @@ namespace VodkaWarwick
         {
             Youmuu = new Item(ItemId.Youmuus_Ghostblade);
             Interrupter.OnInterruptableSpell += InterrupterOnInterruptableSpell;
-            Orbwalker.OnAttack += OrbwalkerOnAttack;Drawing.OnDraw += OnDraw;
+            Orbwalker.OnPreAttack += OrbwalkerOnPreAttack;
+            Obj_AI_Base.OnBuffGain += ObjAiBaseOnBuffGain;
+            Drawing.OnDraw += OnDraw;
         }
 
-        private static void OrbwalkerOnAttack(AttackableUnit target, EventArgs args)
+        private static void ObjAiBaseOnBuffGain(Obj_AI_Base sender, Obj_AI_BaseBuffGainEventArgs args)
+        {
+            // Cast Challenging Smite in Ult
+            if (SettingsModes.Combo.UseSmite && sender.IsEnemy && sender is AIHeroClient && SpellManager.HasChallengingSmite() && args.Buff.Name.Equals("suppression") &&
+                args.Buff.SourceName.Equals("Warwick") && SettingsModes.Combo.UseSmite &&
+                Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
+            {
+                SpellManager.Smite.Cast(sender);
+                Debug.WriteChat("Casting Smite in combo with ult.");
+            }
+        }
+
+        private static void OrbwalkerOnPreAttack(AttackableUnit target, EventArgs args)
         {
             if (SettingsModes.Combo.UseItems && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) && CanUseItem(ItemId.Youmuus_Ghostblade))
             {
@@ -37,7 +51,7 @@ namespace VodkaWarwick
             if (target is AIHeroClient && SettingsModes.Combo.UseSmite && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
                 (SpellManager.HasChillingSmite() || SpellManager.HasChallengingSmite()) && SpellManager.Smite.IsReady())
             {
-                var enemy = (AIHeroClient) target;
+                var enemy = (AIHeroClient)target;
                 if (enemy.IsValidTarget(SpellManager.Smite.Range))
                 {
                     SpellManager.Smite.Cast(enemy);
@@ -87,7 +101,7 @@ namespace VodkaWarwick
                 SpellManager.R.IsReady())
             {
                 SpellManager.R.Cast(sender);
-                Chat.Print("Interrupting spell from {0} with R.", ((AIHeroClient)sender).ChampionName);
+                Debug.WriteChat("Interrupting spell from {0} with R.", ((AIHeroClient)sender).ChampionName);
             }
         }
 

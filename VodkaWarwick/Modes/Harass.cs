@@ -21,6 +21,7 @@ namespace VodkaWarwick.Modes
                     !target.HasBuffOfType(BuffType.SpellShield))
                 {
                     Q.Cast(target);
+                    Debug.WriteChat("Casting Q in Harass on {0}", target.ChampionName);
                 }
             }
         }

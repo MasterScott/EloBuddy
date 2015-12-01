@@ -16,6 +16,7 @@ namespace VodkaWarwick.Modes
             if (Settings.UseE && E.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
             {
                 E.Cast();
+                Debug.WriteChat("Casting E in Flee");
             }
         }
     }

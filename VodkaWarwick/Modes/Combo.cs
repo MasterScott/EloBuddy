@@ -51,6 +51,7 @@ namespace VodkaWarwick.Modes
                 if (useE)
                 {
                     E.Cast();
+                    Debug.WriteChat("Casting E in Combo.");
                 }
             }
             if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
@@ -66,11 +67,8 @@ namespace VodkaWarwick.Modes
                 }
                 if (target != null && target.IsValidTarget(R.Range) && !target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
                 {
-                    if (Settings.UseSmite && SpellManager.HasChallengingSmite() && SpellManager.Smite.IsReady())
-                    {
-                            SpellManager.Smite.Cast(target);
-                    }
                     R.Cast(target);
+                    Debug.WriteChat("Casting R in Combo on {0}", target.ChampionName);
                 }
             }
             if (Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
@@ -80,6 +78,7 @@ namespace VodkaWarwick.Modes
                     !target.HasBuffOfType(BuffType.SpellShield))
                 {
                     Q.Cast(target);
+                    Debug.WriteChat("Casting Q in Combo on {0}", target.ChampionName);
                 }
             }
         }

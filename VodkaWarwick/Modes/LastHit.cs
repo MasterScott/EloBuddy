@@ -23,6 +23,7 @@ namespace VodkaWarwick.Modes
                 if (target != null)
                 {
                     Q.Cast(target);
+                    Debug.WriteChat("Casting Q in LastHit on {0}", target.BaseSkinName);
                 }
             }
         }

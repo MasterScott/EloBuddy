@@ -23,6 +23,7 @@ namespace VodkaWarwick.Modes
                 if (target != null && target.IsValidTarget())
                 {
                     Q.Cast(target);
+                    Debug.WriteChat("Casting Q in JungleClear on {0}", target.BaseSkinName);
                 }
             }
         }
