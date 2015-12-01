@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaTwitch", "VodkaTwitch\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaAzir", "VodkaAzir\VodkaAzir.csproj", "{D76CD2E6-2880-4EBC-B09F-283C6B32EBFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VodkaTristana", "VodkaTristana\VodkaTristana.csproj", "{067840E5-2DCF-4012-BCFF-AC43D71BEC8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{D76CD2E6-2880-4EBC-B09F-283C6B32EBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D76CD2E6-2880-4EBC-B09F-283C6B32EBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D76CD2E6-2880-4EBC-B09F-283C6B32EBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{067840E5-2DCF-4012-BCFF-AC43D71BEC8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{067840E5-2DCF-4012-BCFF-AC43D71BEC8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{067840E5-2DCF-4012-BCFF-AC43D71BEC8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{067840E5-2DCF-4012-BCFF-AC43D71BEC8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
