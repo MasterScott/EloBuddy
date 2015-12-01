@@ -74,7 +74,7 @@ namespace VodkaWarwick.Modes
                 }
             }
             // Auto Q Harass
-            if (SettingsHarass.UseAutoQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana && !_Player.IsRecalling() && !PlayerIsUnderEnemyTurret() /* Don't harass under enemy turrets */ && !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) /* Don't Harass in Combo, it can mess it up */)
+            if (SettingsHarass.UseAutoQ && Q.IsReady() && PlayerMana >= SettingsHarass.MinAutoQMana && !_Player.IsRecalling() && !PlayerIsUnderEnemyTurret() /* Don't harass under enemy turrets */ && !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) /* Don't Harass in Combo, it can mess it up */)
             {
                 var enemies = EntityManager.Heroes.Enemies.Where(
                     e => e.IsValidTarget(Q.Range)).OrderBy(e => _Player.Distance(e));

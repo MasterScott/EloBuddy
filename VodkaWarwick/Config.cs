@@ -139,6 +139,7 @@ namespace VodkaWarwick
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useAutoQ;
+                private static readonly Slider _minAutoQMana;
 
                 public static bool UseQ
                 {
@@ -155,12 +156,18 @@ namespace VodkaWarwick
                     get { return _useW.CurrentValue; }
                 }
 
+                public static int MinAutoQMana
+                {
+                    get { return _minAutoQMana.CurrentValue; }
+                }
+
                 static Harass()
                 {
                     MenuModes.AddGroupLabel("Harass");
                     _useQ = MenuModes.Add("harassUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("harassUseW", new CheckBox("Use W"));
                     _useAutoQ = MenuModes.Add("harassUseAutoQ", new CheckBox("Use Auto Q"));
+                    _minAutoQMana = MenuModes.Add("minQMana", new Slider("Minimum mana % to use Auto Q", 60, 0, 100));
                     foreach (var enemy in EntityManager.Heroes.Enemies)
                     {
                         MenuModes.Add("blacklist" + enemy.ChampionName, new CheckBox("Don't Auto Q " + enemy.ChampionName, false));
