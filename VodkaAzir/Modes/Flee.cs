@@ -25,8 +25,10 @@ namespace VodkaAzir.Modes
                 }
                 W.Cast(_PlayerPos.Extend(cursorPos, W.Range).To3D());
                 var qCastPos = _PlayerPos.Extend(cursorPos, Q.Range).To3D();
+                Core.DelayAction(() => {
+                    E.Cast();
+                }, 200);
                 Q.Cast(qCastPos);
-                E.Cast();
                 Debug.WriteChat("Casting QWE combo in Flee mode");
             }
             if (Settings.UseR && R.IsReady())

@@ -131,8 +131,10 @@ namespace VodkaAzir.Modes
                     else if (PlayerManaExact >= 170 && _PlayerPos.Distance(cursorPos) < Q.Range - 100 &&  W.IsReady() && Q.IsReady())
                     {
                         W.Cast(_PlayerPos.Extend(cursorPos, W.Range).To3D());
+                        Core.DelayAction(() => {
+                            E.Cast();
+                        }, 200);
                         Q.Cast(cursorPos);
-                        E.Cast();
                         Debug.WriteChat("Using QWE to dash to location");
                     }
                 }
