@@ -23,6 +23,8 @@ namespace VodkaGalio
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
             PredictionMenu.Initialize();
+            var shielderSubMenu = Config.Menu.AddSubMenu("Shielder");
+            Shielder.Shielder.Initialize(shielderSubMenu);
             ManaManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
@@ -498,13 +500,11 @@ namespace VodkaGalio
             private static readonly Slider _minQHCCombo;
             private static readonly Slider _minQHCHarass;
             private static readonly Slider _minQHCLastHit;
-            private static readonly Slider _minQHCJungleClear;
             private static readonly Slider _minQHCKillSteal;
             private static readonly Slider _minQHCFlee;
             private static readonly Slider _minEHCCombo;
             private static readonly Slider _minEHCHarass;
             private static readonly Slider _minEHCLastHit;
-            private static readonly Slider _minEHCJungleClear;
             private static readonly Slider _minEHCKillSteal;
 
             public static HitChance MinQHCCombo
@@ -520,11 +520,6 @@ namespace VodkaGalio
             public static HitChance MinQHCLastHit
             {
                 get { return Util.GetHCSliderHitChance(_minQHCLastHit); }
-            }
-
-            public static HitChance MinQHCJungleClear
-            {
-                get { return Util.GetHCSliderHitChance(_minQHCJungleClear); }
             }
 
             public static HitChance MinQHCKillSteal
@@ -550,11 +545,6 @@ namespace VodkaGalio
             public static HitChance MinEHCLastHit
             {
                 get { return Util.GetHCSliderHitChance(_minEHCLastHit); }
-            }
-
-            public static HitChance MinEHCJungleClear
-            {
-                get { return Util.GetHCSliderHitChance(_minEHCJungleClear); }
             }
 
             public static HitChance MinEHCKillSteal

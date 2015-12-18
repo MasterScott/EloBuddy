@@ -69,7 +69,6 @@ namespace VodkaJanna
             {
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
 
                 public static bool UseQ
                 {

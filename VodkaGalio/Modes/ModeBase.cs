@@ -29,8 +29,9 @@ namespace VodkaGalio.Modes
 
         protected bool isUlting()
         {
-            return Player.Instance.Spellbook.IsChanneling || Player.Instance.HasBuff("GalioIdolOfDurand");
+            return SpellManager.isUlting();
         }
+
         public abstract bool ShouldBeExecuted();
 
         public abstract void Execute();

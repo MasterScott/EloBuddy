@@ -30,5 +30,10 @@ namespace VodkaGalio
         {
 
         }
+
+        public static bool isUlting()
+        {
+            return Player.Instance.Spellbook.IsChanneling || Player.Instance.HasBuff("GalioIdolOfDurand");
+        }
     }
 }
