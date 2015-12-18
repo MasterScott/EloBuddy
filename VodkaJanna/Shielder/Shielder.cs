@@ -47,8 +47,8 @@ namespace VodkaJanna.Shielder
             subMenu.Add("ShielderOnEnemySpell", new CheckBox("Shield against enemy spells"));
             subMenu.Add("ShielderOnAllySpell", new CheckBox("Boost ally spell damage"));
             subMenu.AddGroupLabel("Delay");
-            subMenu.Add("ShielderDelay", new Slider("Delay shielding by X ms", 50, 0, 500));
-            subMenu.Add("ShielderDelayRandom", new Slider("Randomize delay by adding up to X ms", 50, 0, 500));
+            subMenu.Add("ShielderDelay", new Slider("Delay shielding by {0} ms", 50, 0, 500));
+            subMenu.Add("ShielderDelayRandom", new Slider("Randomize delay by adding up to {0} ms", 50, 0, 500));
             subMenu.AddGroupLabel("Ally Whitelist");
             subMenu.AddLabel("Choose which allies to shield.");
             foreach (var ally in EntityManager.Heroes.Allies)
