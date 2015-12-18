@@ -128,19 +128,6 @@ namespace VodkaJanna
             {
                 return;
             }
-            // Check if we should use E to attack heroes
-            if ((SettingsModes.Combo.UseE && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) ||
-                (SettingsModes.Harass.UseE && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass)) ||
-                (Orbwalker.LaneClearAttackChamps && SettingsModes.LaneClear.UseE &&
-                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)))
-            {
-                if (target is AIHeroClient && PlayerMana >= SettingsMana.MinEMana)
-                {
-                    Debug.WriteChat("Casting E, because attacking enemy in Combo or Harras");
-                    SpellManager.E.Cast(Player.Instance);
-                    return;
-                }
-            }
             // Check if we should use E to attack minions/monsters/turrets
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))

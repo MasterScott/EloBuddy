@@ -69,6 +69,8 @@
     <Compile Include="Modes\ModeBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shielder\Shielder.cs" />
+    <Compile Include="Shielder\SpellDatabase.cs" />
     <Compile Include="SpellManager.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>

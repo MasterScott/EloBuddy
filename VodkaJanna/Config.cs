@@ -23,6 +23,8 @@ namespace VodkaJanna
             Menu.AddLabel("Feel free to send me any suggestions you might have.");
             ModesMenu.Initialize();
             PredictionMenu.Initialize();
+            var shielderSubMenu = Config.Menu.AddSubMenu("Shielder");
+            Shielder.Shielder.Initialize(shielderSubMenu);
             ManaManagerMenu.Initialize();
             MiscMenu.Initialize();
             DrawingMenu.Initialize();
@@ -79,17 +81,11 @@ namespace VodkaJanna
                     get { return _useW.CurrentValue; }
                 }
 
-                public static bool UseE
-                {
-                    get { return _useE.CurrentValue; }
-                }
-
                 static Combo()
                 {
                     MenuModes.AddGroupLabel("Combo");
                     _useQ = MenuModes.Add("comboUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
-                    _useE = MenuModes.Add("comboUseE", new CheckBox("Use E (on self)"));
                 }
 
                 public static void Initialize()
@@ -101,7 +97,6 @@ namespace VodkaJanna
             {
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
-                private static readonly CheckBox _useE;
 
                 public static bool UseQ
                 {
@@ -113,17 +108,11 @@ namespace VodkaJanna
                     get { return _useW.CurrentValue; }
                 }
 
-                public static bool UseE
-                {
-                    get { return _useE.CurrentValue; }
-                }
-
                 static Harass()
                 {
                     MenuModes.AddGroupLabel("Harass");
                     _useQ = MenuModes.Add("harassUseQ", new CheckBox("Use Q", false));
                     _useW = MenuModes.Add("harassUseW", new CheckBox("Use W"));
-                    _useE = MenuModes.Add("harassUseE", new CheckBox("Use E (on self)", false));
                 }
 
                 public static void Initialize()
@@ -480,7 +469,6 @@ namespace VodkaJanna
             private static readonly Menu MenuPrediction;
             private static readonly Slider _minQHCCombo;
             private static readonly Slider _minQHCHarass;
-            private static readonly Slider _minQHCJungleClear;
             private static readonly Slider _minQHCKillSteal;
             private static readonly Slider _minQHCFlee;
 
@@ -492,11 +480,6 @@ namespace VodkaJanna
             public static HitChance MinQHCHarass
             {
                 get { return Util.GetHCSliderHitChance(_minQHCHarass); }
-            }
-
-            public static HitChance MinQHCJungleClear
-            {
-                get { return Util.GetHCSliderHitChance(_minQHCJungleClear); }
             }
 
             public static HitChance MinQHCKillSteal
