@@ -30,24 +30,14 @@ namespace VodkaAzir.Modes
 
             if (Orbwalker.AzirSoldiers.Count > 0 && Settings.UseQ && Q.IsReady() && PlayerMana >= SettingsMana.MinQMana)
             {
-                foreach (var minion in minions)
+                foreach (var soldier in Orbwalker.AzirSoldiers)
                 {
-                    var qCasted = false;
-                    foreach (var soldier in Orbwalker.AzirSoldiers)
+                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(minions, Q.Width, (int) Q.Range,
+                        soldier.Position.To2D());
+                    if (farmLoc.HitNumber >= Settings.MinQTargets)
                     {
-                        var pred = Prediction.Position.PredictLinearMissile(soldier, Q.Range, (int)soldier.BoundingRadius * 2, Q.CastDelay,
-                            Q.Speed, Int32.MaxValue, soldier.Position);
-                        var cols = pred.CollisionObjects.Count();
-                        if (cols >= Settings.MinQTargets - 1)
-                        {
-                            Q.Cast(minion);
-                            qCasted = true;
-                            Debug.WriteChat("Casting Q in Jungle Clear on {0} minions.", (cols + 1).ToString());
-                            break;
-                        }
-                    }
-                    if (qCasted)
-                    {
+                        Q.Cast(farmLoc.CastPosition);
+                        Debug.WriteChat("Casting Q in Lane Clear on {0} minions.", farmLoc.HitNumber.ToString());
                         break;
                     }
                 }

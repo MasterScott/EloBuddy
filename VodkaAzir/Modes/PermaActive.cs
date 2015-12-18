@@ -137,6 +137,10 @@ namespace VodkaAzir.Modes
                         Q.Cast(cursorPos);
                         Debug.WriteChat("Using QWE to dash to location");
                     }
+                    else
+                    {
+                        Orbwalker.MoveTo(cursorPos);
+                    }
                 }
                 else
                 {

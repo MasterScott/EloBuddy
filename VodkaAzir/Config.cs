@@ -64,6 +64,7 @@ namespace VodkaAzir
                 private static readonly CheckBox _useW;
                 private static readonly CheckBox _useE;
                 private static readonly CheckBox _useR;
+                private static readonly Slider _maxEnemyHPToE;
 
                 public static bool UseQ
                 {
@@ -84,7 +85,12 @@ namespace VodkaAzir
                 {
                     get { return _useR.CurrentValue; }
                 }
-                
+
+                public static int MaxEnemyHPToE
+                {
+                    get { return _maxEnemyHPToE.CurrentValue; }
+                }
+
                 static Combo()
                 {
                     MenuModes.AddGroupLabel("Combo");
@@ -92,6 +98,7 @@ namespace VodkaAzir
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
                     _useR = MenuModes.Add("comboUseR", new CheckBox("Use R"));
+                    _maxEnemyHPToE = MenuModes.Add("comboMaxEnemyHPToE", new Slider("E only enemies below {0}% HP", 30, 0, 100));
                 }
 
                 public static void Initialize()
@@ -170,10 +177,10 @@ namespace VodkaAzir
                 static LaneClear()
                 {
                     MenuModes.AddGroupLabel("LaneClear");
-                    _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q (may cause FPS drop)", false)); // Can cause lags
+                    _useQ = MenuModes.Add("laneUseQ", new CheckBox("Use Q"));
                     _useW = MenuModes.Add("laneUseW", new CheckBox("Use W"));
-                    _minQTargets = MenuModes.Add("minQTargetsLC", new Slider("Minimum targets for Q", 3, 1, 10));
-                    _minWTargets = MenuModes.Add("minWTargetsLC", new Slider("Minimum targets for W", 2, 1, 10));
+                    _minQTargets = MenuModes.Add("minQTargetsLC", new Slider("Minimum targets for Q", 4, 1, 10));
+                    _minWTargets = MenuModes.Add("minWTargetsLC", new Slider("Minimum targets for W", 3, 1, 10));
                     _maxSoldiersForFarming = MenuModes.Add("maxSoldiersLC", new Slider("Max soldiers to farm with", 3, 1, 3));
                 }
 

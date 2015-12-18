@@ -82,7 +82,7 @@ namespace VodkaAzir.Modes
                 if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana) // My name is FireDash
                 {
                     var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
-                    if (target != null)
+                    if (target != null && target.HealthPercent < Settings.MaxEnemyHPToE)
                     {
                         foreach (var soldier in Orbwalker.AzirSoldiers.Where(s => s.Distance(_Player) < E.Range))
                         {
