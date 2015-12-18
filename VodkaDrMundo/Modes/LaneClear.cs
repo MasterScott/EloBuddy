@@ -2,7 +2,6 @@
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
-using SharpDX.Direct3D9;
 using Settings = VodkaDrMundo.Config.ModesMenu.LaneClear;
 using SettingsCombo = VodkaDrMundo.Config.ModesMenu.Combo;
 using SettingsPrediction = VodkaDrMundo.Config.PredictionMenu;

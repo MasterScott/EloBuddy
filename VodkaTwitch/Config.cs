@@ -492,7 +492,6 @@ namespace VodkaTwitch
             private static readonly Menu MenuPrediction;
             private static readonly Slider _minWHCCombo;
             private static readonly Slider _minWHCHarass;
-            private static readonly Slider _minWHCJungleClear;
             private static readonly Slider _minWHCFlee;
 
             public static HitChance MinWHCCombo
@@ -504,12 +503,6 @@ namespace VodkaTwitch
             {
                 get { return Util.GetHCSliderHitChance(_minWHCHarass); }
             }
-
-            public static HitChance MinWHCJungleClear
-            {
-                get { return Util.GetHCSliderHitChance(_minWHCJungleClear); }
-            }
-            
 
             public static HitChance MinWHCFlee
             {

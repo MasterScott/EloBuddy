@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX.Direct3D9;
 using Settings = VodkaJanna.Config.ModesMenu.LaneClear;
 using SettingsPrediction = VodkaJanna.Config.PredictionMenu;
 using SettingsMana = VodkaJanna.Config.ManaManagerMenu;

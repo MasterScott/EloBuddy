@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX.Direct3D9;
 using Settings = VodkaXinZhao.Config.ModesMenu.LaneClear;
 using SettingsMana = VodkaXinZhao.Config.ManaManagerMenu;
 

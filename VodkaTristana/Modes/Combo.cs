@@ -55,7 +55,7 @@ namespace VodkaTristana.Modes
                     if (!target.HasBuffOfType(BuffType.SpellImmunity) && !target.HasBuffOfType(BuffType.SpellShield))
                     {
                         var targetHealth = target.TotalShieldHealth();
-                        if (target.HasBuff("TristanaEChargeSound")) ;
+                        if (target.HasBuff("TristanaEChargeSound"))
                         {
                             targetHealth -= Damages.EDamage(target);
                         }

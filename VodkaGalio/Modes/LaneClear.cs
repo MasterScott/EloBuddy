@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX.Direct3D9;
 using Settings = VodkaGalio.Config.ModesMenu.LaneClear;
 using SettingsPrediction = VodkaGalio.Config.PredictionMenu;
 using SettingsMana = VodkaGalio.Config.ManaManagerMenu;

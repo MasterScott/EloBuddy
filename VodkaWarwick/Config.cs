@@ -284,7 +284,6 @@ namespace VodkaWarwick
             private static readonly CheckBox _ksQ;
             private static readonly CheckBox _ksIgnite;
             private static readonly CheckBox _ksSmite;
-            private static readonly KeyBind _WToCursor;
             private static readonly Slider _potionMinHP;
             private static readonly Slider _potionMinMP;
 
@@ -315,10 +314,6 @@ namespace VodkaWarwick
             public static int potionMinMP
             {
                 get { return _potionMinMP.CurrentValue; }
-            }
-            public static bool WToCursor
-            {
-                get { return _WToCursor.CurrentValue; }
             }
 
             static MiscMenu()
@@ -379,17 +374,6 @@ namespace VodkaWarwick
         public static class PredictionMenu
         {
             private static readonly Menu MenuPrediction;
-            private static readonly Slider _minWHCCombo;
-            private static readonly Slider _minWHCKillSteal;
-
-            public static HitChance MinWHCCombo
-            {
-                get { return Util.GetHitChanceSliderValue(_minWHCCombo); }
-            }
-            public static HitChance MinWHCKillSteal
-            {
-                get { return Util.GetHitChanceSliderValue(_minWHCKillSteal); }
-            }
 
             static PredictionMenu()
             {
