@@ -32,11 +32,11 @@ namespace VodkaAzir.Modes
             {
                 foreach (var soldier in Orbwalker.AzirSoldiers)
                 {
-                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(minions, Q.Width, 300,
+                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(minions, Q.Width, 500,
                         soldier.Position.To2D());
                     if (farmLoc.HitNumber >= Settings.MinQTargets)
                     {
-                        Q.Cast(farmLoc.CastPosition);
+                        Q.Cast(soldier.Position.Extend(farmLoc.CastPosition, soldier.Position.Distance(farmLoc.CastPosition)-100).To3D());
                         Debug.WriteChat("Casting Q in Lane Clear on {0} minions.", farmLoc.HitNumber.ToString());
                         break;
                     }
