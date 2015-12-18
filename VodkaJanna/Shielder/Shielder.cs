@@ -40,7 +40,9 @@ namespace VodkaJanna.Shielder
             subMenu.AddLabel("It takes into account player mana based on Mana Manager settings.");
             subMenu.AddGroupLabel("Basic Autoattacks");
             subMenu.Add("ShielderOnEnemyAA", new CheckBox("Shield against enemy AA"));
+            subMenu.Add("ShielderOnEnemyTurretAA", new CheckBox("Shield against turret attacks"));
             subMenu.Add("ShielderOnAllyAA", new CheckBox("Boost ally AA damage"));
+            subMenu.Add("ShielderOnAllyTurretAA", new CheckBox("Boost turret AA damage against heroes"));
             subMenu.AddGroupLabel("Spell Casts");
             subMenu.Add("ShielderOnEnemySpell", new CheckBox("Shield against enemy spells"));
             subMenu.Add("ShielderOnAllySpell", new CheckBox("Boost ally spell damage"));
@@ -146,6 +148,26 @@ namespace VodkaJanna.Shielder
                 {
                     CastE((Obj_AI_Base)args.Target);
                     Debug.WriteChat("Protecting {0} from autoattack by {1}", (args.Target as AIHeroClient).ChampionName, (sender as AIHeroClient).ChampionName);
+                    return;
+                }
+            }
+            if (sender is Obj_AI_Turret)
+            {
+                // Boost ally turret AA
+                if (sender.IsAlly && ShielderMenu["ShielderOnAllyTurretAA"].Cast<CheckBox>().CurrentValue && args.Target != null
+                    && args.Target is AIHeroClient && (sender as Obj_AI_Turret).IsValidTarget(SpellManager.E.Range))
+                {
+                    CastE((Obj_AI_Base)sender);
+                    Debug.WriteChat("Boosting turret {0} AA damage against {1}", (sender as Obj_AI_Turret).BaseSkinName, (args.Target as AIHeroClient).ChampionName);
+                    return;
+                }
+                // Protect ally from enemy turret AA
+                if (sender.IsEnemy && ShielderMenu["ShielderOnEnemyTurretAA"].Cast<CheckBox>().CurrentValue && args.Target != null
+                    && args.Target is AIHeroClient && ShielderMenu["ShielderAllyWhitelist" + (args.Target as AIHeroClient).ChampionName].Cast<CheckBox>().CurrentValue
+                    && (args.Target as AIHeroClient).IsValidTarget(SpellManager.E.Range))
+                {
+                    CastE((Obj_AI_Base)args.Target);
+                    Debug.WriteChat("Protecting {0} from autoattack by turret {1}", (args.Target as AIHeroClient).ChampionName, (sender as Obj_AI_Turret).BaseSkinName);
                     return;
                 }
             }
