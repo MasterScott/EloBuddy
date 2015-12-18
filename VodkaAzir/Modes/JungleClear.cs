@@ -18,7 +18,7 @@ namespace VodkaAzir.Modes
 
         public override void Execute()
         {
-            var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(_PlayerPos, 1000.0f).ToList();
+            var monsters = EntityManager.MinionsAndMonsters.GetJungleMonsters(_PlayerPos, 800.0f).Where(m => m.IsValidTarget()).ToList();
             if (Orbwalker.AzirSoldiers.Count < Settings.MaxSoldiersForFarming && Settings.UseW && W.IsReady() && PlayerMana >= SettingsMana.MinWMana)
             {
                 var farmLoc = EntityManager.MinionsAndMonsters.GetCircularFarmLocation(monsters, W.Width, (int)W.Range);
@@ -33,7 +33,7 @@ namespace VodkaAzir.Modes
             {
                 foreach (var soldier in Orbwalker.AzirSoldiers)
                 {
-                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(monsters, Q.Width, (int)Q.Range,
+                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(monsters, Q.Width, 300,
                         soldier.Position.To2D());
                     if (farmLoc.HitNumber >= Settings.MinQTargets)
                     {

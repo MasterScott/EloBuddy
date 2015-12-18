@@ -32,7 +32,7 @@ namespace VodkaAzir.Modes
             {
                 foreach (var soldier in Orbwalker.AzirSoldiers)
                 {
-                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(minions, Q.Width, (int) Q.Range,
+                    var farmLoc = EntityManager.MinionsAndMonsters.GetLineFarmLocation(minions, Q.Width, 300,
                         soldier.Position.To2D());
                     if (farmLoc.HitNumber >= Settings.MinQTargets)
                     {

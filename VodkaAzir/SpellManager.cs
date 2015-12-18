@@ -18,7 +18,7 @@ namespace VodkaAzir
         static SpellManager()
         {
             // Initialize spells
-            Q = new Spell.Skillshot(SpellSlot.Q, 1100, SkillShotType.Linear);
+            Q = new Spell.Skillshot(SpellSlot.Q, 1100, SkillShotType.Linear, 250, 1000, 80);
             Q.AllowedCollisionCount = Int32.MaxValue;
             W = new Spell.Skillshot(SpellSlot.W, 450, SkillShotType.Circular, 250, 0, 200);
             W.AllowedCollisionCount = Int32.MaxValue;
