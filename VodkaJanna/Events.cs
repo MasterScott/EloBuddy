@@ -68,18 +68,17 @@ namespace VodkaJanna
 
         private static void InterrupterOnOnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs interruptableSpellEventArgs)
         {
-            if (!sender.IsEnemy || !(sender is AIHeroClient) || Player.Instance.IsRecalling())
+            if (!sender.IsEnemy || !(sender is AIHeroClient) || SpellManager.IsUlting() || Player.Instance.IsRecalling())
             {
                 return;
             }
-            Debug.WriteChat("Interruptable Spell from {0}", sender.Name);
             if (SettingsMisc.InterrupterUseQ && SpellManager.Q.IsReady() && sender.IsEnemy && SpellManager.Q.IsInRange(sender))
             {
                 Debug.WriteChat("Interrupting with Q, Target: {0}, Distance: {1}", ((AIHeroClient)sender).ChampionName, "" + sender.Distance(Player.Instance));
                 canInterruptR = false;
                 SpellManager.Q.Cast(sender);
                 Core.DelayAction(() => { SpellManager.Q.Cast(sender); }, 1);
-                Core.DelayAction(() => { canInterruptR = true; }, 200);
+                Core.DelayAction(() => { canInterruptR = true; }, 1000);
                 return;
             }
             if (SettingsMisc.InterrupterUseR && SpellManager.R.IsReady() && sender.IsEnemy && SpellManager.R.IsInRange(sender) && canInterruptR)

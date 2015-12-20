@@ -89,7 +89,7 @@ namespace VodkaGalio
 
         private static void InterrupterOnOnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs interruptableSpellEventArgs)
         {
-            if (!sender.IsEnemy || !(sender is AIHeroClient) || Player.Instance.IsRecalling())
+            if (!sender.IsEnemy || !(sender is AIHeroClient) || Player.Instance.IsRecalling() || SpellManager.isUlting() || Player.Instance.IsRecalling())
             {
                 Debug.WriteChat("Detected Interruptable spell from {0}, but didn't meet criteria.", sender.Name);
                 return;
