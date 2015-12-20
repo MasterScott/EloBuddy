@@ -1,5 +1,7 @@
-﻿using EloBuddy;
+﻿using System;
+using EloBuddy;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VodkaJanna.Shielder
 {
@@ -136,6 +138,23 @@ namespace VodkaJanna.Shielder
                 new SpellData { Champion = "Akali", SpellName = "AkaliMot", Slot = SpellSlot.Q, Default = true },
                 new SpellData { Champion = "Leblanc", SpellName = "LeblancChaosOrbM", Slot = SpellSlot.Q, Default = true },
                 new SpellData { Champion = "Anivia", SpellName = "Frostbite", Slot = SpellSlot.E, Default = true },
+                new SpellData { Champion = "Zed", SpellName = "zedult", Slot = SpellSlot.R, Delay = 0, Default = true },
+                new SpellData { Champion = "Vi", SpellName = "ViR", Slot = SpellSlot.R, Delay = 0, Default = true },
+                new SpellData { Champion = "LeeSin", SpellName = "BlindMonkRKick", Slot = SpellSlot.R, Delay = 0, Default = true },
             };
+
+        public static SpellData GetTargetedSpellData(string spellName)
+        {
+            return
+                TargetedSpells.FirstOrDefault(
+                    s => s.SpellName.Equals(spellName, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        public static SpellData GetDamageBoostSpellData(string spellName)
+        {
+            return
+                TargetedSpells.FirstOrDefault(
+                    s => s.SpellName.Equals(spellName, StringComparison.CurrentCultureIgnoreCase));
+        }
     }
 }

@@ -32,6 +32,11 @@ namespace VodkaJanna.Modes
             return SpellManager.Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).ToggleState != 2;
         }
 
+        protected bool IsUlting
+        {
+            get { return SpellManager.IsUlting(); }
+        }
+
         public abstract bool ShouldBeExecuted();
 
         public abstract void Execute();

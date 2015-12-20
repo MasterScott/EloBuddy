@@ -101,7 +101,7 @@ namespace VodkaGalio.Shielder
                     var spellCheckbox = ShielderMenu["ShielderEnemySpellWhitelist" + args.SData.Name];
                     if (spellCheckbox != null && spellCheckbox.Cast<CheckBox>().CurrentValue)
                     {
-                        CastW((Obj_AI_Base)args.Target);
+                        CastW((Obj_AI_Base)args.Target, args.SData.Name, false);
                         Debug.WriteChat("Protecting {0} from spell by {1}. Spell - {2}", (args.Target as AIHeroClient).ChampionName, (sender as AIHeroClient).ChampionName, args.SData.Name);
                         return;
                     }
@@ -122,7 +122,7 @@ namespace VodkaGalio.Shielder
                     && args.Target is AIHeroClient && ShielderMenu["ShielderAllyWhitelist" + (args.Target as AIHeroClient).ChampionName].Cast<CheckBox>().CurrentValue
                     && (args.Target as AIHeroClient).IsValidTarget(SpellManager.W.Range))
                 {
-                    CastW((Obj_AI_Base)args.Target);
+                    CastW((Obj_AI_Base)args.Target, null, false);
                     Debug.WriteChat("Protecting {0} from autoattack by {1}", (args.Target as AIHeroClient).ChampionName, (sender as AIHeroClient).ChampionName);
                     return;
                 }
@@ -134,20 +134,36 @@ namespace VodkaGalio.Shielder
                     && args.Target is AIHeroClient && ShielderMenu["ShielderAllyWhitelist" + (args.Target as AIHeroClient).ChampionName].Cast<CheckBox>().CurrentValue
                     && (args.Target as AIHeroClient).IsValidTarget(SpellManager.W.Range))
                 {
-                    CastW((Obj_AI_Base)args.Target);
+                    CastW((Obj_AI_Base)args.Target, null, false);
                     Debug.WriteChat("Protecting {0} from autoattack by turret {1}", (args.Target as AIHeroClient).ChampionName, (sender as Obj_AI_Turret).BaseSkinName);
                     return;
                 }
             }
         }
 
-        private static void CastW(Obj_AI_Base target)
+        private static void CastW(Obj_AI_Base target, string spellName, bool isDamageBoost)
         {
+            var spellDelay = 0;
+            if (spellName != null)
+            {
+                if (isDamageBoost)
+                {
+                    var spellData = SpellDatabase.GetDamageBoostSpellData(spellName);
+                    if (spellData != null)
+                        spellDelay = spellData.Delay;
+                }
+                else
+                {
+                    var spellData = SpellDatabase.GetTargetedSpellData(spellName);
+                    if (spellData != null)
+                        spellDelay = spellData.Delay;
+                }
+            }
             var delay = ShielderMenu["ShielderDelay"].Cast<Slider>().CurrentValue;
             var delayRandom = ShielderMenu["ShielderDelayRandom"].Cast<Slider>().CurrentValue;
             Random r = new Random(Environment.TickCount);
             var randomizedDelay = delayRandom > 0 ? r.Next(0, delayRandom + 1) : 0;
-            Core.DelayAction(() => { SpellManager.W.Cast(target); }, delay + randomizedDelay);
+            Core.DelayAction(() => { SpellManager.E.Cast(target); }, spellDelay + delay + randomizedDelay);
         }
     }
 }

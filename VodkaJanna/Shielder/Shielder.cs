@@ -91,7 +91,7 @@ namespace VodkaJanna.Shielder
 
         private static void OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!SpellManager.E.IsReady() || Player.Instance.ManaPercent < Config.ManaManagerMenu.MinEMana)
+            if (!SpellManager.E.IsReady() || Player.Instance.ManaPercent < Config.ManaManagerMenu.MinEMana || SpellManager.IsUlting())
             {
                 return;
             }
@@ -104,7 +104,7 @@ namespace VodkaJanna.Shielder
                     var spellCheckbox = ShielderMenu["ShielderAllySpellWhitelist" + args.SData.Name];
                     if (spellCheckbox != null && spellCheckbox.Cast<CheckBox>().CurrentValue)
                     {
-                        CastE((Obj_AI_Base) sender);
+                        CastE((Obj_AI_Base) sender, args.SData.Name, true);
                         Debug.WriteChat("Boosting {0} spell damage against {1}. Spell - {2}", (sender as AIHeroClient).ChampionName, (args.Target as AIHeroClient).ChampionName, args.SData.Name);
                         return;
                     }
@@ -116,7 +116,7 @@ namespace VodkaJanna.Shielder
                     var spellCheckbox = ShielderMenu["ShielderEnemySpellWhitelist" + args.SData.Name];
                     if (spellCheckbox != null && spellCheckbox.Cast<CheckBox>().CurrentValue)
                     {
-                        CastE((Obj_AI_Base) args.Target);
+                        CastE((Obj_AI_Base) args.Target, args.SData.Name, false);
                         Debug.WriteChat("Protecting {0} from spell by {1}. Spell - {2}", (args.Target as AIHeroClient).ChampionName, (sender as AIHeroClient).ChampionName, args.SData.Name);
                         return;
                     }
@@ -126,7 +126,7 @@ namespace VodkaJanna.Shielder
 
         private static void OnBasicAttack(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (!SpellManager.E.IsReady() || Player.Instance.ManaPercent < Config.ManaManagerMenu.MinEMana)
+            if (!SpellManager.E.IsReady() || Player.Instance.ManaPercent < Config.ManaManagerMenu.MinEMana || SpellManager.IsUlting())
             {
                 return;
             }
@@ -137,7 +137,7 @@ namespace VodkaJanna.Shielder
                     && (args.Target is AIHeroClient || args.Target is Obj_AI_Turret) && ShielderMenu["ShielderAllyWhitelist" + (sender as AIHeroClient).ChampionName].Cast<CheckBox>().CurrentValue
                     && (sender as AIHeroClient).IsValidTarget(SpellManager.E.Range))
                 {
-                    CastE((Obj_AI_Base)sender);
+                    CastE((Obj_AI_Base)sender, null, false);
                     Debug.WriteChat("Boosting {0} AA damage against {1}", (sender as AIHeroClient).ChampionName, (args.Target as AIHeroClient).ChampionName);
                     return;
                 }
@@ -146,7 +146,7 @@ namespace VodkaJanna.Shielder
                     && args.Target is AIHeroClient && ShielderMenu["ShielderAllyWhitelist" + (args.Target as AIHeroClient).ChampionName].Cast<CheckBox>().CurrentValue
                     && (args.Target as AIHeroClient).IsValidTarget(SpellManager.E.Range))
                 {
-                    CastE((Obj_AI_Base)args.Target);
+                    CastE((Obj_AI_Base)args.Target, null, false);
                     Debug.WriteChat("Protecting {0} from autoattack by {1}", (args.Target as AIHeroClient).ChampionName, (sender as AIHeroClient).ChampionName);
                     return;
                 }
@@ -157,7 +157,7 @@ namespace VodkaJanna.Shielder
                 if (sender.IsAlly && ShielderMenu["ShielderOnAllyTurretAA"].Cast<CheckBox>().CurrentValue && args.Target != null
                     && args.Target is AIHeroClient && (sender as Obj_AI_Turret).IsValidTarget(SpellManager.E.Range))
                 {
-                    CastE((Obj_AI_Base)sender);
+                    CastE((Obj_AI_Base)sender, null, false);
                     Debug.WriteChat("Boosting turret {0} AA damage against {1}", (sender as Obj_AI_Turret).BaseSkinName, (args.Target as AIHeroClient).ChampionName);
                     return;
                 }
@@ -166,20 +166,36 @@ namespace VodkaJanna.Shielder
                     && args.Target is AIHeroClient && ShielderMenu["ShielderAllyWhitelist" + (args.Target as AIHeroClient).ChampionName].Cast<CheckBox>().CurrentValue
                     && (args.Target as AIHeroClient).IsValidTarget(SpellManager.E.Range))
                 {
-                    CastE((Obj_AI_Base)args.Target);
+                    CastE((Obj_AI_Base)args.Target, null, false);
                     Debug.WriteChat("Protecting {0} from autoattack by turret {1}", (args.Target as AIHeroClient).ChampionName, (sender as Obj_AI_Turret).BaseSkinName);
                     return;
                 }
             }
         }
 
-        private static void CastE(Obj_AI_Base target)
+        private static void CastE(Obj_AI_Base target, string spellName, bool isDamageBoost)
         {
+            var spellDelay = 0;
+            if (spellName != null)
+            {
+                if (isDamageBoost)
+                {
+                    var spellData = SpellDatabase.GetDamageBoostSpellData(spellName);
+                    if (spellData != null)
+                        spellDelay = spellData.Delay;
+                }
+                else
+                {
+                    var spellData = SpellDatabase.GetTargetedSpellData(spellName);
+                    if (spellData != null)
+                        spellDelay = spellData.Delay;
+                }
+            }
             var delay = ShielderMenu["ShielderDelay"].Cast<Slider>().CurrentValue;
             var delayRandom = ShielderMenu["ShielderDelayRandom"].Cast<Slider>().CurrentValue;
             Random r = new Random(Environment.TickCount);
             var randomizedDelay = delayRandom > 0 ? r.Next(0, delayRandom + 1) : 0;
-            Core.DelayAction(() => { SpellManager.E.Cast(target); }, delay + randomizedDelay);
+            Core.DelayAction(() => { SpellManager.E.Cast(target); }, spellDelay + delay + randomizedDelay);
         }
     }
 }

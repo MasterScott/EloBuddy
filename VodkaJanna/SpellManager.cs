@@ -41,5 +41,10 @@ namespace VodkaJanna
         {
             return Q.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.Q).ToggleState != 2;
         }
+
+        public static bool IsUlting()
+        {
+            return Player.Instance.Spellbook.IsChanneling || Player.Instance.HasBuff("Reap The Whirlwind");
+        }
     }
 }
