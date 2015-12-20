@@ -142,7 +142,8 @@ namespace VodkaJanna.Shielder
                 new SpellData { Champion = "Zed", SpellName = "zedult", Slot = SpellSlot.R, Delay = 0, Default = true },
                 new SpellData { Champion = "Vi", SpellName = "ViR", Slot = SpellSlot.R, Delay = 0, Default = true },
                 new SpellData { Champion = "LeeSin", SpellName = "BlindMonkRKick", Slot = SpellSlot.R, Delay = 0, Default = true },
-                new SpellData { Champion = "Warwick", SpellName = "InfiniteDuress", Slot = SpellSlot.R, Delay = 0, Default = true }
+                new SpellData { Champion = "Warwick", SpellName = "InfiniteDuress", Slot = SpellSlot.R, Delay = 0, Default = true },
+                new SpellData { Champion = "Quinn", SpellName = "QuinnE", Slot = SpellSlot.E, Delay = 0, Default = true }
             };
 
         public static SpellData GetTargetedSpellData(string spellName)

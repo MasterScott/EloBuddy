@@ -105,7 +105,15 @@ namespace VodkaJanna.Shielder
                     if (spellCheckbox != null && spellCheckbox.Cast<CheckBox>().CurrentValue)
                     {
                         CastE((Obj_AI_Base) sender, args.SData.Name, true);
-                        Debug.WriteChat("Boosting {0} spell damage against {1}. Spell - {2}", (sender as AIHeroClient).ChampionName, (args.Target as AIHeroClient).ChampionName, args.SData.Name);
+                        var enemyName = "enemy";
+                        if (args.Target != null && args.Target is AIHeroClient)
+                        {
+                            enemyName = (args.Target as AIHeroClient).ChampionName;
+                        } else if (args.Target != null && args.Target is Obj_AI_Base)
+                        {
+                            enemyName = (args.Target as Obj_AI_Base).BaseSkinName;
+                        }
+                        Debug.WriteChat("Boosting {0} spell damage against {1}. Spell - {2}", (sender as AIHeroClient).ChampionName, enemyName , args.SData.Name);
                         return;
                     }
                 }
