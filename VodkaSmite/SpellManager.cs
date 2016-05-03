@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 
@@ -10,15 +11,9 @@ namespace VodkaSmite
 
         static SpellManager()
         {
-            if (Util.SmiteNames.ToList().Contains(Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner1).Name))
-            {
-                Smite = new Spell.Targeted(SpellSlot.Summoner1, 570);
-                return;
-            }
-            if (Util.SmiteNames.ToList().Contains(Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner2).Name))
-            {
-                Smite = new Spell.Targeted(SpellSlot.Summoner2, 570);
-            }
+            var smite = Player.Spells.FirstOrDefault(s => s.SData.Name.ToLower().Contains("smite"));
+            if (smite != null)
+                Smite = new Spell.Targeted(smite.Slot, 570);
         }
 
         public static void Initialize()
@@ -27,7 +22,20 @@ namespace VodkaSmite
 
         public static bool HasSmite()
         {
-            return Smite != null && Smite.IsLearned;
+            return Smite != null;
+        }
+
+        public static bool HasChillingSmite()
+        {
+
+            return Smite != null &&
+                   Smite.Name.Equals("s5_summonersmiteplayerganker", StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool HasChallengingSmite()
+        {
+            return Smite != null &&
+                   Smite.Name.Equals("s5_summonersmiteduel", StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

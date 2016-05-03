@@ -35,12 +35,12 @@ namespace VodkaSmite
             }
             if (Config.DrawSmiteRange)
             {
-                Circle.Draw(Color.LightCyan, SpellManager.Smite.Range, Player.Instance.Position);
+                Circle.Draw(Color.Gold, SpellManager.Smite.Range, Player.Instance.Position);
             }
             if (Config.DrawSmiteStatus)
             {
                 var enabled = Config.SmiteEnabled || Config.SmiteEnabledToggle;
-                Text.Position = Drawing.WorldToScreen(Player.Instance.Position) - new Vector2(40, -40);
+                Text.Position = Drawing.WorldToScreen(Player.Instance.Position) - new Vector2(40, -60);
                 Text.Color = enabled ? FontColor.LightSeaGreen : FontColor.DarkRed;
                 Text.TextValue = enabled ? "Smite: ENABLED" : "Smite: disabled";
                 Text.Draw();

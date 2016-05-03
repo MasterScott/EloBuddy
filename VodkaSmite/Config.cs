@@ -17,6 +17,7 @@ namespace VodkaSmite
         private static readonly CheckBox _drawSmiteStatus;
         private static readonly CheckBox _drawSmiteable;
         private static readonly CheckBox _drawRange;
+        private static readonly Slider _keepSmiteNumber;
 
         public static Menu MainMenu
         {
@@ -53,16 +54,23 @@ namespace VodkaSmite
             get { return _drawRange.CurrentValue; }
         }
 
+        public static int KeepSmiteNumber
+        {
+            get { return _keepSmiteNumber.CurrentValue; }
+        }
+
         static Config()
         {
             smiterMenu = EloBuddy.SDK.Menu.MainMenu.AddMenu(MenuName, MenuName.ToLower());
-            smiterMenu.AddGroupLabel("Welcome to VodkaGaren");
+            smiterMenu.AddGroupLabel("Welcome to VodkaSmite");
             smiterMenu.AddLabel("Created by Haker");
             smiterMenu.AddLabel("Feel free to send me any suggestions you might have.");
             smiterMenu.AddGroupLabel("Smite Status");
             _smiteEnabled = smiterMenu.Add("vSmiteEnabled", new CheckBox("Enabled always"));
             _smiteEnabledToggle = smiterMenu.Add("vSmiteEnabledToggle", new KeyBind("Enabled (Toggle Key)", false, KeyBind.BindTypes.PressToggle, 'K'));
             _smiteEnemies = smiterMenu.Add("vSmiteEnemies", new CheckBox("KS enemies with Smite"));
+            _keepSmiteNumber = smiterMenu.Add("vSmiteKeepSmiteNumber",
+                new Slider("Smite enemies if you have more than {0} charges", 1, 0, 2));
             smiterMenu.AddGroupLabel("Monsters to smite");
             smiterMenu.AddLabel("Select monsters you want to smite");
             smiterMenu.Add("vSmiteSRU_Baron", new CheckBox("Baron"));

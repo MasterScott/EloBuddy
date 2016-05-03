@@ -20,9 +20,9 @@ namespace VodkaSmite.Modes
             {
                 return;
             }
-            if (Config.SmiteEnemies && Smite.Name.Equals("s5_summonersmiteplayerganker"))
+            if (Config.SmiteEnemies && SpellManager.HasChillingSmite() && Smite.Handle.Ammo > Config.KeepSmiteNumber)
             {
-                var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(e => Smite.IsInRange(e) && !e.IsDead && e.Health > 0 && !e.IsInvulnerable && e.IsVisible && e.TotalShieldHealth() < Damages.SmiteDmgHero(e));
+                var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(e => e.IsValidTarget(Smite.Range) && e.TotalShieldHealth() < Damages.SmiteDmgHero(e));
                 if (enemy != null)
                 {
                     Debug.WriteChat("Casting Smite on {0}, who has {1}HP", enemy.ChampionName, string.Format("{0}", (int)enemy.Health));
@@ -32,13 +32,13 @@ namespace VodkaSmite.Modes
             }
             var monsters =
                 EntityManager.MinionsAndMonsters.GetJungleMonsters(_PlayerPos, Smite.Range)
-                    .Where(e => !e.IsDead && e.Health > 0 && Util.MonstersNames.Contains(e.BaseSkinName) && !e.IsInvulnerable && e.IsVisible && e.Health < Damages.SmiteDmgMonster(e));
+                    .Where(e => e.IsValidTarget() && Util.MonstersNames.Contains(e.BaseSkinName) && e.Health < Damages.SmiteDmgMonster(e));
             foreach (var m in monsters)
             {
                 if (Config.MainMenu["vSmite" + m.BaseSkinName].Cast<CheckBox>().CurrentValue)
                 {
-                    Debug.WriteChat("Casting Smite on {0}, who has {1}HP", m.Name, string.Format("{0}", (int)m.Health));
                     Smite.Cast(m);
+                    Debug.WriteChat("Casting Smite on {0}, who has {1}HP", m.Name, string.Format("{0}", (int)m.Health));
                     return;
                 }
             }
