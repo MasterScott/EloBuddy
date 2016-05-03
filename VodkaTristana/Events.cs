@@ -91,7 +91,7 @@ namespace VodkaTristana
                 (Orbwalker.LaneClearAttackChamps && SettingsModes.LaneClear.UseE &&
                  Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear)))
             {
-                if (target is AIHeroClient && PlayerMana >= SettingsMana.MinQMana)
+                if (target is AIHeroClient && PlayerMana >= SettingsMana.MinEMana)
                 {
                     SpellManager.E.Cast((Obj_AI_Base)target);
                     Debug.WriteChat("Casting E, because attacking enemy hero in Combo or Harras or LaneClear.");
@@ -102,7 +102,7 @@ namespace VodkaTristana
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) ||
                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
             {
-                if (target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinQMana)
+                if (target is Obj_AI_Minion && PlayerMana >= SettingsMana.MinEMana)
                 {
                     if (SettingsModes.JungleClear.UseE && target.Team == GameObjectTeam.Neutral)
                     {
@@ -143,7 +143,7 @@ namespace VodkaTristana
                 SpellManager.R.IsReady())
             {
                 SpellManager.R.Cast(sender);
-                Chat.Print("Interrupting spell from {0}", ((AIHeroClient)sender).ChampionName);
+                Chat.Print("Interrupting spell from {0} with R", ((AIHeroClient)sender).ChampionName);
             }
         }
 
@@ -166,7 +166,7 @@ namespace VodkaTristana
             {
                 if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.E.IsReady()))
                 {
-                    Circle.Draw(Color.Orange, ERRange, Player.Instance.Position);
+                    Circle.Draw(Color.Orange, ERRange+Player.Instance.BoundingRadius, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawR)

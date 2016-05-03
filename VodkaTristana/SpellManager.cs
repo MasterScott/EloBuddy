@@ -30,14 +30,9 @@ namespace VodkaTristana
 
             Recall = new Spell.Active(SpellSlot.Recall);
 
-            if (Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner1).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase))
-            {
-                Ignite = new Spell.Targeted(SpellSlot.Summoner1, 600);
-            }
-            else if ((Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner2).Name.Equals("summonerdot", StringComparison.CurrentCultureIgnoreCase)))
-            {
-                Ignite = new Spell.Targeted(SpellSlot.Summoner2, 600);
-            }
+            var ignite = Player.Spells.FirstOrDefault(s => s.SData.Name.ToLower().Contains("summonerdot"));
+            if (ignite != null)
+                Ignite = new Spell.Targeted(ignite.Slot, 600);
         }
 
         public static void Initialize()
