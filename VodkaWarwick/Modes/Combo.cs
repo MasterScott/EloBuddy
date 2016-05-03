@@ -24,6 +24,11 @@ namespace VodkaWarwick.Modes
 
         public override void Execute()
         {
+            // Don't do anything if ulting
+            if (_Player.Spellbook.IsChanneling)
+            {
+                return;
+            }
             // Items
             if (Settings.UseItems)
             {
@@ -47,7 +52,7 @@ namespace VodkaWarwick.Modes
             // Skills
             if (Settings.UseE && E.IsReady() && Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState == 1)
             {
-                var useE = EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.Health < 0.5f*e.MaxHealth);
+                var useE = EntityManager.Heroes.Enemies.Any(e => e.IsValidTarget() && e.Health < 0.5f*e.MaxHealth && _Player.Distance(e) < SpellManager.ERange());
                 if (useE)
                 {
                     E.Cast();

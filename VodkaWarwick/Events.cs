@@ -38,7 +38,7 @@ namespace VodkaWarwick
                 Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
             {
                 SpellManager.Smite.Cast(sender);
-                Debug.WriteChat("Casting Smite in combo with ult.");
+                Debug.WriteChat("Casting Challenging Smite in combo with ult.");
             }
         }
 
@@ -55,6 +55,7 @@ namespace VodkaWarwick
                 if (enemy.IsValidTarget(SpellManager.Smite.Range))
                 {
                     SpellManager.Smite.Cast(enemy);
+                    Debug.WriteChat("Casting Smite before attacking enemy in combo");
                 }
             }
             // No sense in checking if W is off cooldown
