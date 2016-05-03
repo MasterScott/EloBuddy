@@ -30,6 +30,7 @@ namespace VodkaTwitch
             if (SettingsMisc.StealthRecall && args.Slot == SpellSlot.Recall && !SpellManager.QActive && SpellManager.Q.IsReady() && !Player.Instance.IsInShopRange())
             {
                 SpellManager.Q.Cast();
+                Debug.WriteChat("Auto casting Q while recalling.");
             }
         }
 

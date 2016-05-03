@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("VodkaTwitch")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("An EloBuddy addon for Twitch")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("VodkaTwitch")]
-[assembly: AssemblyCopyright("Copyright © Haker 2015")]
+[assembly: AssemblyCopyright("Copyright © Haker 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("6.8.0.0")]
+[assembly: AssemblyFileVersion("6.8.0.0")]
