@@ -8,9 +8,9 @@ namespace VodkaSmite
     {
         public readonly static string[] MonstersNames =
         {
+            "SRU_Dragon_Water", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Air", "SRU_Dragon_Elder", "Sru_Crab", "SRU_Baron", "SRU_RiftHerald",
+            "SRU_Red", "SRU_Blue",  "SRU_Krug", "SRU_Gromp", "SRU_Murkwolf", "SRU_Razorbeak",
             "TT_Spiderboss", "TTNGolem", "TTNWolf", "TTNWraith",
-            "SRU_Blue", "SRU_Gromp", "SRU_Murkwolf", "SRU_Razorbeak",
-            "SRU_Red", "SRU_Krug", "SRU_Dragon", "Sru_Crab", "SRU_Baron", "SRU_RiftHerald"
         };
 
         public static readonly string[] SmiteNames =

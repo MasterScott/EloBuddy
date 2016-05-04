@@ -73,8 +73,12 @@ namespace VodkaSmite
                 new Slider("Smite enemies if you have more than {0} charges", 1, 0, 2));
             smiterMenu.AddGroupLabel("Monsters to smite");
             smiterMenu.AddLabel("Select monsters you want to smite");
-            smiterMenu.Add("vSmiteSRU_Baron", new CheckBox("Baron"));
-            smiterMenu.Add("vSmiteSRU_Dragon", new CheckBox("Dragon"));
+            smiterMenu.Add("vSmiteSRU_Baron", new CheckBox("Baron Nashor"));
+            smiterMenu.Add("vSmiteSRU_Dragon_Elder", new CheckBox("Elder Dragon"));
+            smiterMenu.Add("vSmiteSRU_Dragon_Air", new CheckBox("Air Dragon"));
+            smiterMenu.Add("vSmiteSRU_Dragon_Earth", new CheckBox("Fire Dragon"));
+            smiterMenu.Add("vSmiteSRU_Dragon_Fire", new CheckBox("Earth Dragon"));
+            smiterMenu.Add("vSmiteSRU_Dragon_Water", new CheckBox("Water Dragon"));
             smiterMenu.Add("vSmiteSRU_Red", new CheckBox("Red"));
             smiterMenu.Add("vSmiteSRU_Blue", new CheckBox("Blue"));
             smiterMenu.Add("vSmiteSRU_Gromp", new CheckBox("Gromp"));
@@ -82,7 +86,7 @@ namespace VodkaSmite
             smiterMenu.Add("vSmiteSRU_Krug", new CheckBox("Krug"));
             smiterMenu.Add("vSmiteSRU_Razorbeak", new CheckBox("Razorbeak"));
             smiterMenu.Add("vSmiteSru_Crab", new CheckBox("Crab"));
-            smiterMenu.Add("vSmiteSRU_RiftHerald", new CheckBox("Rift Herald", false));
+            smiterMenu.Add("vSmiteSRU_RiftHerald", new CheckBox("Rift Herald"));
             smiterMenu.AddGroupLabel("Drawing");
             _drawSmiteStatus = smiterMenu.Add("vSmiteDrawSmiteStatus", new CheckBox("Draw Smite Status"));
             _drawSmiteable = smiterMenu.Add("vSmiteDrawSmiteable", new CheckBox("Draw Smiteable Monsters"));
