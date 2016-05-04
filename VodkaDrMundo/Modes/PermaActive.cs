@@ -139,7 +139,7 @@ namespace VodkaDrMundo.Modes
                 if (Item.HasItem(HuntersPotion.Id) && Item.CanUseItem(HuntersPotion.Id))
                 {
                     Debug.WriteChat("Using HuntersPotion because below {0}% HP - have {1}% HP", String.Format("{0}", Settings.potionMinHP), String.Format("{0:##.##}", Player.Instance.HealthPercent));
-                    HealthPotion.Cast();
+                    HuntersPotion.Cast();
                     return;
                 }
                 if (Item.HasItem(TotalBiscuit.Id) && Item.CanUseItem(TotalBiscuit.Id))
