@@ -3,6 +3,7 @@ using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Utils;
 using System;
 using System.Collections.Generic;
+using SharpDX.Direct3D9;
 using VodkaJax.Modes;
 
 namespace VodkaJax
@@ -10,6 +11,7 @@ namespace VodkaJax
     public static class ModeManager
     {
         private static List<ModeBase> Modes { get; set; }
+        private static int lastTick { get; set; }
 
         static ModeManager()
         {
@@ -29,6 +31,7 @@ namespace VodkaJax
             });
 
             Game.OnTick += OnTick;
+            lastTick = Environment.TickCount;
         }
 
         public static void Initialize()
@@ -38,8 +41,13 @@ namespace VodkaJax
 
         private static void OnTick(EventArgs args)
         {
+            if (Environment.TickCount - lastTick > 1000)
+            {
+                lastTick = Environment.TickCount;
+            Chat.Print("State: {0}", Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState + "");
+        }
 
-            Modes.ForEach(mode =>
+        Modes.ForEach(mode =>
             {
                 try
                 {

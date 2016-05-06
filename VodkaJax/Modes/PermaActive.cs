@@ -4,6 +4,7 @@ using EloBuddy.SDK.Menu.Values;
 using System;
 using System.Linq;
 using Settings = VodkaJax.Config.MiscMenu;
+using SettingsCombo = VodkaJax.Config.ModesMenu.Combo;
 using SettingsHarass = VodkaJax.Config.ModesMenu.Harass;
 using SettingsMana = VodkaJax.Config.ManaManagerMenu;
 
@@ -39,7 +40,7 @@ namespace VodkaJax.Modes
             if (Environment.TickCount - lastKSTime > 500 && ((Settings.KsQW && Q.IsReady()) || (Settings.KsIgnite && HasIgnite)))
             {
                 var enemies = EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(Q.Range-50));
-                if (Settings.KsQW && Q.IsReady() && PlayerMana >= 95)
+                if (Settings.KsQW && Q.IsReady() && W.IsReady() && PlayerMana >= 95)
                 {
                     var target = enemies.FirstOrDefault(e => Q.IsInRange(e) && e.TotalShieldHealth() < (Damages.QDamage(e) + Damages.WDamage(e)) && !e.HasBuffOfType(BuffType.SpellImmunity) && !e.HasBuffOfType(BuffType.SpellShield));
                     if (target != null)
@@ -67,6 +68,16 @@ namespace VodkaJax.Modes
                         Debug.Write("Casting Ignite in KS on {0} who has {1}HP.", target.ChampionName, target.Health.ToString());
                         return;
                     }
+                }
+            }
+            // Auto E stun
+            if (Player.Instance.HasBuff("JaxCounterStrike") && E.IsReady())
+            {
+                var countenemies = EntityManager.Heroes.Enemies.Count(e => e.IsValidTarget(E.Range));
+                if (countenemies >= SettingsCombo.MinEStunEnemies)
+                {
+                    E.Cast();
+                    Debug.WriteChat("Casting E early to stun "+countenemies+" enemies.");
                 }
             }
             // Potion manager

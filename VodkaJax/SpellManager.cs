@@ -37,5 +37,10 @@ namespace VodkaJax
         {
             return Ignite != null;
         }
+
+        public static float ECost()
+        {
+            return 50.0f + 10.0f*(SpellManager.E.Level - 1);
+        }
     }
 }

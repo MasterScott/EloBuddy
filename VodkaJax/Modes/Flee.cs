@@ -18,7 +18,7 @@ namespace VodkaJax.Modes
             {
                 var jumpPos = Game.CursorPos;
                 var target = ObjectManager.Get<Obj_AI_Base>()
-                    .FirstOrDefault(o => o.IsAlly && o.Distance(jumpPos) < 100 && o.Distance(Player.Instance) < Q.Range);
+                    .FirstOrDefault(o => o.IsAlly && o.Distance(jumpPos) < 150 && o.Distance(Player.Instance) < Q.Range);
                 if (target != null)
                     Q.Cast(target);
             }

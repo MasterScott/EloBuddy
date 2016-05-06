@@ -64,9 +64,11 @@ namespace VodkaJax
                 private static readonly CheckBox _useE;
                 private static readonly CheckBox _useR;
                 private static readonly CheckBox _useItems;
+                private static readonly CheckBox _useEWithQ;
                 private static readonly Slider _maxBOTRKHPEnemy;
                 private static readonly Slider _maxBOTRKHPPlayer;
                 private static readonly Slider _minQDistance;
+                private static readonly Slider _minEStunEnemies;
 
                 public static bool UseQ
                 {
@@ -93,6 +95,11 @@ namespace VodkaJax
                     get { return _useItems.CurrentValue; }
                 }
 
+                public static bool UseEWithQ
+                {
+                    get { return _useEWithQ.CurrentValue; }
+                }
+
                 public static int MaxBOTRKHPPlayer
                 {
                     get { return _maxBOTRKHPPlayer.CurrentValue; }
@@ -108,6 +115,11 @@ namespace VodkaJax
                     get { return _minQDistance.CurrentValue; }
                 }
 
+                public static int MinEStunEnemies
+                {
+                    get { return _minEStunEnemies.CurrentValue; }
+                }
+
                 static Combo()
                 {
                     MenuModes.AddGroupLabel("Combo");
@@ -115,8 +127,11 @@ namespace VodkaJax
                     _useW = MenuModes.Add("comboUseW", new CheckBox("Use W"));
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
                     _useR = MenuModes.Add("comboUseR", new CheckBox("Use R"));
+                    _useEWithQ = MenuModes.Add("comboUseEWithQ", new CheckBox("Use E when jumping with Q"));
                     _minQDistance = MenuModes.Add("comboMinQDistance",
-                        new Slider("Only cast Q when distance is above {0}", 300, 0, (int) SpellManager.Q.Range-50));
+                        new Slider("Only cast Q when distance is above {0}", 400, 0, (int) SpellManager.Q.Range-50));
+                    _minEStunEnemies = MenuModes.Add("comboMinEStunEnemies",
+                        new Slider("Activate E early if you can stun {0} enemy heroes", 2, 1, 5));
                     _useItems = MenuModes.Add("comboUseItems", new CheckBox("Use Cutlass/BOTRK/Youmuu"));
                     _maxBOTRKHPPlayer = MenuModes.Add("comboMaxBotrkHpPlayer",
                         new Slider("Max Player HP % to use BOTRK", 80, 0, 100));

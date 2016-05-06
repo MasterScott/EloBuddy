@@ -64,7 +64,7 @@ namespace VodkaJax.Modes
                 if (target != null)
                 {
                     var distance = target.Distance(Player.Instance);
-                    if (distance >= Settings.MinQDistance && PlayerManaExact > 65)
+                    if (PlayerManaExact > 65 && distance >= Settings.MinQDistance && distance < Q.Range)
                     {
                         Q.Cast(target);
                         Debug.WriteChat("Casting Q in Combo, distance {0}.", ""+distance);

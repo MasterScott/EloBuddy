@@ -5,6 +5,7 @@ using EloBuddy.SDK.Rendering;
 using SharpDX;
 using System;
 using System.Linq;
+using SettingsCombo = VodkaJax.Config.ModesMenu.Combo;
 using SettingsDrawing = VodkaJax.Config.DrawingMenu;
 using SettingsMana = VodkaJax.Config.ManaManagerMenu;
 using SettingsMisc = VodkaJax.Config.MiscMenu;
@@ -25,7 +26,19 @@ namespace VodkaJax
         {
             Youmuu = new Item(ItemId.Youmuus_Ghostblade);
             Orbwalker.OnPostAttack += OrbwalkerOnOnPostAttack;
+            Spellbook.OnCastSpell += SpellbookOnOnCastSpell;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static void SpellbookOnOnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
+        {
+            if (SettingsCombo.UseEWithQ && sender.Owner.IsMe && SpellManager.E.IsReady() && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
+                Player.Instance.Mana > SpellManager.ECost() && args.Target is AIHeroClient && args.Target.IsValid
+                && !Player.Instance.HasBuff("JaxCounterStrike"))
+            {
+                SpellManager.E.Cast();
+                Debug.WriteChat("Casting E while jumping on " + ((AIHeroClient)args.Target).ChampionName);
+            }
         }
 
         private static void OrbwalkerOnOnPostAttack(AttackableUnit target, EventArgs args)
@@ -35,7 +48,7 @@ namespace VodkaJax
                 Youmuu.Cast();
             }
             // No sense in checking if W is off cooldown
-            if (!SpellManager.W.IsReady())
+            if (!SpellManager.W.IsReady() || target.IsDead)
             {
                 return;
             }
@@ -94,9 +107,9 @@ namespace VodkaJax
             }
             if (SettingsDrawing.DrawE)
             {
-                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.Q.IsReady()))
+                if (!(SettingsDrawing.DrawOnlyReady && !SpellManager.E.IsReady()))
                 {
-                    Circle.Draw(Color.LightGreen, SpellManager.E.Range, Player.Instance.Position);
+                    Circle.Draw(Color.LightYellow, SpellManager.E.Range, Player.Instance.Position);
                 }
             }
             if (SettingsDrawing.DrawIgnite && SpellManager.HasIgnite())
