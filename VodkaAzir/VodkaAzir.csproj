@@ -33,13 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EloBuddy">
-      <HintPath>C:\Gry\EB\System\EloBuddy.dll</HintPath>
+      <HintPath>..\..\..\Users\tomek\AppData\Roaming\EloBuddy\Addons\Libraries\EloBuddy.dll</HintPath>
     </Reference>
     <Reference Include="EloBuddy.SDK">
-      <HintPath>C:\Gry\EB\System\EloBuddy.SDK.dll</HintPath>
+      <HintPath>..\..\..\Users\tomek\AppData\Roaming\EloBuddy\Addons\Libraries\EloBuddy.SDK.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Gry\EB\System\SharpDX.dll</HintPath>
+      <HintPath>..\..\..\Users\tomek\AppData\Roaming\EloBuddy\Addons\Libraries\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
