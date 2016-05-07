@@ -34,14 +34,11 @@ namespace VodkaTwitch.Modes
             // KillSteal
             if (Settings.KsE && E.IsReady())
             {
-                var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(e => e.IsValidTarget(E.Range) && e.TotalShieldHealth() < Damages.EDamage(e));
+                var enemy = EntityManager.Heroes.Enemies.FirstOrDefault(e => e.IsValidTarget(E.Range) && e.TotalShieldHealth() < Damages.EDamage(e) && !e.HasBuffOfType(BuffType.SpellImmunity));
                 if (enemy != null)
                 {
-                    if (!enemy.HasBuffOfType(BuffType.SpellImmunity) && !enemy.HasBuffOfType(BuffType.SpellShield))
-                    {
                         E.Cast();
                         Debug.WriteChat("Casting E in KS on {0}, Enemy HP: {1}", "" + enemy.ChampionName, "" + enemy.Health);
-                    }
                 }
             }
             if (Settings.KsIgnite && HasIgnite && Ignite.IsReady())

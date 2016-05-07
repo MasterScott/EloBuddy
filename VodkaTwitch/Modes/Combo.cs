@@ -41,7 +41,7 @@ namespace VodkaTwitch.Modes
             {
                 var enemy =
                     EntityManager.Heroes.Enemies
-                        .FirstOrDefault(e => e.IsValidTarget(E.Range) && EStacks(e) >= Settings.MinEStacks);
+                        .FirstOrDefault(e => e.IsValidTarget(E.Range) && EStacks(e) >= Settings.MinEStacks && !e.HasBuffOfType(BuffType.SpellImmunity));
                 if (enemy != null)
                 {
                     E.Cast();
