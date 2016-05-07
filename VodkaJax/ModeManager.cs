@@ -41,13 +41,7 @@ namespace VodkaJax
 
         private static void OnTick(EventArgs args)
         {
-            if (Environment.TickCount - lastTick > 1000)
-            {
-                lastTick = Environment.TickCount;
-            Chat.Print("State: {0}", Player.Instance.Spellbook.GetSpell(SpellSlot.E).ToggleState + "");
-        }
-
-        Modes.ForEach(mode =>
+            Modes.ForEach(mode =>
             {
                 try
                 {
