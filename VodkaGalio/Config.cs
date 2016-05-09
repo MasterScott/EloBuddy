@@ -107,7 +107,7 @@ namespace VodkaGalio
                     _useE = MenuModes.Add("comboUseE", new CheckBox("Use E"));
                     _useR = MenuModes.Add("comboUseR", new CheckBox("Use R"));
                     _minRTargets = MenuModes.Add("comboMinRTargets",
-                        new Slider("Minimum enemies in range to ult", 3, 1, 5));
+                        new Slider("Minimum enemies in range to ult", 2, 1, 5));
                 }
 
                 public static void Initialize()
