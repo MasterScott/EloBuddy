@@ -20,6 +20,18 @@ namespace VodkaSmite
         {
             Text = new Text("", new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)) { Color = System.Drawing.Color.White };
             Drawing.OnDraw += OnDraw;
+            Orbwalker.OnAttack += OrbwalkerOnOnAttack;
+        }
+
+        private static void OrbwalkerOnOnAttack(AttackableUnit target, EventArgs args)
+        {
+            if (Config.SmiteEnemiesChallenging && target is AIHeroClient && SpellManager.HasChallengingSmite() && 
+                SpellManager.Smite.IsReady() && SpellManager.Smite.Handle.Ammo > Config.KeepSmiteNumber)
+            {
+                var enemyHero = (AIHeroClient) target;
+                SpellManager.Smite.Cast(enemyHero);
+                Debug.WriteChat("Casting Challenging Smite on {0} while autoattacking.", enemyHero.ChampionName);
+            }
         }
 
 

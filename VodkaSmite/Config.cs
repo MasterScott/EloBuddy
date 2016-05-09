@@ -14,6 +14,7 @@ namespace VodkaSmite
         private static readonly CheckBox _smiteEnabled;
         private static readonly KeyBind _smiteEnabledToggle;
         private static readonly CheckBox _smiteEnemies;
+        private static readonly CheckBox _smiteEnemiesChallenging;
         private static readonly CheckBox _drawSmiteStatus;
         private static readonly CheckBox _drawSmiteable;
         private static readonly CheckBox _drawRange;
@@ -37,6 +38,11 @@ namespace VodkaSmite
         public static bool SmiteEnemies
         {
             get { return _smiteEnemies.CurrentValue; }
+        }
+
+        public static bool SmiteEnemiesChallenging
+        {
+            get { return _smiteEnemiesChallenging.CurrentValue; }
         }
 
         public static bool DrawSmiteStatus
@@ -68,9 +74,10 @@ namespace VodkaSmite
             smiterMenu.AddGroupLabel("Smite Status");
             _smiteEnabled = smiterMenu.Add("vSmiteEnabled", new CheckBox("Enabled always"));
             _smiteEnabledToggle = smiterMenu.Add("vSmiteEnabledToggle", new KeyBind("Enabled (Toggle Key)", false, KeyBind.BindTypes.PressToggle, 'K'));
-            _smiteEnemies = smiterMenu.Add("vSmiteEnemies", new CheckBox("KS enemies with Smite"));
+            _smiteEnemies = smiterMenu.Add("vSmiteEnemies", new CheckBox("KS with Smite"));
+            _smiteEnemiesChallenging = smiterMenu.Add("vSmiteEnemiesChallenging", new CheckBox("Smite enemies with Challenging Smite on AA"));
             _keepSmiteNumber = smiterMenu.Add("vSmiteKeepSmiteNumber",
-                new Slider("Smite enemies if you have more than {0} charges", 1, 0, 2));
+                new Slider("Smite enemies only if you have more than {0} charges", 1, 0, 2));
             smiterMenu.AddGroupLabel("Monsters to smite");
             smiterMenu.AddLabel("Select monsters you want to smite");
             smiterMenu.Add("vSmiteSRU_Baron", new CheckBox("Baron Nashor"));
