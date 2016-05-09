@@ -43,7 +43,7 @@ namespace VodkaGaren.Modes
                     break;
                 }
 
-                if (Settings.KsIgnite && SpellManager.Ignite.IsReady() &&
+                if (Settings.KsIgnite && SpellManager.HasIgnite() && SpellManager.Ignite.IsReady() &&
                     Damages.IgniteDmg(enemy) > enemy.Health && SpellManager.Ignite.IsInRange(enemy))
                 {
                     SpellManager.Ignite.Cast(enemy);
