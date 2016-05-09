@@ -62,7 +62,6 @@ namespace VodkaDrMundo.Modes
             // Auto Q Harass
             if (SettingsHarass.AutoQ && Q.IsReady() && PlayerHealth >= SettingsHarass.MinAutoQHealth && !_Player.IsRecalling() && !PlayerIsUnderEnemyTurret() /* Don't harass under enemy turrets */ && !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) /* Don't Harass in Combo, it can mess it up */)
             {
-                
                 var enemies = EntityManager.Heroes.Enemies.Where(
                     e => e.IsValidTarget(SettingsCombo.MaxQDistance)).OrderBy(e => _Player.Distance(e));
                 foreach (var enemy in enemies)
