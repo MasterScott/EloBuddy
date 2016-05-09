@@ -36,7 +36,7 @@ namespace VodkaGaren.Modes
 
             if (Settings.UseW && W.IsReady())
             {
-                int count = EntityManager.Heroes.Enemies.Count(enemy => enemy.IsValid && !enemy.IsDead && !enemy.IsZombie && !enemy.IsInvulnerable && enemy.Health > 0 && enemy.Distance(Player.Instance) <= 400);
+                int count = EntityManager.Heroes.Enemies.Count(enemy => enemy.IsValidTarget(450));
                 if (
                     count >= Settings.MinWEnemies)
                 {

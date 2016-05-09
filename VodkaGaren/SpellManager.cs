@@ -6,9 +6,6 @@ namespace VodkaGaren
 {
     public static class SpellManager
     {
-        // You will need to edit the types of spells you have for each champ as they
-        // don't have the same type for each champ, for example Xerath Q is chargeable,
-        // right now it's  set to Active.
         public static Spell.Active Q { get; private set; }
         public static Spell.Active W { get; private set; }
         public static Spell.Active E { get; private set; }
@@ -26,9 +23,13 @@ namespace VodkaGaren
             Ignite = new Spell.Targeted(Player.Instance.GetSpellSlotFromName("summonerdot"), 600);
         }
 
+        public static bool HasIgnite()
+        {
+            return Ignite != null;
+        }
+
         public static void Initialize()
         {
-            // Let the static initializer do the job, this way we avoid multiple init calls aswell
         }
     }
 }

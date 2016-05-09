@@ -21,12 +21,17 @@ namespace VodkaGaren
         static Events()
         {
             Text = new Text("", new Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)) { Color = System.Drawing.Color.ForestGreen };
-            //Interrupter.OnInterruptableSpell += InterrupterOnOnInterruptableSpell;
-            //Gapcloser.OnGapcloser += GapcloserOnOnGapcloser;
             Orbwalker.OnPostAttack += OrbwalkerOnOnPostAttack;
-            //AIHeroClient.OnBuffGain += AIHeroClientOnOnBuffGain;
-            //AIHeroClient.OnBuffLose += AIHeroClientOnOnBuffLose;
+            Obj_AI_Base.OnLevelUp += Obj_AI_Base_OnOnLevelUp;
             Drawing.OnDraw += OnDraw;
+        }
+
+        private static void Obj_AI_Base_OnOnLevelUp(Obj_AI_Base sender, Obj_AI_BaseLevelUpEventArgs args)
+        {
+            if (sender.IsMe && Player.Instance.Level == 6)
+            {
+                Player.Instance.Spellbook.LevelSpell(SpellSlot.R);
+            }
         }
 
         private static float PlayerMana
@@ -51,7 +56,7 @@ namespace VodkaGaren
             var drawOnlyReady = SettingsDrawing.DrawOnlyReady;
             if (SettingsDrawing.DrawE && !(drawOnlyReady && !SpellManager.W.IsReady()))
             {
-                Circle.Draw(Color.Yellow, SpellManager.E.Range, Player.Instance.Position);
+                Circle.Draw(Color.Orange, SpellManager.E.Range, Player.Instance.Position);
             }
             if (SettingsDrawing.DrawR && !(drawOnlyReady && !SpellManager.R.IsReady()))
             {
@@ -71,8 +76,8 @@ namespace VodkaGaren
             }
             foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => !e.IsDead && e.IsVisible && e.Health > 0))
             {
-                int hpAfterR = (int)Math.Floor((double)enemy.Health - Damages.RDamage(enemy));
-                Vector2 drawPos = new Vector2(enemy.HPBarPosition.X, enemy.HPBarPosition.Y - 10);
+                int hpAfterR = (int)Math.Floor((double)enemy.TotalShieldHealth() - Damages.RDamage(enemy));
+                Vector2 drawPos = new Vector2(enemy.HPBarPosition.X, enemy.HPBarPosition.Y - 12);
                 if (hpAfterR > 0)
                 {
                     Text.TextValue = "+" + hpAfterR;
@@ -107,7 +112,7 @@ namespace VodkaGaren
             // Check if we should use Q to attack heroes
             if (SettingsMisc.AutoQ)
             {
-                if (target is AIHeroClient)
+                if (target is AIHeroClient && target.IsValidTarget(Player.Instance.GetAutoAttackRange()))
                 {
                     SpellManager.Q.Cast();
                     Orbwalker.ResetAutoAttack();
