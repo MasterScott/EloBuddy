@@ -20,21 +20,20 @@ namespace VodkaXinZhao.Modes
             if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Magical);
-                if (target == null || Player.Instance.Distance(target) < Settings.MinEDistance)
+                if (target != null && Player.Instance.Distance(target) >= Settings.MinEDistance)
                 {
-                    return;
+
+                    E.Cast(target);
+                    Debug.WriteChat("Casting E in Combo, Target: {0}, Distance: {1}", target.ChampionName, "" + Player.Instance.Distance(target));
                 }
-                Debug.WriteChat("Casting E in Combo, Target: {0}, Distance: {1}", target.ChampionName, "" + Player.Instance.Distance(target));
-                E.Cast(target);
             }
             if (Settings.UseR && R.IsReady() && PlayerMana >= SettingsMana.MinRMana)
             {
-                var enemies = EntityManager.Heroes.Enemies.Where(e => !e.IsDead && !e.IsRecalling() && !e.IsZombie && !e.IsInvulnerable && R.IsInRange(e)).ToList();
-                if (enemies.Count() >= Settings.MinRTargets)
+                var enemiesCount = EntityManager.Heroes.Enemies.Count(e => e.IsValidTarget(R.Range));
+                if (enemiesCount >= Settings.MinRTargets)
                 {
-                    Debug.WriteChat("Casting R in combo, Enemies in range: {0}", "" + enemies.Count());
                     R.Cast();
-                    return;
+                    Debug.WriteChat("Casting R in combo, Enemies in range: {0}", "" + enemiesCount);
                 }
             }
         }

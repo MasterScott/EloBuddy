@@ -21,15 +21,15 @@ namespace VodkaXinZhao.Modes
             {
                 var monsters =
                 EntityManager.MinionsAndMonsters.GetJungleMonsters(_PlayerPos, E.Range)
-                    .Where(e => !e.IsDead && e.Health > 0 && !e.IsInvulnerable && e.IsVisible);
+                    .Where(e => e.IsValidTarget());
                 foreach (var m in monsters)
                 {
                     var around = EntityManager.MinionsAndMonsters.GetJungleMonsters(m.Position, 100)
-                        .Count(e => !e.IsDead && e.Health > 0 && !e.IsInvulnerable && e.IsVisible);
+                        .Count(e => e.IsValidTarget());
                     if (around >= Settings.MinETargets)
                     {
-                        Debug.WriteChat("Casting E in JungleClearClear on {0} enemies", "" + around);
                         E.Cast(m);
+                        Debug.WriteChat("Casting E in JungleClearClear on {0} enemies", "" + around);
                         return;
                     }
                 }

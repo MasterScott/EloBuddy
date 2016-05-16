@@ -18,16 +18,16 @@ namespace VodkaXinZhao.Modes
             if (Settings.UseE && E.IsReady() && PlayerMana >= SettingsMana.MinEMana)
             {
                 var minions =
-                    EntityManager.MinionsAndMonsters.GetLaneMinions()
-                        .Where(e => !e.IsDead && e.Health > 0 && !e.IsInvulnerable && e.IsVisible);
+                    EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                        Player.Instance.Position, E.Range);
                 foreach (var m in minions)
                 {
-                    var around = EntityManager.MinionsAndMonsters.GetLaneMinions()
-                        .Count(e => !e.IsDead && e.Health > 0 && !e.IsInvulnerable && e.IsVisible && m.Distance(e) <= 100);
+                    var around = EntityManager.MinionsAndMonsters.GetLaneMinions(EntityManager.UnitTeam.Enemy,
+                        m.Position, 100.0f).Count();
                     if (around >= Settings.MinETargets)
                     {
-                        Debug.WriteChat("Casting E in LaneClear on {0} enemies", ""+around);
                         E.Cast(m);
+                        Debug.WriteChat("Casting E in LaneClear on {0} enemy minions", "" + around);
                         return;
                     }
                 }
